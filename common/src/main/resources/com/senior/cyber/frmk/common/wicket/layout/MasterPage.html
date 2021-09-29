@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title wicket:id="pageTitle"></title>
+    </head>
+    <body wicket:id="body_element">
+        <div class="wrapper">
+
+            <nav wicket:id="navbar_widget" class=""/>
+
+            <aside wicket:id="main_sidebar_widget" class=""/>
+
+            <div class="content-wrapper">
+
+                <section wicket:id="content_header_widget" class="content-header"/>
+
+                <section wicket:id="message_container" class="content">
+                    <div wicket:id="message_label" class="container-fluid"></div>
+                </section>
+
+                <wicket:child/>
+
+            </div>
+
+            <footer wicket:id="footer_widget" class=""/>
+
+            <aside class="control-sidebar control-sidebar-dark"/>
+
+            <div wicket:id="modalDialog"></div>
+
+        </div>
+        <div wicket:id="overlay_dialog" class=""></div>
+    </body>
+
+    <wicket:fragment wicket:id="fragment_content_header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 wicket:id="caption"></h1>
+                </div>
+                <div wicket:id="breadcrumb_container_widget" class="col-sm-6"/>
+            </div>
+        </div>
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="fragment_breadcrumb_container">
+        <ol class="breadcrumb float-sm-right">
+            <wicket:container wicket:id="breadcrumb"/>
+        </ol>
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="fragment_breadcrumb_text">
+        <li wicket:id="text" class="breadcrumb-item"></li>
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="fragment_breadcrumb_page">
+        <li class="breadcrumb-item">
+            <a wicket:id="link">
+                <span wicket:id="text"/>
+            </a>
+        </li>
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="fragment_footer">
+        <div class="float-right d-none d-sm-block">
+            <b>Version</b>
+            <span wicket:id="version"></span>
+        </div>
+        <strong>
+            <span>Copyright &copy;
+                <span wicket:id="year"/>
+            </span>
+            <a wicket:id="link">
+                <span wicket:id="text"/>
+            </a>
+            <span>.</span>
+        </strong>
+        <span>All rights reserved.</span>
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="fragment_main_sidebar">
+        <!-- Main Sidebar Open -->
+        <wicket:container wicket:id="brand_widget"/>
+
+        <div wicket:id="sidebar_widget" class="sidebar"/>
+        <!-- Main Sidebar Close -->
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="fragment_sidebar">
+        <!-- Sidebar Open -->
+        <div wicket:id="user_panel_widget" class="user-panel mt-3 pb-3 mb-3 d-flex"/>
+        <wicket:container wicket:id="sidebar_search_widget"/>
+        <wicket:container wicket:id="sidebar_menu_container_widget"/>
+        <!-- Sidebar Close -->
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="fragment_sidebar_search">
+        <form wicket:id="search_form" class="form-inline">
+            <div class="input-group">
+                <input wicket:id="search_field" class="form-control form-control-sidebar" type="text" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
+                    <button wicket:id="search_button" class="btn btn-sidebar" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="fragment_sidebar_menu_container">
+        <nav class="mt-2">
+            <ul wicket:id="sidebar_menu_controller" class="" data-widget="treeview"
+                role="menu">
+                <!-- Add icons to the links using the .nav-icon class
+                     with font-awesome or any other icon font library -->
+                <wicket:container wicket:id="children"/>
+            </ul>
+        </nav>
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="fragment_sidebar_menu_caption">
+        <li wicket:id="text" class="nav-header"></li>
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="fragment_sidebar_menu_dropdown">
+        <li wicket:id="menu_tree" class="nav-item has-treeview">
+            <a wicket:id="menu_link" href="#" class="nav-link">
+                <i wicket:id="icon" class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                    <wicket:container wicket:id="text"/>
+                    <i class="right fas fa-angle-left"></i>
+                    <span wicket:id="badge" class="badge badge-info right"></span>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <wicket:container wicket:id="children"/>
+            </ul>
+        </li>
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="fragment_sidebar_menu_item">
+        <li class="nav-item">
+            <a wicket:id="link" class="nav-link">
+                <i wicket:id="icon" class="far fa-circle nav-icon"></i>
+                <p>
+                    <span wicket:id="text"/>
+                    <span wicket:id="badge" class="right badge badge-danger"/>
+                </p>
+            </a>
+        </li>
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="fragment_brand">
+        <!-- Branding Open -->
+        <a wicket:id="brand_link" class="brand-link">
+            <img wicket:id="image" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+                 style="opacity: .8">
+            <span wicket:id="text" class="brand-text font-weight-light"></span>
+        </a>
+        <!-- Branding Close -->
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="fragment_user_panel">
+        <div class="image">
+            <img wicket:id="image" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+            <a wicket:id="link" class="d-block">
+                <span wicket:id="text"/>
+            </a>
+        </div>
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="fragment_navbar_empty">
+        <!-- Navbar Open -->
+        <ui class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#">
+                    <i class="fas fa-bars"></i>
+                </a>
+            </li>
+        </ui>
+        <!-- Navbar Close-->
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="fragment_navbar">
+        <!-- Navbar Open -->
+        <ui wicket:id="navbar_left_menu_widget" class="navbar-nav"/>
+        <wicket:container wicket:id="navbar_search_widget"/>
+        <ul wicket:id="navbar_right_menu_widget" class="navbar-nav ml-auto"/>
+        <!-- Navbar Close-->
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="fragment_navbar_right_menu">
+        <wicket:container wicket:id="top_right_menu_container_widget"/>
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="fragment_navbar_left_menu">
+        <wicket:container wicket:id="hamburger_widget"/>
+        <wicket:container wicket:id="top_left_menu_container_widget"/>
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="fragment_hamburger">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#">
+                <i class="fas fa-bars"></i>
+            </a>
+        </li>
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="fragment_top_left_menu_item">
+        <li class="nav-item d-none d-sm-inline-block">
+            <a wicket:id="link" class="nav-link">
+                <span wicket:id="text"/>
+            </a>
+        </li>
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="fragment_top_left_menu_dropdown">
+        <li class="nav-item dropdown">
+            <a wicket:id="link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+               class="nav-link dropdown-toggle">
+                <span wicket:id="text"/>
+            </a>
+            <wicket:container wicket:id="children"/>
+        </li>
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="fragment_top_left_sub_menu">
+        <ul aria-labelledby="" class="dropdown-menu border-0 shadow">
+            <wicket:container wicket:id="sub_menu_container_widget"/>
+        </ul>
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="fragment_top_left_sub_menu_item">
+        <li>
+            <a wicket:id="link" class="dropdown-item">
+                <span wicket:id="text"/>
+            </a>
+        </li>
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="fragment_top_left_sub_menu_divider">
+        <li class="dropdown-divider"></li>
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="fragment_top_left_sub_menu_dropdown">
+        <li class="dropdown-submenu dropdown-hover">
+            <a wicket:id="link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+               aria-expanded="false" class="dropdown-item dropdown-toggle">
+                <span wicket:id="text"/>
+            </a>
+            <ul wicket:id="children_container" aria-labelledby="" class="dropdown-menu border-0 shadow">
+                <wicket:container wicket:id="children"/>
+            </ul>
+        </li>
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="fragment_top_right_menu_divider">
+        <div class="dropdown-divider"></div>
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="fragment_top_right_menu_card_item">
+        <a wicket:id="link" class="dropdown-item">
+            <div class="media">
+                <img wicket:id="avatar_image" class="img-size-50 mr-3 img-circle">
+                <div class="media-body">
+                    <h3 class="dropdown-item-title">
+                        <span wicket:id="title"/>
+                        <wicket:container wicket:id="emoji">
+                            <span wicket:id="emoji_type" class="float-right text-sm text-danger">
+                                <i wicket:id="emoji_icon" class="fas fa-star"></i>
+                            </span>
+                        </wicket:container>
+                    </h3>
+                    <p class="text-sm" wicket:id="description"></p>
+                    <p wicket:id="caption" class="text-sm text-muted">
+                        <i wicket:id="caption_icon" class="far fa-clock mr-1"></i>
+                        <span wicket:id="caption_text"/>
+                    </p>
+                </div>
+            </div>
+        </a>
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="fragment_top_right_menu_footer">
+        <a href="#" class="dropdown-item dropdown-footer">
+            <span wicket:id="text"/>
+        </a>
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="fragment_top_right_menu_simple_item">
+        <a wicket:id="link" class="dropdown-item">
+            <i wicket:id="icon" class=""></i>
+            <span wicket:id="text"/>
+            <span wicket:id="caption" class="float-right text-muted text-sm"></span>
+        </a>
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="fragment_top_right_menu_header">
+        <span class="dropdown-header">
+            <span wicket:id="text"/>
+        </span>
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="fragment_top_right_menu_item">
+        <li class="nav-item d-none d-sm-inline-block">
+            <a class="nav-link" wicket:id="link"><wicket:container wicket:id="text"/></a>
+        </li>
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="fragment_top_right_menu_dropdown">
+        <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+                <span wicket:id="text"/>
+                <i wicket:id="icon" class="far fa-comments"></i>
+                <span wicket:id="badge" class="badge badge-danger navbar-badge">3</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                <wicket:container wicket:id="children"/>
+            </div>
+        </li>
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="fragment_navbar_search">
+        <form wicket:id="search_form" class="form-inline ml-3">
+            <div class="input-group input-group-sm">
+                <input wicket:id="search_field" class="form-control form-control-navbar" type="text" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
+                    <button wicket:id="search_button" class="btn btn-navbar" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </wicket:fragment>
+
+</html>

@@ -1,0 +1,1 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.senior.cyber.frmk.common.base.WebUiAutoConfiguration

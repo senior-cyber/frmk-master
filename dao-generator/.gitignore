@@ -1,0 +1,7 @@
+/.classpath
+/.project
+/target/
+/.settings/
+/.idea/
+/Build/
+dao-generator.iml

@@ -1,0 +1,49 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+group = 'com.senior.cyber.frmk'
+version = '1.0.0'
+
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+dependencies {
+    implementation "commons-io:commons-io:${commons_io}"
+    implementation "org.apache.commons:commons-lang3:${commons_lang3}"
+    implementation "org.springframework:spring-jdbc:${spring}"
+    implementation "org.flywaydb:flyway-core:${flyway}"
+    implementation "org.apache.commons:commons-dbcp2:${commons_dbcp2}"
+    implementation "org.liquibase:liquibase-core:${liquibase}"
+    implementation "com.google.guava:guava:${guava}"
+    implementation("org.apache.metamodel:MetaModel-full:${metamodel}") {
+        exclude group: 'org.apache.metamodel', module: 'MetaModel-hadoop'
+        exclude group: 'org.apache.metamodel', module: 'MetaModel-cassandra'
+        exclude group: 'org.apache.metamodel', module: 'MetaModel-couchdb'
+        exclude group: 'org.apache.metamodel', module: 'MetaModel-neo4j'
+        exclude group: 'org.apache.metamodel', module: 'MetaModel-fixedwidth'
+        exclude group: 'org.apache.metamodel', module: 'MetaModel-elasticsearch-native'
+        exclude group: 'org.apache.metamodel', module: 'MetaModel-elasticsearch-rest'
+        exclude group: 'org.apache.metamodel', module: 'MetaModel-arff'
+        exclude group: 'org.apache.metamodel', module: 'MetaModel-xml'
+        exclude group: 'org.apache.metamodel', module: 'MetaModel-sugarcrm'
+        exclude group: 'org.apache.metamodel', module: 'MetaModel-salesforce'
+        exclude group: 'org.apache.metamodel', module: 'MetaModel-openoffice'
+        exclude group: 'org.apache.metamodel', module: 'MetaModel-mongodb-mongo2'
+        exclude group: 'org.apache.metamodel', module: 'MetaModel-mongodb-mongo3'
+        exclude group: 'org.apache.metamodel', module: 'MetaModel-hbase'
+        exclude group: 'org.apache.metamodel', module: 'MetaModel-dynamodb'
+    }
+}

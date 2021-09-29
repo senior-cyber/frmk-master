@@ -1,0 +1,7 @@
+/target/
+/.settings/
+/.classpath
+/.project
+/.idea/
+/Build/
+jdbc-query.iml

@@ -1,0 +1,27 @@
+plugins {
+    id 'org.springframework.boot' version "${spring_boot}"
+    id 'io.spring.dependency-management' version "${spring_dependency_management}"
+    id 'java'
+    id 'war'
+}
+
+group = 'com.senior.cyber.frmk'
+version = '1.0.0'
+
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(":common")
+    implementation "com.google.code.gson:gson:${gson}"
+	implementation "commons-io:commons-io:${commons_io}"
+	implementation "org.apache.commons:commons-lang3:${commons_lang3}"
+    implementation "org.apache.wicket:wicket-core:${wicket}"
+    implementation "org.apache.wicket:wicket-extensions:${wicket}"
+	implementation "org.springframework.boot:spring-boot-starter-web:${spring_boot}"
+    providedRuntime "org.springframework.boot:spring-boot-starter-tomcat:${spring_boot}"
+    // implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+}

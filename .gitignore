@@ -1,0 +1,8 @@
+/.classpath
+/.project
+/target/
+/.settings/
+/.idea/
+framework-parent.iml
+/.gradle/
+.DS_Store
