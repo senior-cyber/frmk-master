@@ -13,7 +13,7 @@ buildscript {
         joda_time = '2.10.12'
         commons_io = '2.11.0'
         metamodel = '5.3.3'
-        liquibase = '4.4.3'
+        liquibase = '4.5.0'
         commons_dbcp2 = '2.9.0'
         flyway = '7.15.0'
         gson = '2.8.8'
