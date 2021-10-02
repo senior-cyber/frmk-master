@@ -23,5 +23,4 @@ dependencies {
     implementation "org.apache.wicket:wicket-extensions:${wicket}"
 	implementation "org.springframework.boot:spring-boot-starter-web:${spring_boot}"
     providedRuntime "org.springframework.boot:spring-boot-starter-tomcat:${spring_boot}"
-    // implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 }
