@@ -269,8 +269,8 @@ public abstract class QueryDataProvider extends SortableDataProvider<Tuple, Stri
     }
 
     @Override
-    public void setSort(String column, SortOrder order) {
-        super.setSort(column, order);
+    public void setSort(String key, SortOrder order) {
+        super.setSort(key, order);
     }
 
     public String getCountField() {
