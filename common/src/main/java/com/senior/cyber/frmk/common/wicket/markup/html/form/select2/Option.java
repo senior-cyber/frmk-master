@@ -1,5 +1,7 @@
 package com.senior.cyber.frmk.common.wicket.markup.html.form.select2;
 
+import org.apache.wicket.markup.html.form.IChoiceRenderer;
+
 import java.io.Serializable;
 
 public class Option implements Serializable {
@@ -12,6 +14,8 @@ public class Option implements Serializable {
     private String id;
 
     private String text;
+
+    public static final ChoiceRenderer RENDERER = new ChoiceRenderer();
 
     public Option() {
     }
@@ -66,6 +70,20 @@ public class Option implements Serializable {
         } else if (!text.equals(other.text))
             return false;
         return true;
+    }
+
+    private static class ChoiceRenderer implements IChoiceRenderer<Option> {
+
+        @Override
+        public Object getDisplayValue(Option object) {
+            return object.getText();
+        }
+
+        @Override
+        public String getIdValue(Option object, int index) {
+            return object.getId();
+        }
+
     }
 
 }
