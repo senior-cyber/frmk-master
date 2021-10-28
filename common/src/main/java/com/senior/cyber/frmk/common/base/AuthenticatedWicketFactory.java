@@ -11,6 +11,7 @@ import org.apache.wicket.protocol.http.IWebApplicationFactory;
 import org.apache.wicket.protocol.http.WicketFilter;
 import org.apache.wicket.request.resource.*;
 import org.reflections.Reflections;
+import org.reflections.scanners.Scanners;
 import org.reflections.scanners.SubTypesScanner;
 import org.reflections.scanners.TypeAnnotationsScanner;
 import org.reflections.util.ClasspathHelper;
@@ -49,8 +50,7 @@ public abstract class AuthenticatedWicketFactory extends AuthenticatedWebApplica
             if (this.webUiProperties.getPkg() != null && !"".equals(this.webUiProperties.getPkg())) {
                 Reflections reflections = new Reflections(new ConfigurationBuilder()
                         .setUrls(ClasspathHelper.forPackage(this.webUiProperties.getPkg()))
-                        .setScanners(new SubTypesScanner(), new TypeAnnotationsScanner())
-                        .setExecutorService(Executors.newFixedThreadPool(1)));
+                        .setScanners(Scanners.SubTypes, Scanners.TypesAnnotated));
                 Set<Class<?>> clazzes = reflections.getTypesAnnotatedWith(Bookmark.class);
                 Set<String> bookmarks = new TreeSet<>();
                 Map<String, Class<?>> existedPages = new HashMap<>();
