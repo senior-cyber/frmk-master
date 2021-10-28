@@ -23,7 +23,7 @@ public class KeyStoreUtils {
      * @throws IOException
      * @throws NoSuchAlgorithmException
      */
-    public KeyStore generateKeyStore(String alias, X509Certificate certificate) {
+    public static KeyStore generateKeyStore(String alias, X509Certificate certificate) {
         try {
             KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
             keyStore.load(null, null);
@@ -44,7 +44,7 @@ public class KeyStoreUtils {
      * @throws IOException
      * @throws NoSuchAlgorithmException
      */
-    public KeyStore generateKeyStore(Map<String, X509Certificate> certificates) {
+    public static KeyStore generateKeyStore(Map<String, X509Certificate> certificates) {
         try {
             KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
             keyStore.load(null, null);
@@ -70,7 +70,7 @@ public class KeyStoreUtils {
      * @throws IOException
      * @throws NoSuchAlgorithmException
      */
-    public KeyStore generateKeyStore(String alias, PrivateKey privateKey, X509Certificate certificate) {
+    public static KeyStore generateKeyStore(String alias, PrivateKey privateKey, X509Certificate certificate) {
         try {
             KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
             keyStore.load(null, null);
@@ -94,7 +94,7 @@ public class KeyStoreUtils {
      * @throws IOException
      * @throws NoSuchAlgorithmException
      */
-    public KeyStore generateKeyStore(String alias, PrivateKey privateKey, X509Certificate[] certificateChain) {
+    public static KeyStore generateKeyStore(String alias, PrivateKey privateKey, X509Certificate[] certificateChain) {
         try {
             KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
             keyStore.load(null, null);
