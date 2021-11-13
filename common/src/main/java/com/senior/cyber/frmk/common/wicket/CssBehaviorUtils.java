@@ -11,7 +11,7 @@ import java.util.List;
 
 public class CssBehaviorUtils {
 
-    public static void appendCssClass(String cssClass, Component component, ComponentTag tag) {
+    public static void appendCssClass(String cssClass, ComponentTag tag) {
         if (tag.getType() != XmlTag.TagType.CLOSE) {
             List<String> errorClasses = new ArrayList<>(Arrays.asList(StringUtils.split(cssClass, " ")));
             List<String> tagClasses = new ArrayList<>(Arrays.asList(StringUtils.split(StringUtils.trim(tag.getAttributes().getString("class", "")), " ")));

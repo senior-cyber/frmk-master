@@ -49,7 +49,7 @@ public class UIColumn extends WebMarkupContainer {
 
         @Override
         public void onComponentTag(Component component, ComponentTag tag) {
-            CssBehaviorUtils.appendCssClass(this.cssClass, component, tag);
+            CssBehaviorUtils.appendCssClass(this.cssClass, tag);
         }
 
     }
