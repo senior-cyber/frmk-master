@@ -6,3 +6,4 @@
 ./gradlew bootJar bootRun --args='--spring.config.location=file:///full_path/ --spring.config.name=base_filename'
 
 java -jar demo.jar --spring.config.location=file:///full_path/ --spring.config.name=base_filename
+
