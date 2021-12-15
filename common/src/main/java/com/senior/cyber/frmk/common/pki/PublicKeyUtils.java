@@ -29,11 +29,12 @@ public class PublicKeyUtils {
             } else if (object instanceof SubjectPublicKeyInfo) {
                 SubjectPublicKeyInfo subjectPublicKeyInfo = (SubjectPublicKeyInfo) object;
                 return new JcaPEMKeyConverter().getPublicKey(subjectPublicKeyInfo);
+            } else {
+                throw new java.lang.UnsupportedOperationException(object.getClass().getName());
             }
         } catch (CertificateException e) {
             throw new IOException(e);
         }
-        return null;
     }
 
     public static PublicKey read(File pem) throws IOException {

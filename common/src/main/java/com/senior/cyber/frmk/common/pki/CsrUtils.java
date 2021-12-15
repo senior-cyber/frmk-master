@@ -16,7 +16,11 @@ public class CsrUtils {
     public static PKCS10CertificationRequest read(String pem) throws IOException {
         try (PEMParser parser = new PEMParser(new StringReader(pem))) {
             Object objectHolder = parser.readObject();
-            return (PKCS10CertificationRequest) objectHolder;
+            if (objectHolder instanceof PKCS10CertificationRequest) {
+                return (PKCS10CertificationRequest) objectHolder;
+            } else {
+                throw new java.lang.UnsupportedOperationException(objectHolder.getClass().getName());
+            }
         }
     }
 
@@ -26,8 +30,7 @@ public class CsrUtils {
 
     public static String write(PKCS10CertificationRequest csr) throws IOException {
         StringWriter pem = new StringWriter();
-        try (
-                JcaPEMWriter writer = new JcaPEMWriter(pem)) {
+        try (JcaPEMWriter writer = new JcaPEMWriter(pem)) {
             writer.writeObject(csr);
         }
         return pem.toString();

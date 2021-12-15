@@ -27,7 +27,7 @@ public class PrivateKeyUtils {
                 PrivateKeyInfo holder = (PrivateKeyInfo) objectHolder;
                 return new JcaPEMKeyConverter().getPrivateKey(holder);
             } else {
-                return null;
+                throw new java.lang.UnsupportedOperationException(objectHolder.getClass().getName());
             }
         }
     }
