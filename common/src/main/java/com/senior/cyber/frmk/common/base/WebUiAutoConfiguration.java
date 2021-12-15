@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ConditionalOnWebApplication(type = Type.SERVLET)
-@ConditionalOnProperty(name = "webui.wicketFactory")
+@ConditionalOnProperty(name = "webui.wicket-factory")
 @AutoConfigureAfter({WebMvcAutoConfiguration.class})
 public class WebUiAutoConfiguration {
 

@@ -199,8 +199,8 @@ public class WidgetsPage extends WebPage {
         try {
             ApplicationContext context = WicketFactory.getApplicationContext();
             WebUiProperties properties = context.getBean(WebUiProperties.class);
-            response.render(OnDomReadyHeaderItem.forScript(FileUtils.readFileToString(new File(properties.getAdminLTE(), AdminLTEResourceReference.JS_DIST_DEMO), StandardCharsets.UTF_8)));
-            response.render(OnDomReadyHeaderItem.forScript(FileUtils.readFileToString(new File(properties.getAdminLTE(), AdminLTEResourceReference.JS_DIST_DASHBOARD_3), StandardCharsets.UTF_8)));
+            response.render(OnDomReadyHeaderItem.forScript(FileUtils.readFileToString(new File(properties.getAdminLte(), AdminLTEResourceReference.JS_DIST_DEMO), StandardCharsets.UTF_8)));
+            response.render(OnDomReadyHeaderItem.forScript(FileUtils.readFileToString(new File(properties.getAdminLte(), AdminLTEResourceReference.JS_DIST_DASHBOARD_3), StandardCharsets.UTF_8)));
         } catch (IOException e) {
             e.printStackTrace();
         }

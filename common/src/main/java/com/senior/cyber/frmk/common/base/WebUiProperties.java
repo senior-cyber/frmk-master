@@ -23,7 +23,7 @@ public class WebUiProperties implements Serializable {
 
     private Class<?> wicketFactory = null;
 
-    private File adminLTE;
+    private File adminLte;
 
     public String getPkg() {
         return pkg;
@@ -33,12 +33,12 @@ public class WebUiProperties implements Serializable {
         this.pkg = pkg;
     }
 
-    public File getAdminLTE() {
-        return adminLTE;
+    public File getAdminLte() {
+        return adminLte;
     }
 
-    public void setAdminLTE(File adminLTE) {
-        this.adminLTE = adminLTE;
+    public void setAdminLte(File adminLte) {
+        this.adminLte = adminLte;
     }
 
     private final Servlet servlet = new Servlet();

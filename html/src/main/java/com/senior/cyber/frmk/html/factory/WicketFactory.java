@@ -169,7 +169,7 @@ public class WicketFactory extends com.senior.cyber.frmk.common.base.WicketFacto
         ApplicationContext context = WicketFactory.getApplicationContext();
         WebUiProperties properties = context.getBean(WebUiProperties.class);
         if (PAGES.containsKey(clazz.getName())) {
-            File html = new File(properties.getAdminLTE(), PAGES.get(clazz.getName()));
+            File html = new File(properties.getAdminLte(), PAGES.get(clazz.getName()));
             return new FileSystemResourceStream(html);
         } else {
             return null;

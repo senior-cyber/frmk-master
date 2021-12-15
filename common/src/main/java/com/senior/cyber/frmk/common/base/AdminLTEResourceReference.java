@@ -291,9 +291,9 @@ public class AdminLTEResourceReference extends ResourceReference {
 
         final String name = getName();
 
-        File file = new File(properties.getAdminLTE(), name);
+        File file = new File(properties.getAdminLte(), name);
 
-        if (FilenameUtils.normalize(file.getAbsolutePath(), true).startsWith(FilenameUtils.normalize(properties.getAdminLTE().getAbsolutePath(), true))) {
+        if (FilenameUtils.normalize(file.getAbsolutePath(), true).startsWith(FilenameUtils.normalize(properties.getAdminLte().getAbsolutePath(), true))) {
             return new FileSystemResource(file.toPath());
         }
         return null;
