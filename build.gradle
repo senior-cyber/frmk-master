@@ -20,5 +20,6 @@ buildscript {
         bouncycastle = '1.70' // https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on
         spring_cloud = '2021.0.0' // https://github.com/spring-cloud/spring-cloud-release/tags
         guava = '31.0.1-jre' // https://mvnrepository.com/artifact/com.google.guava/guava
+        httpclient = '4.5.13' // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
     }
 }
