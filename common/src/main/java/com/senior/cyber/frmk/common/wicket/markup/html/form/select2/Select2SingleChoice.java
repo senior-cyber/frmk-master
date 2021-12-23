@@ -72,12 +72,12 @@ public class Select2SingleChoice extends FormComponent<Option> implements IReque
             response.render(new Select2OnDomReady("$('#" + markupId + "')."
                     + "select2({" + theme + " allowClear: true, placeholder: '" + selectOne.getString() + "', ajax: { url: '" + url
                     + "', dataType: 'json', delay: 250, data: function (params) { return { q: params.term, page: params.page }; }, processResults: function (data, params) { params.page = params.page || 1; return { results: data.items, pagination: { more: data.more } }; }, cache: true }, escapeMarkup: function (markup) { return markup; }, minimumInputLength: "
-                    + this.inputLength + "});"));
+                    + this.inputLength + "})"));
         } else {
             response.render(new Select2OnDomReady("$('#" + markupId + "')."
                     + "select2({" + theme + " allowClear: true, placeholder: '', ajax: { url: '" + url
                     + "', dataType: 'json', delay: 250, data: function (params) { return { q: params.term, page: params.page }; }, processResults: function (data, params) { params.page = params.page || 1; return { results: data.items, pagination: { more: data.more } }; }, cache: true }, escapeMarkup: function (markup) { return markup; }, minimumInputLength: "
-                    + this.inputLength + "});"));
+                    + this.inputLength + "})"));
         }
     }
 

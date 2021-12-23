@@ -72,16 +72,25 @@ public class Select2MultipleChoice extends FormComponent<Collection<Option>> imp
         theme = "";
         if (isRequired()) {
             StringResourceModel selectOne = new StringResourceModel("null", this);
+//            response.render(new Select2OnDomReady("setTimeout(function() { $('#" + markupId + "')." + "select2({" + theme + " placeholder:'"
+//                    + selectOne.getString() + "', ajax: { url: '" + url
+//                    + "', dataType: 'json', delay: 250, data: function (params) { return { q: params.term, page: params.page }; }, processResults: function (data, params) { params.page = params.page || 1; return { results: data.items, pagination: { more: data.more } }; }, cache: true }, escapeMarkup: function (markup) { return markup; }, minimumInputLength: "
+//                    + this.inputLength + "}); }, 1000)"));
             response.render(new Select2OnDomReady("$('#" + markupId + "')." + "select2({" + theme + " placeholder:'"
                     + selectOne.getString() + "', ajax: { url: '" + url
                     + "', dataType: 'json', delay: 250, data: function (params) { return { q: params.term, page: params.page }; }, processResults: function (data, params) { params.page = params.page || 1; return { results: data.items, pagination: { more: data.more } }; }, cache: true }, escapeMarkup: function (markup) { return markup; }, minimumInputLength: "
-                    + this.inputLength + "});"));
+                    + this.inputLength + "})"));
         } else {
+//            response.render(new Select2OnDomReady("setTimeout(function() { $('#" + markupId + "')."
+//                    + "select2({" + theme + " placeholder:'', ajax: { url: '" + url
+//                    + "', dataType: 'json', delay: 250, data: function (params) { return { q: params.term, page: params.page }; }, processResults: function (data, params) { params.page = params.page || 1; return { results: data.items, pagination: { more: data.more } }; }, cache: true }, escapeMarkup: function (markup) { return markup; }, minimumInputLength: "
+//                    + this.inputLength + "}); }, 1000)"));
             response.render(new Select2OnDomReady("$('#" + markupId + "')."
                     + "select2({" + theme + " placeholder:'', ajax: { url: '" + url
                     + "', dataType: 'json', delay: 250, data: function (params) { return { q: params.term, page: params.page }; }, processResults: function (data, params) { params.page = params.page || 1; return { results: data.items, pagination: { more: data.more } }; }, cache: true }, escapeMarkup: function (markup) { return markup; }, minimumInputLength: "
-                    + this.inputLength + "});"));
+                    + this.inputLength + "})"));
         }
+        // setTimeout(function() { ; }, 1000)
     }
 
     @Override
