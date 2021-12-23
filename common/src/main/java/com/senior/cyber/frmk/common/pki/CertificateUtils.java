@@ -11,11 +11,13 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.bouncycastle.asn1.*;
 import org.bouncycastle.asn1.x509.*;
+import org.bouncycastle.asn1.x509.Extension;
 import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
 import org.bouncycastle.cert.ocsp.*;
 import org.bouncycastle.cert.ocsp.jcajce.JcaCertificateID;
+import org.bouncycastle.jcajce.provider.asymmetric.x509.CertificateFactory;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.openssl.PEMParser;
 import org.bouncycastle.openssl.jcajce.JcaPEMWriter;
@@ -27,9 +29,11 @@ import org.bouncycastle.operator.jcajce.JcaDigestCalculatorProviderBuilder;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.security.cert.CertificateEncodingException;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.SignatureException;
+import java.security.cert.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,6 +100,18 @@ public class CertificateUtils {
         return urls;
     }
 
+    public static boolean crlValidation(X509Certificate certificate, String crlUrl) throws IOException, CRLException {
+        try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
+            HttpUriRequest request = RequestBuilder.get().setUri(crlUrl).build();
+            try (CloseableHttpResponse response = client.execute(request)) {
+                byte[] raw = EntityUtils.toByteArray(response.getEntity());
+                CertificateFactory certificateFactory = new CertificateFactory();
+                CRL crl = certificateFactory.engineGenerateCRL(new ByteArrayInputStream(raw));
+                return crl.isRevoked(certificate);
+            }
+        }
+    }
+
     public static boolean ocspValidation(X509Certificate certificate, X509Certificate issuerCertificate, String ocspUri) throws OCSPException, OperatorCreationException, IOException, CertificateException {
         DigestCalculatorProvider digestCalculatorProvider = new JcaDigestCalculatorProviderBuilder().setProvider(BouncyCastleProvider.PROVIDER_NAME).build();
         CertificateID certificateID = new JcaCertificateID(digestCalculatorProvider.get(CertificateID.HASH_SHA1), issuerCertificate, certificate.getSerialNumber());
@@ -156,6 +172,22 @@ public class CertificateUtils {
             }
         }
         return urls;
+    }
+
+    public static boolean certificateChainValidation(List<X509Certificate> certificateChain) {
+        try {
+            for (int i = certificateChain.size() - 1; i > 0; i--) {
+                X509Certificate certificate = certificateChain.get(i);
+                X509Certificate issuerCertificate = certificateChain.get(i - 1);
+                certificate.verify(issuerCertificate.getPublicKey());
+                if (!certificate.getIssuerDN().equals(issuerCertificate.getSubjectDN())) {
+                    return false;
+                }
+            }
+            return true;
+        } catch (CertificateException | SignatureException | NoSuchProviderException | InvalidKeyException | NoSuchAlgorithmException e) {
+            return false;
+        }
     }
 
 }
