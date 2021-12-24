@@ -1,9 +1,7 @@
-package com.senior.cyber.frmk.common.pki;
+package com.senior.cyber.frmk.common.jwt;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 import org.apache.commons.lang3.StringUtils;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.openssl.jcajce.JcaPEMWriter;
@@ -41,13 +39,14 @@ public abstract class Jwt<T> {
 
     protected String signature;
 
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+
     protected Jwt(Class<T> payloadClass, Algorithm algorithm) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         this.payloadClass = payloadClass;
         this.header = new Header();
         this.header.algorithm = algorithm;
         this.header.type = "JWT";
-        byte[] headerByte = gson.toJson(header).getBytes(StandardCharsets.UTF_8);
+        byte[] headerByte = GSON.toJson(header).getBytes(StandardCharsets.UTF_8);
         this.headerText = Base64.getUrlEncoder().withoutPadding().encodeToString(headerByte);
     }
 
@@ -84,18 +83,17 @@ public abstract class Jwt<T> {
     }
 
     public static <P, J extends Jwt<P>> J fromString(Class<J> jwtClass, String token) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String[] segments = StringUtils.split(token, ".");
         String headerText = segments[0];
         byte[] headerByte = Base64.getUrlDecoder().decode(headerText);
-        Header header = gson.fromJson(new String(headerByte, StandardCharsets.UTF_8), Header.class);
+        Header header = GSON.fromJson(new String(headerByte, StandardCharsets.UTF_8), Header.class);
         Algorithm algorithm = header.getAlgorithm();
         J jwt = jwtClass.getDeclaredConstructor(Algorithm.class).newInstance(algorithm);
         jwt.headerText = headerText;
         jwt.payloadText = segments[1];
         jwt.signature = segments[2];
-        jwt.payload = gson.fromJson(new String(Base64.getUrlDecoder().decode(jwt.payloadText), StandardCharsets.UTF_8), jwt.payloadClass);
-        jwt.header = gson.fromJson(new String(headerByte, StandardCharsets.UTF_8), Header.class);
+        jwt.payload = GSON.fromJson(new String(Base64.getUrlDecoder().decode(jwt.payloadText), StandardCharsets.UTF_8), jwt.payloadClass);
+        jwt.header = GSON.fromJson(new String(headerByte, StandardCharsets.UTF_8), Header.class);
         if (!"JWT".equals(jwt.header.type)) {
             throw new IllegalArgumentException("Not supported alg " + jwt.header.algorithm + " and typ " + jwt.header.type);
         }
@@ -236,170 +234,141 @@ public abstract class Jwt<T> {
         return signature;
     }
 
-    public boolean verifyUsing(RSAPublicKey publicKey) throws NoSuchAlgorithmException, NoSuchProviderException, SignatureException, InvalidKeyException, InvalidAlgorithmParameterException {
+    public boolean verifyWith(Key key) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidAlgorithmParameterException, InvalidKeyException, SignatureException {
+        if (isRS()) {
+            if (key instanceof RSAPublicKey) {
+                byte[] payloadByte = Base64.getUrlDecoder().decode(payloadText);
+                payload = GSON.fromJson(new String(payloadByte, StandardCharsets.UTF_8), payloadClass);
+                Signature verifier = null;
+                if (Algorithm.RS256 == header.algorithm || Algorithm.RS384 == header.algorithm || Algorithm.RS512 == header.algorithm) {
+                    verifier = Signature.getInstance("SHA" + header.algorithm.getSize() + "withRSA", BouncyCastleProvider.PROVIDER_NAME);
+                } else if (Algorithm.PS256 == header.algorithm || Algorithm.PS384 == header.algorithm) {
+                    verifier = Signature.getInstance("SHA" + header.algorithm.getSize() + "withRSA/PSS", BouncyCastleProvider.PROVIDER_NAME);
+                    verifier.setParameter(new PSSParameterSpec("SHA-" + header.algorithm.getSize(), "MGF1", MGF1ParameterSpec.SHA256, header.algorithm.getSize() / 8, 1));
+                }
+                verifier.initVerify((RSAPublicKey) key);
+                verifier.update((headerText + "." + payloadText).getBytes(StandardCharsets.UTF_8));
+                if (verifier.verify(Base64.getUrlDecoder().decode(signature))) {
+                    return true;
+                }
+                return false;
+            } else {
+                throw new IllegalArgumentException(this.header.algorithm + " support only " + RSAPrivateKey.class.getSimpleName() + ", not supported " + key.getClass().getSimpleName());
+            }
+        } else if (isES()) {
+            if (key instanceof ECPublicKey) {
+                byte[] payloadByte = Base64.getUrlDecoder().decode(payloadText);
+                payload = GSON.fromJson(new String(payloadByte, StandardCharsets.UTF_8), payloadClass);
+                Signature verifier = Signature.getInstance("SHA" + header.algorithm.getSize() + "withECDSA", BouncyCastleProvider.PROVIDER_NAME);
+                verifier.initVerify((ECPublicKey) key);
+                verifier.update((headerText + "." + payloadText).getBytes(StandardCharsets.UTF_8));
+                byte[] signature = JOSEToDER(header.algorithm.getSize() / 8, Base64.getUrlDecoder().decode(this.signature));
+                if (verifier.verify(signature)) {
+                    return true;
+                }
+                return false;
+            } else {
+                throw new IllegalArgumentException(this.header.algorithm + " support only " + ECPublicKey.class.getSimpleName() + ", not supported " + key.getClass().getSimpleName());
+            }
+        } else if (isHS()) {
+            if (key instanceof SecretKey) {
+                byte[] payloadByte = Base64.getUrlDecoder().decode(payloadText);
+                payload = GSON.fromJson(new String(payloadByte, StandardCharsets.UTF_8), payloadClass);
+                Mac hmac = Mac.getInstance("HmacSHA" + header.algorithm.getSize(), BouncyCastleProvider.PROVIDER_NAME);
+                hmac.init(key);
+                String signature = Base64.getUrlEncoder().withoutPadding().encodeToString(hmac.doFinal((headerText + "." + payloadText).getBytes(StandardCharsets.UTF_8)));
+                if (this.signature.equals(signature)) {
+                    return true;
+                }
+                return false;
+            } else {
+                throw new IllegalArgumentException(this.header.algorithm + " support only " + SecretKey.class.getSimpleName() + ", not supported " + key.getClass().getSimpleName());
+            }
+        } else {
+            throw new IllegalArgumentException(this.header.algorithm + " is not support");
+        }
+    }
+
+    public String signWith(Key key) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidAlgorithmParameterException, InvalidKeyException, SignatureException {
+        if (isRS()) {
+            if (key instanceof RSAPrivateKey) {
+                Algorithm algorithm = header.algorithm;
+                this.payloadText = Base64.getUrlEncoder().withoutPadding().encodeToString(GSON.toJson(this.payload).getBytes(StandardCharsets.UTF_8));
+                Signature issuer = null;
+                if (Algorithm.RS256 == algorithm || Algorithm.RS384 == algorithm || Algorithm.RS512 == algorithm) {
+                    issuer = Signature.getInstance("SHA" + algorithm.getSize() + "withRSA", BouncyCastleProvider.PROVIDER_NAME);
+                } else if (Algorithm.PS256 == algorithm || Algorithm.PS384 == algorithm) {
+                    issuer = Signature.getInstance("SHA" + algorithm.getSize() + "withRSA/PSS", BouncyCastleProvider.PROVIDER_NAME);
+                    issuer.setParameter(new PSSParameterSpec("SHA-" + algorithm.getSize(), "MGF1", MGF1ParameterSpec.SHA256, algorithm.getSize() / 8, 1));
+                }
+                issuer.initSign((RSAPrivateKey) key);
+                issuer.update((this.headerText + "." + this.payloadText).getBytes(StandardCharsets.UTF_8));
+                byte[] signature = issuer.sign();
+                this.signature = Base64.getUrlEncoder().withoutPadding().encodeToString(signature);
+                return this.headerText + "." + this.payloadText + "." + StringUtils.trim(this.signature);
+            } else {
+                throw new IllegalArgumentException(this.header.algorithm + " support only " + RSAPrivateKey.class.getSimpleName() + ", not supported " + key.getClass().getSimpleName());
+            }
+        } else if (isES()) {
+            if (key instanceof ECPrivateKey) {
+                Algorithm algorithm = header.algorithm;
+                this.payloadText = Base64.getUrlEncoder().withoutPadding().encodeToString(GSON.toJson(this.payload).getBytes(StandardCharsets.UTF_8));
+                Signature issuer = Signature.getInstance("SHA" + algorithm.getSize() + "withECDSA", BouncyCastleProvider.PROVIDER_NAME);
+                issuer.initSign((ECPrivateKey) key);
+                issuer.update((this.headerText + "." + this.payloadText).getBytes(StandardCharsets.UTF_8));
+                byte[] signature = DERToJOSE(algorithm.getSize() / 8, issuer.sign());
+                this.signature = Base64.getUrlEncoder().withoutPadding().encodeToString(signature);
+                return this.headerText + "." + this.payloadText + "." + StringUtils.trim(this.signature);
+            } else {
+                throw new IllegalArgumentException(this.header.algorithm + " support only " + ECPrivateKey.class.getSimpleName() + ", not supported " + key.getClass().getSimpleName());
+            }
+        } else if (isHS()) {
+            if (key instanceof SecretKey) {
+                Algorithm algorithm = header.algorithm;
+                this.payloadText = Base64.getUrlEncoder().withoutPadding().encodeToString(GSON.toJson(this.payload).getBytes(StandardCharsets.UTF_8));
+                Mac hmac = Mac.getInstance("HmacSHA" + algorithm.getSize(), BouncyCastleProvider.PROVIDER_NAME);
+                hmac.init(key);
+                byte[] signature = hmac.doFinal((this.headerText + "." + this.payloadText).getBytes(StandardCharsets.UTF_8));
+                this.signature = Base64.getUrlEncoder().withoutPadding().encodeToString(signature);
+                return this.headerText + "." + this.payloadText + "." + StringUtils.trim(this.signature);
+            } else {
+                throw new IllegalArgumentException(this.header.algorithm + " support only " + SecretKey.class.getSimpleName() + ", not supported " + key.getClass().getSimpleName());
+            }
+        } else {
+            throw new IllegalArgumentException(this.header.algorithm + " is not support");
+        }
+    }
+
+    protected boolean isRS() {
         if (Algorithm.RS256 == this.header.algorithm ||
                 Algorithm.RS384 == this.header.algorithm ||
                 Algorithm.RS512 == this.header.algorithm ||
                 Algorithm.PS256 == this.header.algorithm ||
                 Algorithm.PS384 == this.header.algorithm) {
-        } else {
-            throw new IllegalArgumentException(this.header.algorithm + " does not support rsa private key");
-        }
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        byte[] payloadByte = Base64.getUrlDecoder().decode(payloadText);
-        payload = gson.fromJson(new String(payloadByte, StandardCharsets.UTF_8), payloadClass);
-        Signature verifier = null;
-        if (Algorithm.RS256 == header.algorithm || Algorithm.RS384 == header.algorithm || Algorithm.RS512 == header.algorithm) {
-            verifier = Signature.getInstance("SHA" + header.algorithm.size + "withRSA", BouncyCastleProvider.PROVIDER_NAME);
-        } else if (Algorithm.PS256 == header.algorithm || Algorithm.PS384 == header.algorithm) {
-            verifier = Signature.getInstance("SHA" + header.algorithm.size + "withRSA/PSS", BouncyCastleProvider.PROVIDER_NAME);
-            verifier.setParameter(new PSSParameterSpec("SHA-" + header.algorithm.size, "MGF1", MGF1ParameterSpec.SHA256, header.algorithm.size / 8, 1));
-        }
-        verifier.initVerify(publicKey);
-        verifier.update((headerText + "." + payloadText).getBytes(StandardCharsets.UTF_8));
-        if (verifier.verify(Base64.getUrlDecoder().decode(signature))) {
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
-    public boolean verifyUsing(ECPublicKey publicKey) throws NoSuchAlgorithmException, NoSuchProviderException, SignatureException, InvalidKeyException {
+    protected boolean isES() {
         if (Algorithm.ES256 == this.header.algorithm ||
                 Algorithm.ES384 == this.header.algorithm ||
                 Algorithm.ES512 == this.header.algorithm) {
-        } else {
-            throw new IllegalArgumentException(this.header.algorithm + " does not support rsa private key");
-        }
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        byte[] payloadByte = Base64.getUrlDecoder().decode(payloadText);
-        payload = gson.fromJson(new String(payloadByte, StandardCharsets.UTF_8), payloadClass);
-        Signature verifier = Signature.getInstance("SHA" + header.algorithm.size + "withECDSA", BouncyCastleProvider.PROVIDER_NAME);
-        verifier.initVerify(publicKey);
-        verifier.update((headerText + "." + payloadText).getBytes(StandardCharsets.UTF_8));
-        byte[] signature = JOSEToDER(header.algorithm.size / 8, Base64.getUrlDecoder().decode(this.signature));
-        if (verifier.verify(signature)) {
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
-    public boolean verifyUsing(SecretKey secretKey) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeyException {
+    protected boolean isHS() {
         if (Algorithm.HS256 == this.header.algorithm ||
                 Algorithm.HS384 == this.header.algorithm ||
                 Algorithm.HS512 == this.header.algorithm) {
-        } else {
-            throw new IllegalArgumentException(this.header.algorithm + " does not support rsa private key");
-        }
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        byte[] payloadByte = Base64.getUrlDecoder().decode(payloadText);
-        payload = gson.fromJson(new String(payloadByte, StandardCharsets.UTF_8), payloadClass);
-        Mac hmac = Mac.getInstance("HmacSHA" + header.algorithm.size, BouncyCastleProvider.PROVIDER_NAME);
-        hmac.init(secretKey);
-        String signature = Base64.getUrlEncoder().withoutPadding().encodeToString(hmac.doFinal((headerText + "." + payloadText).getBytes(StandardCharsets.UTF_8)));
-        if (this.signature.equals(signature)) {
             return true;
-        }
-        return false;
-    }
-
-    public String signUsing(RSAPrivateKey privateKey) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException, NoSuchProviderException, InvalidAlgorithmParameterException {
-        if (Algorithm.RS256 == this.header.algorithm ||
-                Algorithm.RS384 == this.header.algorithm ||
-                Algorithm.RS512 == this.header.algorithm ||
-                Algorithm.PS256 == this.header.algorithm ||
-                Algorithm.PS384 == this.header.algorithm) {
         } else {
-            throw new IllegalArgumentException(this.header.algorithm + " does not support rsa private key");
+            return false;
         }
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        Algorithm algorithm = header.algorithm;
-        this.payloadText = Base64.getUrlEncoder().withoutPadding().encodeToString(gson.toJson(this.payload).getBytes(StandardCharsets.UTF_8));
-        Signature issuer = null;
-        if (Algorithm.RS256 == algorithm || Algorithm.RS384 == algorithm || Algorithm.RS512 == algorithm) {
-            issuer = Signature.getInstance("SHA" + algorithm.size + "withRSA", BouncyCastleProvider.PROVIDER_NAME);
-        } else if (Algorithm.PS256 == algorithm || Algorithm.PS384 == algorithm) {
-            issuer = Signature.getInstance("SHA" + algorithm.size + "withRSA/PSS", BouncyCastleProvider.PROVIDER_NAME);
-            issuer.setParameter(new PSSParameterSpec("SHA-" + algorithm.size, "MGF1", MGF1ParameterSpec.SHA256, algorithm.size / 8, 1));
-        }
-        issuer.initSign(privateKey);
-        issuer.update((this.headerText + "." + this.payloadText).getBytes(StandardCharsets.UTF_8));
-        byte[] signature = issuer.sign();
-        this.signature = Base64.getUrlEncoder().withoutPadding().encodeToString(signature);
-        return this.headerText + "." + this.payloadText + "." + StringUtils.trim(this.signature);
-    }
-
-    public String signUsing(ECPrivateKey privateKey) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException, NoSuchProviderException {
-        if (Algorithm.ES256 == this.header.algorithm ||
-                Algorithm.ES384 == this.header.algorithm ||
-                Algorithm.ES512 == this.header.algorithm
-        ) {
-        } else {
-            throw new IllegalArgumentException(this.header.algorithm + " does not support rsa private key");
-        }
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        Algorithm algorithm = header.algorithm;
-        this.payloadText = Base64.getUrlEncoder().withoutPadding().encodeToString(gson.toJson(this.payload).getBytes(StandardCharsets.UTF_8));
-        Signature issuer = Signature.getInstance("SHA" + algorithm.size + "withECDSA", BouncyCastleProvider.PROVIDER_NAME);
-        issuer.initSign(privateKey);
-        issuer.update((this.headerText + "." + this.payloadText).getBytes(StandardCharsets.UTF_8));
-        byte[] signature = DERToJOSE(algorithm.size / 8, issuer.sign());
-        this.signature = Base64.getUrlEncoder().withoutPadding().encodeToString(signature);
-        return this.headerText + "." + this.payloadText + "." + StringUtils.trim(this.signature);
-    }
-
-    public String signUsing(SecretKey secretKey) throws NoSuchAlgorithmException, InvalidKeyException, NoSuchProviderException {
-        if (Algorithm.HS256 == this.header.algorithm ||
-                Algorithm.HS384 == this.header.algorithm ||
-                Algorithm.HS512 == this.header.algorithm) {
-        } else {
-            throw new IllegalArgumentException(this.header.algorithm + " does not support secret key");
-        }
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        Algorithm algorithm = header.algorithm;
-        this.payloadText = Base64.getUrlEncoder().withoutPadding().encodeToString(gson.toJson(this.payload).getBytes(StandardCharsets.UTF_8));
-        Mac hmac = Mac.getInstance("HmacSHA" + algorithm.size, BouncyCastleProvider.PROVIDER_NAME);
-        hmac.init(secretKey);
-        byte[] signature = hmac.doFinal((this.headerText + "." + this.payloadText).getBytes(StandardCharsets.UTF_8));
-        this.signature = Base64.getUrlEncoder().withoutPadding().encodeToString(signature);
-        return this.headerText + "." + this.payloadText + "." + StringUtils.trim(this.signature);
-    }
-
-    public enum Algorithm {
-        HS256(256), HS384(384), HS512(512),
-        RS256(256), RS384(384), RS512(512),
-        ES256(256), ES384(384), ES512(512),
-        PS256(256), PS384(384);
-
-        private final int size;
-
-        Algorithm(int size) {
-            this.size = size;
-        }
-
-        public int getSize() {
-            return size;
-        }
-
-    }
-
-    public static class Header {
-
-        @Expose
-        @SerializedName("alg")
-        private Algorithm algorithm;
-
-        @Expose
-        @SerializedName("typ")
-        private String type;
-
-        public Algorithm getAlgorithm() {
-            return algorithm;
-        }
-
-        public String getType() {
-            return type;
-        }
-
     }
 
 }
