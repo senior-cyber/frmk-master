@@ -47,7 +47,7 @@ public abstract class Jwt<T> {
         this.header.algorithm = algorithm;
         this.header.type = "JWT";
         byte[] headerByte = GSON.toJson(header).getBytes(StandardCharsets.UTF_8);
-        this.headerText = Base64.getUrlEncoder().withoutPadding().encodeToString(headerByte);
+        this.headerText = Base64.getEncoder().encodeToString(headerByte);
     }
 
     public static String pem(PrivateKey privateKey) throws IOException {
@@ -276,7 +276,7 @@ public abstract class Jwt<T> {
                 payload = GSON.fromJson(new String(payloadByte, StandardCharsets.UTF_8), payloadClass);
                 Mac hmac = Mac.getInstance("HmacSHA" + header.algorithm.getSize(), BouncyCastleProvider.PROVIDER_NAME);
                 hmac.init(key);
-                String signature = Base64.getUrlEncoder().withoutPadding().encodeToString(hmac.doFinal((headerText + "." + payloadText).getBytes(StandardCharsets.UTF_8)));
+                String signature = Base64.getEncoder().encodeToString(hmac.doFinal((headerText + "." + payloadText).getBytes(StandardCharsets.UTF_8)));
                 if (this.signature.equals(signature)) {
                     return true;
                 }
@@ -293,7 +293,7 @@ public abstract class Jwt<T> {
         if (isRS()) {
             if (key instanceof RSAPrivateKey) {
                 Algorithm algorithm = header.algorithm;
-                this.payloadText = Base64.getUrlEncoder().withoutPadding().encodeToString(GSON.toJson(this.payload).getBytes(StandardCharsets.UTF_8));
+                this.payloadText = Base64.getEncoder().encodeToString(GSON.toJson(this.payload).getBytes(StandardCharsets.UTF_8));
                 Signature issuer = null;
                 if (Algorithm.RS256 == algorithm || Algorithm.RS384 == algorithm || Algorithm.RS512 == algorithm) {
                     issuer = Signature.getInstance("SHA" + algorithm.getSize() + "withRSA", BouncyCastleProvider.PROVIDER_NAME);
@@ -304,7 +304,7 @@ public abstract class Jwt<T> {
                 issuer.initSign((RSAPrivateKey) key);
                 issuer.update((this.headerText + "." + this.payloadText).getBytes(StandardCharsets.UTF_8));
                 byte[] signature = issuer.sign();
-                this.signature = Base64.getUrlEncoder().withoutPadding().encodeToString(signature);
+                this.signature = Base64.getEncoder().encodeToString(signature);
                 return this.headerText + "." + this.payloadText + "." + StringUtils.trim(this.signature);
             } else {
                 throw new IllegalArgumentException(this.header.algorithm + " support only " + RSAPrivateKey.class.getSimpleName() + ", not supported " + key.getClass().getSimpleName());
@@ -312,12 +312,12 @@ public abstract class Jwt<T> {
         } else if (isES()) {
             if (key instanceof ECPrivateKey) {
                 Algorithm algorithm = header.algorithm;
-                this.payloadText = Base64.getUrlEncoder().withoutPadding().encodeToString(GSON.toJson(this.payload).getBytes(StandardCharsets.UTF_8));
+                this.payloadText = Base64.getEncoder().encodeToString(GSON.toJson(this.payload).getBytes(StandardCharsets.UTF_8));
                 Signature issuer = Signature.getInstance("SHA" + algorithm.getSize() + "withECDSA", BouncyCastleProvider.PROVIDER_NAME);
                 issuer.initSign((ECPrivateKey) key);
                 issuer.update((this.headerText + "." + this.payloadText).getBytes(StandardCharsets.UTF_8));
                 byte[] signature = DERToJOSE(algorithm.getSize() / 8, issuer.sign());
-                this.signature = Base64.getUrlEncoder().withoutPadding().encodeToString(signature);
+                this.signature = Base64.getEncoder().encodeToString(signature);
                 return this.headerText + "." + this.payloadText + "." + StringUtils.trim(this.signature);
             } else {
                 throw new IllegalArgumentException(this.header.algorithm + " support only " + ECPrivateKey.class.getSimpleName() + ", not supported " + key.getClass().getSimpleName());
@@ -325,11 +325,11 @@ public abstract class Jwt<T> {
         } else if (isHS()) {
             if (key instanceof SecretKey) {
                 Algorithm algorithm = header.algorithm;
-                this.payloadText = Base64.getUrlEncoder().withoutPadding().encodeToString(GSON.toJson(this.payload).getBytes(StandardCharsets.UTF_8));
+                this.payloadText = Base64.getEncoder().encodeToString(GSON.toJson(this.payload).getBytes(StandardCharsets.UTF_8));
                 Mac hmac = Mac.getInstance("HmacSHA" + algorithm.getSize(), BouncyCastleProvider.PROVIDER_NAME);
                 hmac.init(key);
                 byte[] signature = hmac.doFinal((this.headerText + "." + this.payloadText).getBytes(StandardCharsets.UTF_8));
-                this.signature = Base64.getUrlEncoder().withoutPadding().encodeToString(signature);
+                this.signature = Base64.getEncoder().encodeToString(signature);
                 return this.headerText + "." + this.payloadText + "." + StringUtils.trim(this.signature);
             } else {
                 throw new IllegalArgumentException(this.header.algorithm + " support only " + SecretKey.class.getSimpleName() + ", not supported " + key.getClass().getSimpleName());
