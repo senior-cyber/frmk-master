@@ -9,6 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.interfaces.ECPrivateKey;
 import java.security.interfaces.ECPublicKey;
+import java.util.Arrays;
 import java.util.Base64;
 
 public class SecretKeyUtils {
@@ -45,24 +46,67 @@ public class SecretKeyUtils {
         return Base64.getEncoder().encodeToString(mac.doFinal(text.getBytes(StandardCharsets.UTF_8)));
     }
 
+    /**
+     * AES_256/GCM/NoPadding
+     *
+     * @param secretKey
+     * @param text
+     * @return iv.cipher.tag
+     * @throws NoSuchPaddingException
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidAlgorithmParameterException
+     * @throws InvalidKeyException
+     * @throws IllegalBlockSizeException
+     * @throws BadPaddingException
+     */
     public static String encryptText(SecretKey secretKey, String text) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         int length = 16;
-        byte[] iv = RANDOM.generateSeed(length);
+        byte[] ivData = RANDOM.generateSeed(length);
+        String ivText = Base64.getEncoder().encodeToString(ivData);
+        System.out.println("let nonceText = \"" + ivText + "\"");
+
         Cipher cipher = Cipher.getInstance("AES_256/GCM/NoPadding");
-        GCMParameterSpec gcm = new GCMParameterSpec(iv.length * 8, iv);
+        GCMParameterSpec gcm = new GCMParameterSpec(ivData.length * 8, ivData);
+
         cipher.init(Cipher.ENCRYPT_MODE, secretKey, gcm);
-        byte[] cipherData = cipher.doFinal(text.getBytes(StandardCharsets.UTF_8));
-        return Base64.getEncoder().encodeToString(iv) + "." + Base64.getEncoder().encodeToString(cipherData);
+
+        byte[] textData = text.getBytes(StandardCharsets.UTF_8);
+
+        byte[] secretData = cipher.doFinal(textData);
+
+        byte[] authenticationData = Arrays.copyOfRange(secretData, secretData.length - ivData.length, secretData.length);
+        String authenticationText = Base64.getEncoder().encodeToString(authenticationData);
+        byte[] cipherData = Arrays.copyOfRange(secretData, 0, secretData.length - ivData.length);
+        String cipherText = Base64.getEncoder().encodeToString(cipherData);
+
+        return ivText + "." + cipherText + "." + authenticationText;
     }
 
+    /**
+     * @param secretKey
+     * @param text      iv.cipher.tag
+     * @return
+     * @throws NoSuchPaddingException
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidAlgorithmParameterException
+     * @throws InvalidKeyException
+     * @throws IllegalBlockSizeException
+     * @throws BadPaddingException
+     */
     public static String decryptText(SecretKey secretKey, String text) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         int dotIndex = text.indexOf('.');
-        String ivText = text.substring(0, dotIndex);
         Cipher cipher = Cipher.getInstance("AES_256/GCM/NoPadding");
-        byte[] iv = Base64.getDecoder().decode(ivText);
-        GCMParameterSpec gcm = new GCMParameterSpec(iv.length * 8, iv);
+        byte[] ivData = Base64.getDecoder().decode(text.substring(0, dotIndex));
+        text = text.substring(dotIndex + 1);
+        dotIndex = text.indexOf('.');
+        GCMParameterSpec gcm = new GCMParameterSpec(ivData.length * 8, ivData);
         cipher.init(Cipher.DECRYPT_MODE, secretKey, gcm);
-        byte[] textData = cipher.doFinal(Base64.getDecoder().decode(text.substring(dotIndex + 1)));
+        byte[] cipherData = Base64.getDecoder().decode(text.substring(0, dotIndex));
+        byte[] authenticationData = Base64.getDecoder().decode(text.substring(dotIndex + 1));
+        byte[] secretData = new byte[cipherData.length + authenticationData.length];
+        System.arraycopy(cipherData, 0, secretData, 0, cipherData.length);
+        System.arraycopy(authenticationData, 0, secretData, cipherData.length, authenticationData.length);
+        byte[] textData = cipher.doFinal(secretData);
         return new String(textData, StandardCharsets.UTF_8);
     }
 
