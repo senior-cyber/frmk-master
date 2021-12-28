@@ -63,7 +63,6 @@ public class SecretKeyUtils {
         int length = 16;
         byte[] ivData = RANDOM.generateSeed(length);
         String ivText = Base64.getEncoder().encodeToString(ivData);
-        System.out.println("let nonceText = \"" + ivText + "\"");
 
         Cipher cipher = Cipher.getInstance("AES_256/GCM/NoPadding");
         GCMParameterSpec gcm = new GCMParameterSpec(ivData.length * 8, ivData);
@@ -94,15 +93,14 @@ public class SecretKeyUtils {
      * @throws BadPaddingException
      */
     public static String decryptText(SecretKey secretKey, String text) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
-        int dotIndex = text.indexOf('.');
+        int firstDotIndex = text.indexOf('.');
+        int secondDotIndex = text.indexOf('.', firstDotIndex + 1);
         Cipher cipher = Cipher.getInstance("AES_256/GCM/NoPadding");
-        byte[] ivData = Base64.getDecoder().decode(text.substring(0, dotIndex));
-        text = text.substring(dotIndex + 1);
-        dotIndex = text.indexOf('.');
+        byte[] ivData = Base64.getDecoder().decode(text.substring(0, firstDotIndex));
         GCMParameterSpec gcm = new GCMParameterSpec(ivData.length * 8, ivData);
         cipher.init(Cipher.DECRYPT_MODE, secretKey, gcm);
-        byte[] cipherData = Base64.getDecoder().decode(text.substring(0, dotIndex));
-        byte[] authenticationData = Base64.getDecoder().decode(text.substring(dotIndex + 1));
+        byte[] cipherData = Base64.getDecoder().decode(text.substring(firstDotIndex + 1, secondDotIndex));
+        byte[] authenticationData = Base64.getDecoder().decode(text.substring(secondDotIndex + 1));
         byte[] secretData = new byte[cipherData.length + authenticationData.length];
         System.arraycopy(cipherData, 0, secretData, 0, cipherData.length);
         System.arraycopy(authenticationData, 0, secretData, cipherData.length, authenticationData.length);
