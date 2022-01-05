@@ -10,8 +10,15 @@ version = '1.0.0'
 
 sourceCompatibility = '11'
 
+java {
+    withSourcesJar()
+}
+
 repositories {
-    mavenCentral()
+    maven {
+        url "$nexus_url/maven-public/"
+        allowInsecureProtocol = true
+    }
 }
 
 dependencies {

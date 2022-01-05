@@ -8,14 +8,31 @@ version = '1.0.0'
 
 sourceCompatibility = '11'
 
+java {
+	withSourcesJar()
+}
+
 repositories {
-	mavenCentral()
+	maven {
+		url "$nexus_url/maven-public/"
+		allowInsecureProtocol = true
+	}
 }
 
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
 			from components.java
+		}
+	}
+	repositories {
+		maven {
+			credentials {
+				username = "$nexus_uid"
+				password = "$nexus_pwd"
+			}
+			url = "$nexus_url/maven-releases/"
+			allowInsecureProtocol = true
 		}
 	}
 }
