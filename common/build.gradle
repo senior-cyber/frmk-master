@@ -19,6 +19,7 @@ repositories {
         url "$nexus_url/maven-public/"
         allowInsecureProtocol = true
     }
+    mavenCentral()
 }
 
 publishing {
