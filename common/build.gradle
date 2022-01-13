@@ -1,7 +1,7 @@
 plugins {
-	id 'io.spring.dependency-management' version "${spring_dependency_management}"
-	id 'maven-publish'
-	id 'java'
+    id 'io.spring.dependency-management' version "${spring_dependency_management}"
+    id 'maven-publish'
+    id 'java'
 }
 
 group = 'com.senior.cyber.frmk'
@@ -10,60 +10,61 @@ version = '1.0.0'
 sourceCompatibility = '11'
 
 java {
-	withSourcesJar()
+    withSourcesJar()
 }
 
 repositories {
-	maven {
-		url "$nexus_url/maven-public/"
-		allowInsecureProtocol = true
-	}
+    mavenLocal()
+    maven {
+        url "$nexus_url/maven-public/"
+        allowInsecureProtocol = true
+    }
 }
 
 publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			from components.java
-		}
-	}
-	repositories {
-		maven {
-			credentials {
-				username = "$nexus_uid"
-				password = "$nexus_pwd"
-			}
-			url = "$nexus_url/maven-releases/"
-			allowInsecureProtocol = true
-		}
-	}
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            credentials {
+                username = "$nexus_uid"
+                password = "$nexus_pwd"
+            }
+            url = "$nexus_url/maven-releases/"
+            allowInsecureProtocol = true
+        }
+    }
 }
 
 dependencies {
-	implementation project(":jdbc-query")
-	implementation "com.google.code.gson:gson:${gson}"
-	implementation "org.apache.poi:poi-ooxml:${poi}"
-	implementation "org.apache.poi:poi:${poi}"
-	implementation "joda-time:joda-time:${joda_time}"
-	implementation "org.apache.commons:commons-text:${commons_text}"
-	implementation "org.reflections:reflections:${reflections}"
-	implementation "org.springframework.boot:spring-boot-autoconfigure:${spring_boot}"
-	implementation "org.springframework.boot:spring-boot:${spring_boot}"
-	implementation "org.springframework:spring-web:${spring}"
-	implementation "org.springframework:spring-beans:${spring}"
-	implementation "org.apache.commons:commons-lang3:${commons_lang3}"
-	implementation "org.apache.wicket:wicket-core:${wicket}"
-	implementation "org.apache.wicket:wicket-extensions:${wicket}"
-	implementation "org.apache.wicket:wicket-auth-roles:${wicket}"
-	implementation "com.google.guava:guava:${guava}"
-	implementation "org.bouncycastle:bcprov-jdk15to18:${bouncycastle}"
-	implementation "org.bouncycastle:bcpkix-jdk15to18:${bouncycastle}"
-	implementation "org.springframework.boot:spring-boot-starter-jdbc:${spring_boot}"
-	implementation "org.springframework.boot:spring-boot-starter-data-jpa:${spring_boot}"
-	implementation "org.bouncycastle:bcprov-jdk15to18:${bouncycastle}"
-	implementation "org.bouncycastle:bcpkix-jdk15to18:${bouncycastle}"
-	implementation "org.bouncycastle:bcpg-jdk15to18:${bouncycastle}"
-	implementation "org.apache.httpcomponents:httpclient:${httpclient}"
-	compileOnly "javax.servlet:javax.servlet-api:${servlet}"
+    implementation project(":jdbc-query")
+    implementation "com.google.code.gson:gson:${gson}"
+    implementation "org.apache.poi:poi-ooxml:${poi}"
+    implementation "org.apache.poi:poi:${poi}"
+    implementation "joda-time:joda-time:${joda_time}"
+    implementation "org.apache.commons:commons-text:${commons_text}"
+    implementation "org.reflections:reflections:${reflections}"
+    implementation "org.springframework.boot:spring-boot-autoconfigure:${spring_boot}"
+    implementation "org.springframework.boot:spring-boot:${spring_boot}"
+    implementation "org.springframework:spring-web:${spring}"
+    implementation "org.springframework:spring-beans:${spring}"
+    implementation "org.apache.commons:commons-lang3:${commons_lang3}"
+    implementation "org.apache.wicket:wicket-core:${wicket}"
+    implementation "org.apache.wicket:wicket-extensions:${wicket}"
+    implementation "org.apache.wicket:wicket-auth-roles:${wicket}"
+    implementation "com.google.guava:guava:${guava}"
+    implementation "org.bouncycastle:bcprov-jdk15to18:${bouncycastle}"
+    implementation "org.bouncycastle:bcpkix-jdk15to18:${bouncycastle}"
+    implementation "org.springframework.boot:spring-boot-starter-jdbc:${spring_boot}"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:${spring_boot}"
+    implementation "org.bouncycastle:bcprov-jdk15to18:${bouncycastle}"
+    implementation "org.bouncycastle:bcpkix-jdk15to18:${bouncycastle}"
+    implementation "org.bouncycastle:bcpg-jdk15to18:${bouncycastle}"
+    implementation "org.apache.httpcomponents:httpclient:${httpclient}"
+    compileOnly "javax.servlet:javax.servlet-api:${servlet}"
 
-	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor:${spring_boot}"
 }

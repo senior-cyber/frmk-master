@@ -1,6 +1,6 @@
 plugins {
-	id 'maven-publish'
-	id 'java'
+    id 'maven-publish'
+    id 'java'
 }
 
 group = 'com.senior.cyber.frmk'
@@ -9,34 +9,35 @@ version = '1.0.0'
 sourceCompatibility = '11'
 
 java {
-	withSourcesJar()
+    withSourcesJar()
 }
 
 repositories {
-	maven {
-		url "$nexus_url/maven-public/"
-		allowInsecureProtocol = true
-	}
+    mavenLocal()
+    maven {
+        url "$nexus_url/maven-public/"
+        allowInsecureProtocol = true
+    }
 }
 
 publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			from components.java
-		}
-	}
-	repositories {
-		maven {
-			credentials {
-				username = "$nexus_uid"
-				password = "$nexus_pwd"
-			}
-			url = "$nexus_url/maven-releases/"
-			allowInsecureProtocol = true
-		}
-	}
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            credentials {
+                username = "$nexus_uid"
+                password = "$nexus_pwd"
+            }
+            url = "$nexus_url/maven-releases/"
+            allowInsecureProtocol = true
+        }
+    }
 }
 
 dependencies {
-	implementation "org.jooq:jooq-codegen:${jooq}"
+    implementation "org.jooq:jooq-codegen:${jooq}"
 }

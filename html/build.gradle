@@ -15,6 +15,7 @@ java {
 }
 
 repositories {
+    mavenLocal()
     maven {
         url "$nexus_url/maven-public/"
         allowInsecureProtocol = true
@@ -24,11 +25,11 @@ repositories {
 dependencies {
     implementation project(":common")
     implementation "com.google.code.gson:gson:${gson}"
-	implementation "commons-io:commons-io:${commons_io}"
-	implementation "org.apache.commons:commons-lang3:${commons_lang3}"
+    implementation "commons-io:commons-io:${commons_io}"
+    implementation "org.apache.commons:commons-lang3:${commons_lang3}"
     implementation "org.apache.wicket:wicket-core:${wicket}"
     implementation "org.apache.wicket:wicket-extensions:${wicket}"
-	implementation "org.springframework.boot:spring-boot-starter-web:${spring_boot}"
+    implementation "org.springframework.boot:spring-boot-starter-web:${spring_boot}"
     providedRuntime "org.springframework.boot:spring-boot-starter-tomcat:${spring_boot}"
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"

@@ -13,6 +13,7 @@ java {
 }
 
 repositories {
+    mavenLocal()
     maven {
         url "$nexus_url/maven-public/"
         allowInsecureProtocol = true
