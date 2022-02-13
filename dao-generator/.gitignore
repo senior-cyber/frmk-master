@@ -3,5 +3,5 @@
 /target/
 /.settings/
 /.idea/
-/Build/
+/build/
 dao-generator.iml
