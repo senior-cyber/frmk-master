@@ -16,11 +16,11 @@ java {
 
 repositories {
     mavenLocal()
+    mavenCentral()
     maven {
         url "$nexus_url/maven-public/"
         allowInsecureProtocol = true
     }
-    mavenCentral()
 }
 
 dependencies {
