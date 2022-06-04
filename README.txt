@@ -1,4 +1,4 @@
-# publish into local m2 folder
+# publish into local m2 folder (tested)
 ./gradlew publishToMavenLocal
 
 # --spring.config.location : directory with / at the end
