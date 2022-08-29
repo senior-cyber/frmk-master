@@ -6,7 +6,8 @@ plugins {
 group = 'com.senior.cyber.frmk'
 version = '1.0.0'
 
-sourceCompatibility = '11'
+sourceCompatibility = "$java_version"
+targetCompatibility = "$java_version"
 
 java {
 	withSourcesJar()
