@@ -18,12 +18,12 @@ public class LoginPage extends WebPage {
     protected void onInitialize() {
         super.onInitialize();
 
-        add(new BookmarkablePageLink<>("index2.html", DashboardV2Page.class));
-        WebMarkupContainer index3 = new WebMarkupContainer("index3.html");
+        add(new BookmarkablePageLink<>("index2.html_1", DashboardV2Page.class));
+        WebMarkupContainer index3 = new WebMarkupContainer("index3.html_1");
         index3.add(AttributeModifier.replace("action", urlFor(DashboardV3Page.class, new PageParameters()).toString()));
         add(index3);
-        add(new BookmarkablePageLink<>("pages/examples/forgot-password.html", ForgotPasswordPage.class));
-        add(new BookmarkablePageLink<>("pages/examples/register.html", RegisterPage.class));
+        add(new BookmarkablePageLink<>("forgot-password.html_1", ForgotPasswordPage.class));
+        add(new BookmarkablePageLink<>("register.html_1", RegisterPage.class));
     }
 
     @Override
