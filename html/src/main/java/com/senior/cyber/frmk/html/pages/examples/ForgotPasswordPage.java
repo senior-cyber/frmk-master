@@ -17,14 +17,14 @@ public class ForgotPasswordPage extends WebPage {
     protected void onInitialize() {
         super.onInitialize();
 
-        add(new BookmarkablePageLink<>("index2.html", DashboardV2Page.class));
+        add(new BookmarkablePageLink<>("index2.html_1", DashboardV2Page.class));
 
-        WebMarkupContainer recover_password = new WebMarkupContainer("pages/examples/recover-password.html");
+        WebMarkupContainer recover_password = new WebMarkupContainer("recover-password.html_1");
         recover_password.add(AttributeModifier.replace("action", urlFor(RecoverPasswordPage.class, new PageParameters()).toString()));
         add(recover_password);
 
-        add(new BookmarkablePageLink<>("pages/examples/login.html", LoginPage.class));
-        add(new BookmarkablePageLink<>("pages/examples/register.html", RegisterPage.class));
+        add(new BookmarkablePageLink<>("login.html_1", LoginPage.class));
+        add(new BookmarkablePageLink<>("register.html_1", RegisterPage.class));
     }
 
     @Override

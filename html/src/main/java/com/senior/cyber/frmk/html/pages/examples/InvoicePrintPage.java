@@ -13,10 +13,10 @@ public class InvoicePrintPage extends WebPage {
     protected void onInitialize() {
         super.onInitialize();
 
-        add(new Image("img_credit_visa", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_CREDIT_VI)));
-        add(new Image("img_credit_mastercard", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_CREDIT_MA)));
-        add(new Image("img_credit_american-express", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_CREDIT_AE)));
-        add(new Image("img_credit_paypal2", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_CREDIT_P2)));
+        add(new Image("visa.png_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_CREDIT_VI)));
+        add(new Image("mastercard.png_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_CREDIT_MA)));
+        add(new Image("american-express.png_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_CREDIT_AE)));
+        add(new Image("paypal2.png_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_CREDIT_P2)));
     }
 
     @Override

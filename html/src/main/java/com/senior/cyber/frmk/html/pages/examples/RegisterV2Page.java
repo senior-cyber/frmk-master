@@ -18,11 +18,11 @@ public class RegisterV2Page extends WebPage {
     protected void onInitialize() {
         super.onInitialize();
 
-        add(new BookmarkablePageLink<>("index2.html", DashboardV2Page.class));
-        WebMarkupContainer index = new WebMarkupContainer("index.html_form");
+        add(new BookmarkablePageLink<>("index2.html_1", DashboardV2Page.class));
+        WebMarkupContainer index = new WebMarkupContainer("index.html_1");
         index.add(AttributeModifier.replace("action", urlFor(DashboardV1Page.class, new PageParameters()).toString()));
         add(index);
-        add(new BookmarkablePageLink<>("pages/examples/login-v2.html", LoginV2Page.class));
+        add(new BookmarkablePageLink<>("login.html_1", LoginV2Page.class));
     }
 
     @Override

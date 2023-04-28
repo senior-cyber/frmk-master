@@ -15,9 +15,9 @@ public class LockScreenPage extends WebPage {
     protected void onInitialize() {
         super.onInitialize();
 
-        add(new BookmarkablePageLink<>("index2.html", DashboardV2Page.class));
-        add(new BookmarkablePageLink<>("pages/examples/login.html", LoginPage.class));
-        add(new Image("img_user_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_1)));
+        add(new BookmarkablePageLink<>("index2.html_1", DashboardV2Page.class));
+        add(new BookmarkablePageLink<>("login.html_1", LoginPage.class));
+        add(new Image("user1-128x128.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_1)));
     }
 
     @Override

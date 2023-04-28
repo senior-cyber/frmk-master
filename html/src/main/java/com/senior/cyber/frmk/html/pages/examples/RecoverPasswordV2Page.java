@@ -17,11 +17,11 @@ public class RecoverPasswordV2Page extends WebPage {
     protected void onInitialize() {
         super.onInitialize();
 
-        add(new BookmarkablePageLink<>("index2.html", DashboardV2Page.class));
-        WebMarkupContainer login_form = new WebMarkupContainer("pages/examples/login-v2.html_form");
+        add(new BookmarkablePageLink<>("index2.html_1", DashboardV2Page.class));
+        WebMarkupContainer login_form = new WebMarkupContainer("login.html_1");
         login_form.add(AttributeModifier.replace("action", urlFor(LoginV2Page.class, new PageParameters()).toString()));
         add(login_form);
-        add(new BookmarkablePageLink<>("pages/examples/login-v2.html", LoginV2Page.class));
+        add(new BookmarkablePageLink<>("login.html_2", LoginV2Page.class));
     }
 
     @Override

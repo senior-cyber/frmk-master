@@ -54,7 +54,6 @@ public class DashboardV3Page extends WebPage {
 
         add(new BookmarkablePageLink<>("index.html_1", DashboardV1Page.class));
         add(new BookmarkablePageLink<>("index2.html_1", DashboardV2Page.class));
-
         add(new BookmarkablePageLink<>("iframe.html_1", IFramePage.class));
 
         add(new BookmarkablePageLink<>("widgets.html_1", WidgetsPage.class));
@@ -132,9 +131,9 @@ public class DashboardV3Page extends WebPage {
 
         index3_2.add(new Image("AdminLTELogo.png_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_LOGO)));
         add(new Image("user1-128x128.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_1)));
-        add(new Image("user8-128x128.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_8)));
-        add(new Image("user3-128x128.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_3)));
         add(new Image("user2-160x160.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_2)));
+        add(new Image("user3-128x128.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_3)));
+        add(new Image("user8-128x128.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_8)));
         add(new Image("default-150x150.png_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_DEFAULT)));
         add(new Image("default-150x150.png_2", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_DEFAULT)));
         add(new Image("default-150x150.png_3", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_DEFAULT)));
