@@ -125,12 +125,12 @@ public class ChartJSPage extends WebPage {
 
         add(new BookmarkablePageLink<>("starter.html_1", StarterPage.class));
 
+        index3_2.add(new Image("AdminLTELogo.png_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_LOGO)));
+
         add(new Image("user1-128x128.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_1)));
         add(new Image("user2-160x160.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_2)));
         add(new Image("user3-128x128.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_3)));
         add(new Image("user8-128x128.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_8)));
-
-        index3_2.add(new Image("AdminLTELogo.png_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_LOGO)));
     }
 
     @Override

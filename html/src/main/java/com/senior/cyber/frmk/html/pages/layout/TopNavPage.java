@@ -15,15 +15,15 @@ public class TopNavPage extends WebPage {
     protected void onInitialize() {
         super.onInitialize();
 
-        BookmarkablePageLink<Void> index3 = new BookmarkablePageLink<>("index3.html", DashboardV3Page.class);
-        add(index3);
-        BookmarkablePageLink<Void> index3_logo = new BookmarkablePageLink<>("index3.html_logo", DashboardV3Page.class);
-        add(index3_logo);
+        BookmarkablePageLink<Void> index3_1 = new BookmarkablePageLink<>("index3.html_1", DashboardV3Page.class);
+        add(index3_1);
+        BookmarkablePageLink<Void> index3_2 = new BookmarkablePageLink<>("index3.html_2", DashboardV3Page.class);
+        add(index3_2);
 
-        index3_logo.add(new Image("img_logo", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_LOGO)));
-        add(new Image("img_user_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_1)));
-        add(new Image("img_user_3", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_3)));
-        add(new Image("img_user_8", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_8)));
+        index3_1.add(new Image("AdminLTELogo.png_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_LOGO)));
+        add(new Image("user1-128x128.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_1)));
+        add(new Image("user3-128x128.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_3)));
+        add(new Image("user8-128x128.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_8)));
     }
 
     @Override

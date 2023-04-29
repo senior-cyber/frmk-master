@@ -49,91 +49,92 @@ public class FixedFooterPage extends WebPage {
         add(index3_1);
         BookmarkablePageLink<Void> index3_2 = new BookmarkablePageLink<>("index3.html_2", DashboardV3Page.class);
         add(index3_2);
-        BookmarkablePageLink<Void> index3_logo = new BookmarkablePageLink<>("index3.html_logo", DashboardV3Page.class);
-        add(index3_logo);
+        BookmarkablePageLink<Void> index3_3 = new BookmarkablePageLink<>("index3.html_3", DashboardV3Page.class);
+        add(index3_3);
 
-        add(new BookmarkablePageLink<>("index.html", DashboardV1Page.class));
-        add(new BookmarkablePageLink<>("index2.html", DashboardV2Page.class));
-        add(new BookmarkablePageLink<>("iframe.html", IFramePage.class));
+        add(new BookmarkablePageLink<>("index.html_1", DashboardV1Page.class));
+        add(new BookmarkablePageLink<>("index2.html_1", DashboardV2Page.class));
+        add(new BookmarkablePageLink<>("iframe.html_1", IFramePage.class));
 
-        add(new BookmarkablePageLink<>("pages/widgets.html", WidgetsPage.class));
+        add(new BookmarkablePageLink<>("widgets.html_1", WidgetsPage.class));
 
-        add(new BookmarkablePageLink<>("pages/layout/top-nav.html", TopNavPage.class));
-        add(new BookmarkablePageLink<>("pages/layout/boxed.html", BoxedPage.class));
-        add(new BookmarkablePageLink<>("pages/layout/fixed-sidebar.html", FixedSidebarPage.class));
-        add(new BookmarkablePageLink<>("pages/layout/fixed-sidebar-custom.html", FixedSidebarCustomPage.class));
-        add(new BookmarkablePageLink<>("pages/layout/fixed-topnav.html", FixedTopNavPage.class));
-        add(new BookmarkablePageLink<>("pages/layout/fixed-footer.html", FixedFooterPage.class));
-        add(new BookmarkablePageLink<>("pages/layout/collapsed-sidebar.html", CollapsedSidebarPage.class));
-        add(new BookmarkablePageLink<>("pages/layout/top-nav-sidebar.html", TopNavSidebarPage.class));
+        add(new BookmarkablePageLink<>("top-nav.html_1", TopNavPage.class));
+        add(new BookmarkablePageLink<>("boxed.html_1", BoxedPage.class));
+        add(new BookmarkablePageLink<>("fixed-sidebar.html_1", FixedSidebarPage.class));
+        add(new BookmarkablePageLink<>("fixed-topnav.html_1", FixedTopNavPage.class));
+        add(new BookmarkablePageLink<>("fixed-footer.html_1", FixedFooterPage.class));
+        add(new BookmarkablePageLink<>("collapsed-sidebar.html_1", CollapsedSidebarPage.class));
+        add(new BookmarkablePageLink<>("top-nav-sidebar.html_1", TopNavSidebarPage.class));
+        add(new BookmarkablePageLink<>("fixed-sidebar-custom.html_1", FixedSidebarCustomPage.class));
 
-        add(new BookmarkablePageLink<>("pages/kanban.html", KanbanPage.class));
-        add(new BookmarkablePageLink<>("pages/search/simple.html", com.senior.cyber.frmk.html.pages.search.SimplePage.class));
-        add(new BookmarkablePageLink<>("pages/search/enhanced.html", EnhancedPage.class));
+        add(new BookmarkablePageLink<>("kanban.html_1", KanbanPage.class));
+        add(new BookmarkablePageLink<>("simple.html_2", com.senior.cyber.frmk.html.pages.search.SimplePage.class));
+        add(new BookmarkablePageLink<>("enhanced.html_1", EnhancedPage.class));
 
-        add(new BookmarkablePageLink<>("pages/charts/chartjs.html", ChartJSPage.class));
-        add(new BookmarkablePageLink<>("pages/charts/flot.html", FlotPage.class));
-        add(new BookmarkablePageLink<>("pages/charts/inline.html", InlinePage.class));
-        add(new BookmarkablePageLink<>("pages/charts/uplot.html", UPlotPage.class));
+        add(new BookmarkablePageLink<>("chartjs.html_1", ChartJSPage.class));
+        add(new BookmarkablePageLink<>("flot.html_1", FlotPage.class));
+        add(new BookmarkablePageLink<>("inline.html_1", InlinePage.class));
+        add(new BookmarkablePageLink<>("uplot.html_1", UPlotPage.class));
 
-        add(new BookmarkablePageLink<>("pages/UI/general.html", com.senior.cyber.frmk.html.pages.ui.GeneralPage.class));
-        add(new BookmarkablePageLink<>("pages/UI/icons.html", IconsPage.class));
-        add(new BookmarkablePageLink<>("pages/UI/buttons.html", ButtonsPage.class));
-        add(new BookmarkablePageLink<>("pages/UI/sliders.html", SlidersPage.class));
-        add(new BookmarkablePageLink<>("pages/UI/modals.html", ModalsPage.class));
-        add(new BookmarkablePageLink<>("pages/UI/navbar.html", NavbarPage.class));
-        add(new BookmarkablePageLink<>("pages/UI/timeline.html", TimelinePage.class));
-        add(new BookmarkablePageLink<>("pages/UI/ribbons.html", RibbonsPage.class));
+        add(new BookmarkablePageLink<>("general.html_1", com.senior.cyber.frmk.html.pages.ui.GeneralPage.class));
+        add(new BookmarkablePageLink<>("icons.html_1", IconsPage.class));
+        add(new BookmarkablePageLink<>("buttons.html_1", ButtonsPage.class));
+        add(new BookmarkablePageLink<>("sliders.html_1", SlidersPage.class));
+        add(new BookmarkablePageLink<>("modals.html_1", ModalsPage.class));
+        add(new BookmarkablePageLink<>("navbar.html_1", NavbarPage.class));
+        add(new BookmarkablePageLink<>("timeline.html_1", TimelinePage.class));
+        add(new BookmarkablePageLink<>("ribbons.html_1", RibbonsPage.class));
 
-        add(new BookmarkablePageLink<>("pages/forms/general.html", GeneralPage.class));
-        add(new BookmarkablePageLink<>("pages/forms/advanced.html", AdvancedPage.class));
-        add(new BookmarkablePageLink<>("pages/forms/editors.html", EditorsPage.class));
-        add(new BookmarkablePageLink<>("pages/forms/validation.html", ValidationPage.class));
+        add(new BookmarkablePageLink<>("general.html_2", com.senior.cyber.frmk.html.pages.forms.GeneralPage.class));
+        add(new BookmarkablePageLink<>("advanced.html_1", AdvancedPage.class));
+        add(new BookmarkablePageLink<>("editors.html_1", EditorsPage.class));
+        add(new BookmarkablePageLink<>("validation.html_1", ValidationPage.class));
 
-        add(new BookmarkablePageLink<>("pages/tables/simple.html", SimplePage.class));
-        add(new BookmarkablePageLink<>("pages/tables/data.html", DataPage.class));
-        add(new BookmarkablePageLink<>("pages/tables/jsgrid.html", JSGridPage.class));
+        add(new BookmarkablePageLink<>("simple.html_1", SimplePage.class));
+        add(new BookmarkablePageLink<>("data.html_1", DataPage.class));
+        add(new BookmarkablePageLink<>("jsgrid.html_1", JSGridPage.class));
 
-        add(new BookmarkablePageLink<>("pages/calendar.html", CalendarPage.class));
-        add(new BookmarkablePageLink<>("pages/gallery.html", GalleryPage.class));
+        add(new BookmarkablePageLink<>("calendar.html_1", CalendarPage.class));
+        add(new BookmarkablePageLink<>("gallery.html_1", GalleryPage.class));
 
-        add(new BookmarkablePageLink<>("pages/mailbox/mailbox.html", MailboxPage.class));
-        add(new BookmarkablePageLink<>("pages/mailbox/compose.html", ComposePage.class));
-        add(new BookmarkablePageLink<>("pages/mailbox/read-mail.html", ReadMailPage.class));
+        add(new BookmarkablePageLink<>("mailbox.html_1", MailboxPage.class));
+        add(new BookmarkablePageLink<>("compose.html_1", ComposePage.class));
+        add(new BookmarkablePageLink<>("read-mail.html_1", ReadMailPage.class));
 
-        add(new BookmarkablePageLink<>("pages/examples/faq.html", FaqPage.class));
-        add(new BookmarkablePageLink<>("pages/examples/contact-us.html", ContactUsPage.class));
-        add(new BookmarkablePageLink<>("pages/examples/login-v2.html", LoginV2Page.class));
-        add(new BookmarkablePageLink<>("pages/examples/register-v2.html", RegisterV2Page.class));
-        add(new BookmarkablePageLink<>("pages/examples/forgot-password-v2.html", ForgotPasswordV2Page.class));
-        add(new BookmarkablePageLink<>("pages/examples/recover-password-v2.html", RecoverPasswordV2Page.class));
-        add(new BookmarkablePageLink<>("pages/examples/invoice.html", InvoicePage.class));
-        add(new BookmarkablePageLink<>("pages/examples/profile.html", ProfilePage.class));
-        add(new BookmarkablePageLink<>("pages/examples/e-commerce.html", ECommercePage.class));
-        add(new BookmarkablePageLink<>("pages/examples/projects.html", ProjectsPage.class));
-        add(new BookmarkablePageLink<>("pages/examples/project-add.html", ProjectAddPage.class));
-        add(new BookmarkablePageLink<>("pages/examples/project-edit.html", ProjectEditPage.class));
-        add(new BookmarkablePageLink<>("pages/examples/project-detail.html", ProjectDetailPage.class));
-        add(new BookmarkablePageLink<>("pages/examples/contacts.html", ContactsPage.class));
-        add(new BookmarkablePageLink<>("pages/examples/login.html", LoginPage.class));
-        add(new BookmarkablePageLink<>("pages/examples/register.html", RegisterPage.class));
-        add(new BookmarkablePageLink<>("pages/examples/forgot-password.html", ForgotPasswordPage.class));
-        add(new BookmarkablePageLink<>("pages/examples/recover-password.html", RecoverPasswordPage.class));
-        add(new BookmarkablePageLink<>("pages/examples/lockscreen.html", LockScreenPage.class));
-        add(new BookmarkablePageLink<>("pages/examples/legacy-user-menu.html", LegacyUserMenuPage.class));
-        add(new BookmarkablePageLink<>("pages/examples/language-menu.html", LanguageMenuPage.class));
-        add(new BookmarkablePageLink<>("pages/examples/404.html", C404Page.class));
-        add(new BookmarkablePageLink<>("pages/examples/500.html", C500Page.class));
-        add(new BookmarkablePageLink<>("pages/examples/pace.html", PacePage.class));
-        add(new BookmarkablePageLink<>("pages/examples/blank.html", BlankPage.class));
+        add(new BookmarkablePageLink<>("faq.html_1", FaqPage.class));
+        add(new BookmarkablePageLink<>("contact-us.html_1", ContactUsPage.class));
+        add(new BookmarkablePageLink<>("login-v2.html_1", LoginV2Page.class));
+        add(new BookmarkablePageLink<>("register-v2.html_1", RegisterV2Page.class));
+        add(new BookmarkablePageLink<>("forgot-password-v2.html_1", ForgotPasswordV2Page.class));
+        add(new BookmarkablePageLink<>("recover-password-v2.html_1", RecoverPasswordV2Page.class));
+        add(new BookmarkablePageLink<>("invoice.html_1", InvoicePage.class));
+        add(new BookmarkablePageLink<>("profile.html_1", ProfilePage.class));
+        add(new BookmarkablePageLink<>("e-commerce.html_1", ECommercePage.class));
+        add(new BookmarkablePageLink<>("projects.html_1", ProjectsPage.class));
+        add(new BookmarkablePageLink<>("project-add.html_1", ProjectAddPage.class));
+        add(new BookmarkablePageLink<>("project-edit.html_1", ProjectEditPage.class));
+        add(new BookmarkablePageLink<>("project-detail.html_1", ProjectDetailPage.class));
+        add(new BookmarkablePageLink<>("contacts.html_1", ContactsPage.class));
+        add(new BookmarkablePageLink<>("login.html_1", LoginPage.class));
+        add(new BookmarkablePageLink<>("register.html_1", RegisterPage.class));
+        add(new BookmarkablePageLink<>("forgot-password.html_1", ForgotPasswordPage.class));
+        add(new BookmarkablePageLink<>("recover-password.html_1", RecoverPasswordPage.class));
+        add(new BookmarkablePageLink<>("lockscreen.html_1", LockScreenPage.class));
+        add(new BookmarkablePageLink<>("legacy-user-menu.html_1", LegacyUserMenuPage.class));
+        add(new BookmarkablePageLink<>("language-menu.html_1", LanguageMenuPage.class));
+        add(new BookmarkablePageLink<>("404.html_1", C404Page.class));
+        add(new BookmarkablePageLink<>("500.html_1", C500Page.class));
+        add(new BookmarkablePageLink<>("pace.html_1", PacePage.class));
+        add(new BookmarkablePageLink<>("blank.html_1", BlankPage.class));
 
-        add(new BookmarkablePageLink<>("starter.html", StarterPage.class));
+        add(new BookmarkablePageLink<>("starter.html_1", StarterPage.class));
 
-        index3_logo.add(new Image("img_logo", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_LOGO)));
-        add(new Image("img_user_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_1)));
-        add(new Image("img_user_2", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_2)));
-        add(new Image("img_user_3", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_3)));
-        add(new Image("img_user_8", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_8)));
+        index3_2.add(new Image("AdminLTELogo.png_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_LOGO)));
+
+        add(new Image("user1-128x128.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_1)));
+        add(new Image("user2-160x160.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_2)));
+        add(new Image("user3-128x128.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_3)));
+        add(new Image("user8-128x128.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_8)));
     }
 
     @Override
