@@ -1,0 +1,14 @@
+spring:
+  mvc:
+    servlet:
+      load-on-startup: 1
+      path: /api
+webui:
+  servlet:
+    load-on-startup: 1
+    path: /*
+  configuration-type: DEVELOPMENT
+  csrf: false
+  wicket-factory:
+  pkg:
+  admin-lte:
