@@ -13,4 +13,4 @@ webui:
   configuration-type: ${webui-configuration-type:DEVELOPMENT}
   csrf: ${webui-csrf:false}
   wicket-factory: com.senior.cyber.frmk.html.factory.WicketFactory
-  admin-lte: ${webui-admin-lte}
+  admin-lte: ${webui-admin-lte:/Users/socheatkhauv/github/ColorlibHQ/AdminLTE}

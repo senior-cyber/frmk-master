@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
-import javax.persistence.Tuple;
+import jakarta.persistence.Tuple;
 import java.io.Serializable;
 import java.util.*;
 

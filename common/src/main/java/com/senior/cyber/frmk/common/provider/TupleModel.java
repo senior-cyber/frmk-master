@@ -2,7 +2,7 @@ package com.senior.cyber.frmk.common.provider;
 
 import org.apache.wicket.model.IModel;
 
-import javax.persistence.Tuple;
+import jakarta.persistence.Tuple;
 
 public class TupleModel implements IModel<Tuple> {
 

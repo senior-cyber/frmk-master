@@ -1,7 +1,7 @@
 package com.senior.cyber.frmk.common.provider;
 
-import javax.persistence.Tuple;
-import javax.persistence.TupleElement;
+import jakarta.persistence.Tuple;
+import jakarta.persistence.TupleElement;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;

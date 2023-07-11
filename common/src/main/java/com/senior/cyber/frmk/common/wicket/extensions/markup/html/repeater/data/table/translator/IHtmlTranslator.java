@@ -4,7 +4,7 @@ import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.io.IClusterable;
 
-import javax.persistence.Tuple;
+import jakarta.persistence.Tuple;
 
 public interface IHtmlTranslator<T> extends IClusterable {
 

@@ -1,6 +1,6 @@
 package com.senior.cyber.frmk.common.provider;
 
-import javax.persistence.TupleElement;
+import jakarta.persistence.TupleElement;
 import java.io.Serializable;
 
 public class BasicTupleElement<X> implements TupleElement<X>, Serializable {

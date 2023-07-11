@@ -14,8 +14,8 @@ import org.apache.wicket.model.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.persistence.Tuple;
-import javax.persistence.TupleElement;
+import jakarta.persistence.Tuple;
+import jakarta.persistence.TupleElement;
 import java.io.Serializable;
 
 public class Column<T extends Serializable> extends AbstractColumn<Tuple, String>

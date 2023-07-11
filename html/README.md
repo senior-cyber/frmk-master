@@ -12,5 +12,6 @@ webui-admin-lte: /Users/socheatkhauv/github/ColorlibHQ/AdminLTE
 ```shell
 # JDK-7
 ${JAVA_HOME}/bin/java -jar build/libs/html.jar --spring.config.location=classpath:/application.yaml,file:./application.yaml
+${JAVA_HOME}/bin/java -jar build/libs/html.jar --spring.config.location=classpath:/application.yaml
 
 ```

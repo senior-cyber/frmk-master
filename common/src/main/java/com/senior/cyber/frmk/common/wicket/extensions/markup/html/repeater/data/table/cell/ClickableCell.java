@@ -10,7 +10,7 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
-import javax.persistence.Tuple;
+import jakarta.persistence.Tuple;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;

@@ -65,7 +65,7 @@ dependencies {
     implementation "org.bouncycastle:bcpkix-jdk15to18:${bouncycastle}"
     implementation "org.bouncycastle:bcpg-jdk15to18:${bouncycastle}"
     implementation "org.apache.httpcomponents:httpclient:${httpclient}"
-    compileOnly "javax.servlet:javax.servlet-api:${servlet}"
+    compileOnly "jakarta.servlet:jakarta.servlet-api:${servlet}"
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor:${spring_boot}"
 }
