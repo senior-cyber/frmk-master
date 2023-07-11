@@ -9,6 +9,6 @@ webui:
     path: /*
   configuration-type: DEVELOPMENT
   csrf: false
-  wicket-factory:
-  pkg:
-  admin-lte:
+  wicket-factory: # Wicket Factory Class
+  pkg: # Pages packages
+  admin-lte: # Admin LTE

@@ -1,0 +1,16 @@
+server:
+  port: 8080
+spring:
+  mvc:
+    servlet:
+      load-on-startup: 1
+      path: /api
+
+webui:
+  servlet:
+    load-on-startup: 1
+    path: /*
+  configuration-type: DEVELOPMENT
+  csrf: false
+  wicket-factory: com.senior.cyber.frmk.html.factory.WicketFactory
+  admin-lte: /home/socheat/github/senior-cyber/frmk-master/AdminLTE # git clone https://github.com/ColorlibHQ/AdminLTE.git
