@@ -30,8 +30,8 @@ public class BootApplication {
 
     public static void html(String[] args) throws Exception {
         // git clone https://github.com/ColorlibHQ/AdminLTE.git
-        // /Users/socheatkhauv/github/ColorlibHQ/
-        File adminLTE = new File("AdminLTE");
+        // File adminLTE = new File("AdminLTE");
+        File adminLTE = new File("/Users/socheatkhauv/github/ColorlibHQ/AdminLTE");
         File folders = new File(adminLTE, "pages");
         List<File> files = new ArrayList<>();
         files.addAll(FileUtils.listFiles(folders, new String[]{"html"}, true));
