@@ -13,4 +13,4 @@ webui:
   configuration-type: DEVELOPMENT
   csrf: false
   wicket-factory: com.senior.cyber.frmk.html.factory.WicketFactory
-  admin-lte: /home/socheat/github/senior-cyber/frmk-master/AdminLTE # git clone https://github.com/ColorlibHQ/AdminLTE.git
+  admin-lte: /Users/socheatkhauv/github/ColorlibHQ/AdminLTE  # git clone https://github.com/ColorlibHQ/AdminLTE.git

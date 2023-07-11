@@ -1,42 +1,42 @@
 buildscript {
     ext {
 
-        java_version = '17'
+        java_version = JavaVersion.VERSION_17
 
         // Nexus Repository Configuration
-        nexus_url = 'https://149.56.22.39:8443/repository'
-        nexus_uid = 'admin'
-        nexus_pwd = System.getProperty('nexusPassword')
+        // nexus_url = 'https://149.56.22.39:8443/repository'
+        // nexus_uid = 'admin'
+        // nexus_pwd = System.getProperty('nexusPassword')
 
         // Dependency Management
         poi = '5.2.3' // https://mvnrepository.com/artifact/org.apache.poi/poi
         wicket = '9.14.0' // https://mvnrepository.com/artifact/org.apache.wicket/wicket
-        spring_boot = '2.7.12' // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot
+        spring_boot = '2.7.13' // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot
         reflections = '0.10.2' // https://mvnrepository.com/artifact/org.reflections/reflections
         servlet = '4.0.1' // https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
         commons_lang3 = '3.12.0' // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
         commons_text = '1.10.0' // https://mvnrepository.com/artifact/org.apache.commons/commons-text
         spring = '5.3.28' // https://mvnrepository.com/artifact/org.springframework/spring-context
-        jooq = '3.18.4' // https://mvnrepository.com/artifact/org.jooq/jooq
+        jooq = '3.18.5' // https://mvnrepository.com/artifact/org.jooq/jooq
         spring_dependency_management = '1.1.0' // https://mvnrepository.com/artifact/io.spring.dependency-management/io.spring.dependency-management.gradle.plugin
         joda_time = '2.12.5' // https://mvnrepository.com/artifact/joda-time/joda-time
         commons_io = '2.13.0' // https://mvnrepository.com/artifact/commons-io/commons-io
         metamodel = '5.3.3' // https://mvnrepository.com/artifact/org.apache.metamodel/MetaModel-core
-        liquibase = '4.22.1' // https://mvnrepository.com/artifact/org.liquibase/liquibase-core
+        liquibase = '4.23.0' // https://mvnrepository.com/artifact/org.liquibase/liquibase-core
         commons_dbcp2 = '2.9.0' // https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2
-        flyway = '9.19.4' // https://mvnrepository.com/artifact/org.flywaydb/flyway-core
+        flyway = '9.20.0' // https://mvnrepository.com/artifact/org.flywaydb/flyway-core
         gson = '2.10.1' // https://mvnrepository.com/artifact/com.google.code.gson/gson
         bouncycastle = '1.70' // https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on
         spring_cloud = '2022.0.3' // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies
-        guava = '32.0.1-jre' // https://mvnrepository.com/artifact/com.google.guava/guava
+        guava = '32.1.1-jre' // https://mvnrepository.com/artifact/com.google.guava/guava
         httpclient = '4.5.14' // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
     }
     repositories {
         mavenLocal()
         mavenCentral()
-        maven {
-            url "$nexus_url/maven-public/"
-            allowInsecureProtocol = true
-        }
+        // maven {
+        //    url "$nexus_url/maven-public/"
+        //    allowInsecureProtocol = true
+        // }
     }
 }

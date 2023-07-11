@@ -1,43 +1,42 @@
 plugins {
-	id 'java'
-	id 'maven-publish'
+    id 'java'
+    id 'maven-publish'
 }
 
 group = 'com.senior.cyber.frmk'
 version = '1.0.0'
 
-sourceCompatibility = "$java_version"
-targetCompatibility = "$java_version"
-
 java {
-	withSourcesJar()
+    sourceCompatibility = "$java_version"
+    targetCompatibility = "$java_version"
+    withSourcesJar()
 }
 
 repositories {
-	mavenLocal()
-	mavenCentral()
-	maven {
-		url "$nexus_url/maven-public/"
-		allowInsecureProtocol = true
-	}
+    mavenLocal()
+    mavenCentral()
+    // maven {
+    //     url "$nexus_url/maven-public/"
+    //     allowInsecureProtocol = true
+    // }
 }
 
 publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			from components.java
-		}
-	}
-	repositories {
-		maven {
-			credentials {
-				username = "$nexus_uid"
-				password = "$nexus_pwd"
-			}
-			url = "$nexus_url/maven-releases/"
-			allowInsecureProtocol = true
-		}
-	}
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+    // repositories {
+    //     maven {
+    //         credentials {
+    //             username = "$nexus_uid"
+    //             password = "$nexus_pwd"
+    //         }
+    //         url = "$nexus_url/maven-releases/"
+    //         allowInsecureProtocol = true
+    //     }
+    // }
 }
 
 dependencies {

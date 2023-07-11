@@ -148,6 +148,7 @@ public class WidgetsPage extends WebPage {
         add(new Image("user1-128x128.jpg_18", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_1)));
         add(new Image("user1-128x128.jpg_19", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_1)));
         add(new Image("user1-128x128.jpg_20", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_1)));
+        add(new Image("user1-128x128.jpg_21", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_1)));
         add(new Image("user2-160x160.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_2)));
         add(new Image("user3-128x128.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_3)));
         add(new Image("user3-128x128.jpg_2", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_3)));
@@ -165,7 +166,7 @@ public class WidgetsPage extends WebPage {
         add(new Image("user4-128x128.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_4)));
         add(new Image("user4-128x128.jpg_2", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_4)));
         add(new Image("user4-128x128.jpg_3", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_4)));
-        add(new Image("user4-128x128.jpg_4", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_4)));
+        // add(new Image("user4-128x128.jpg_4", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_4)));
         add(new Image("user5-128x128.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_5)));
         add(new Image("user7-128x128.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_7)));
         add(new Image("user7-128x128.jpg_2", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_7)));

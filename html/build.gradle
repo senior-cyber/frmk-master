@@ -8,20 +8,19 @@ plugins {
 group = 'com.senior.cyber.frmk'
 version = '1.0.0'
 
-sourceCompatibility = "$java_version"
-targetCompatibility = "$java_version"
-
 java {
+    sourceCompatibility = "$java_version"
+    targetCompatibility = "$java_version"
     withSourcesJar()
 }
 
 repositories {
     mavenLocal()
     mavenCentral()
-    maven {
-        url "$nexus_url/maven-public/"
-        allowInsecureProtocol = true
-    }
+    // maven {
+    //     url "$nexus_url/maven-public/"
+    //     allowInsecureProtocol = true
+    // }
 }
 
 dependencies {
