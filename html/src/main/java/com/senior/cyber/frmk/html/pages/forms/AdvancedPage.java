@@ -185,7 +185,8 @@ public class AdvancedPage extends WebPage {
         // <!-- Tempusdominus Bootstrap 4 -->
         response.render(JavaScriptHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.JS_TEMPUSDOMINUS_BOOTSTRAP)));
         // <!-- Bootstrap Switch -->
-        response.render(JavaScriptHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.JS_SWITCH_BOOTSTRAP)));
+        // removed
+        // response.render(JavaScriptHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.JS_SWITCH_BOOTSTRAP)));
         // <!-- BS-Stepper -->
         response.render(JavaScriptHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.JS_BS_STEPPER)));
         // <!-- dropzonejs -->

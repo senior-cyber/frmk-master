@@ -112,7 +112,7 @@ public class AdminLTEResourceReference extends ResourceReference {
 
     public static final String JS_TEMPUSDOMINUS_BOOTSTRAP = "/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.js";
 
-    public static final String JS_SWITCH_BOOTSTRAP = "/plugins/bootstrap-switch/js/bootstrap-switch.min.js";
+    // public static final String JS_SWITCH_BOOTSTRAP = "/plugins/bootstrap-switch/js/bootstrap-switch.min.js";
 
     public static final String JS_DIST_DEMO = "/dist/js/demo.js";
 
@@ -134,9 +134,9 @@ public class AdminLTEResourceReference extends ResourceReference {
 
     public static final String JS_JQUERY_FLOT = "/plugins/flot/jquery.flot.js";
 
-    public static final String JS_JQUERY_FLOT_RESIZE = "/plugins/flot-old/jquery.flot.resize.min.js";
+    public static final String JS_JQUERY_FLOT_RESIZE = "/plugins/flot/plugins/jquery.flot.resize.js";
 
-    public static final String JS_JQUERY_FLOT_PIE = "/plugins/flot-old/jquery.flot.pie.min.js";
+    public static final String JS_JQUERY_FLOT_PIE = "/plugins/flot/plugins/jquery.flot.pie.js";
 
     public static final String JS_JQUERY_KNOB = "/plugins/jquery-knob/jquery.knob.min.js";
 
