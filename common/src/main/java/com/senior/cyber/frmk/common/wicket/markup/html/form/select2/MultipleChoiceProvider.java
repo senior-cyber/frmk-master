@@ -2,6 +2,7 @@ package com.senior.cyber.frmk.common.wicket.markup.html.form.select2;
 
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.filter.convertor.Convertor;
 import com.senior.cyber.frmk.jdbc.query.GenericSelectQuery;
+import com.senior.cyber.frmk.jdbc.query.Param;
 import com.senior.cyber.frmk.jdbc.query.SelectQuery;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.wicket.model.IModel;
@@ -28,32 +29,19 @@ public abstract class MultipleChoiceProvider<Id, Label> extends IMultipleChoiceP
     private boolean disabled = false;
     private String groupBy;
 
-    public MultipleChoiceProvider(
-            Class<Id> idType, Convertor<Id> idConvertor,
-            Class<Label> labelType, Convertor<Label> labelConvertor,
-            String table, String idField) {
+    public MultipleChoiceProvider(Class<Id> idType, Convertor<Id> idConvertor, Class<Label> labelType, Convertor<Label> labelConvertor, String table, String idField) {
         this(idType, idConvertor, labelType, labelConvertor, table, idField, idField);
     }
 
-    public MultipleChoiceProvider(
-            Class<Id> idType, Convertor<Id> idConvertor,
-            Class<Label> labelType, Convertor<Label> labelConvertor,
-            String table, String idField, String queryField) {
+    public MultipleChoiceProvider(Class<Id> idType, Convertor<Id> idConvertor, Class<Label> labelType, Convertor<Label> labelConvertor, String table, String idField, String queryField) {
         this(idType, idConvertor, labelType, labelConvertor, table, idField, queryField, queryField);
     }
 
-    public MultipleChoiceProvider(
-            Class<Id> idType, Convertor<Id> idConvertor,
-            Class<Label> labelType, Convertor<Label> labelConvertor,
-            String table, String idField, String queryField, String orderBy) {
+    public MultipleChoiceProvider(Class<Id> idType, Convertor<Id> idConvertor, Class<Label> labelType, Convertor<Label> labelConvertor, String table, String idField, String queryField, String orderBy) {
         this(idType, idConvertor, labelType, labelConvertor, table, idField, queryField, orderBy, queryField);
     }
 
-    public MultipleChoiceProvider(
-            Class<Id> idType, Convertor<Id> idConvertor,
-            Class<Label> labelType, Convertor<Label> labelConvertor,
-            String table, String idField, String queryField, String orderBy,
-            String labelField) {
+    public MultipleChoiceProvider(Class<Id> idType, Convertor<Id> idConvertor, Class<Label> labelType, Convertor<Label> labelConvertor, String table, String idField, String queryField, String orderBy, String labelField) {
         super(idType, idConvertor, labelType, labelConvertor);
         this.table = table;
         this.idField = idField;
@@ -91,7 +79,7 @@ public abstract class MultipleChoiceProvider<Id, Label> extends IMultipleChoiceP
                 selectQuery.addJoin(join);
             }
         }
-        selectQuery.addWhere(this.idField + " in (:id)", "id", String.class, ids);
+        selectQuery.addWhere(this.idField + " in (:id)", new Param("id", ids));
         if (this.groupBy != null && !"".equals(this.groupBy)) {
             selectQuery.addField("MAX(" + this.idField + ") AS id");
             selectQuery.addField("MAX(" + this.labelField + ") AS text");
@@ -126,7 +114,7 @@ public abstract class MultipleChoiceProvider<Id, Label> extends IMultipleChoiceP
         }
         s = StringUtils.trimToEmpty(s);
         if (!"".equals(s)) {
-            selectQuery.addWhere("LOWER(" + this.queryField + ") like LOWER(:value)", "value", s + "%");
+            selectQuery.addWhere("LOWER(" + this.queryField + ") like LOWER(:value)", new Param("value", s + "%"));
         }
         if (this.where != null && !this.where.isEmpty()) {
             for (String where : this.where.values()) {
@@ -174,7 +162,7 @@ public abstract class MultipleChoiceProvider<Id, Label> extends IMultipleChoiceP
             selectQuery.addField(this.labelField + " AS text");
             selectQuery.addOrderBy(this.orderBy);
         }
-        selectQuery.addWhere(this.idField + " = :id", id);
+        selectQuery.addWhere(this.idField + " = :id", new Param("id", id));
         return queryOption(selectQuery.toSQL(), selectQuery.toParam());
     }
 

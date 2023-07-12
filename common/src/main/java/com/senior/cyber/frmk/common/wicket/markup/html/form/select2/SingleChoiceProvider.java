@@ -2,6 +2,7 @@ package com.senior.cyber.frmk.common.wicket.markup.html.form.select2;
 
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.filter.convertor.Convertor;
 import com.senior.cyber.frmk.jdbc.query.GenericSelectQuery;
+import com.senior.cyber.frmk.jdbc.query.Param;
 import com.senior.cyber.frmk.jdbc.query.SelectQuery;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.wicket.model.IModel;
@@ -99,7 +100,7 @@ public abstract class SingleChoiceProvider<Id, Label> extends ISingleChoiceProvi
             selectQuery.addField(this.idField + " AS id");
             selectQuery.addField(this.labelField + " AS text");
         }
-        selectQuery.addWhere(this.idField + " = :id", s);
+        selectQuery.addWhere(this.idField + " = :id", new Param("id", s));
         return queryOption(selectQuery.toSQL(), selectQuery.toParam());
     }
 
@@ -133,7 +134,7 @@ public abstract class SingleChoiceProvider<Id, Label> extends ISingleChoiceProvi
         }
         s = StringUtils.trimToEmpty(s);
         if (!"".equals(s)) {
-            selectQuery.addWhere("LOWER(" + this.queryField + ") like LOWER(:value)", "value", s + "%");
+            selectQuery.addWhere("LOWER(" + this.queryField + ") like LOWER(:value)", new Param("value", s + "%"));
         }
         return queryOptions(selectQuery.toSQL(), selectQuery.toParam());
     }
@@ -174,7 +175,7 @@ public abstract class SingleChoiceProvider<Id, Label> extends ISingleChoiceProvi
             selectQuery.addField(this.labelField + " AS text");
             selectQuery.addOrderBy(this.orderBy);
         }
-        selectQuery.addWhere(this.idField + " = :id", id);
+        selectQuery.addWhere(this.idField + " = :id", new Param("id", id));
         return queryOption(selectQuery.toSQL(), selectQuery.toParam());
     }
 

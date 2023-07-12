@@ -2,6 +2,7 @@ plugins {
     id 'io.spring.dependency-management' version "${spring_dependency_management}"
     id 'maven-publish'
     id 'java'
+    id 'jacoco'
 }
 
 group = 'com.senior.cyber.frmk'
@@ -11,6 +12,23 @@ java {
     sourceCompatibility = "$java_version"
     targetCompatibility = "$java_version"
     withSourcesJar()
+}
+
+test {
+    finalizedBy jacocoTestReport // report is always generated after tests run
+}
+
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+    reports {
+        xml.required = false
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+    }
+}
+
+jacoco {
+    toolVersion = "0.8.9"
 }
 
 repositories {
@@ -68,4 +86,10 @@ dependencies {
     compileOnly "jakarta.servlet:jakarta.servlet-api:${servlet}"
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor:${spring_boot}"
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test:${spring_boot}"
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
 }
