@@ -1,4 +1,4 @@
-package com.senior.cyber.frmk.common.pki;
+package com.senior.cyber.frmk.common.x509;
 
 import javax.net.ssl.*;
 import java.io.File;

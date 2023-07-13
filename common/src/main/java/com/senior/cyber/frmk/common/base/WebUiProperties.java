@@ -17,7 +17,7 @@ public class WebUiProperties implements Serializable {
 
     private RuntimeConfigurationType configurationType = RuntimeConfigurationType.DEPLOYMENT;
 
-    private String pkg;
+    private String pages;
 
     private boolean csrf;
 
@@ -25,12 +25,12 @@ public class WebUiProperties implements Serializable {
 
     private File adminLte;
 
-    public String getPkg() {
-        return pkg;
+    public String getPages() {
+        return pages;
     }
 
-    public void setPkg(String pkg) {
-        this.pkg = pkg;
+    public void setPages(String pages) {
+        this.pages = pages;
     }
 
     public File getAdminLte() {

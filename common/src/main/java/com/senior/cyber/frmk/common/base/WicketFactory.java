@@ -47,9 +47,10 @@ public abstract class WicketFactory extends org.apache.wicket.protocol.http.WebA
             getSecuritySettings().setCryptFactory(new KeyInSessionSunJceCryptFactory());
             setRootRequestMapper(new CryptoMapper(getRootRequestMapper(), this));
         } else {
-            if (this.webUiProperties.getPkg() != null && !"".equals(this.webUiProperties.getPkg())) {
+            var pages = this.webUiProperties.getPages();
+            if (pages != null && !"".equals(pages)) {
                 Reflections reflections = new Reflections(new ConfigurationBuilder()
-                        .setUrls(ClasspathHelper.forPackage(this.webUiProperties.getPkg()))
+                        .setUrls(ClasspathHelper.forPackage(pages))
                         .setScanners(Scanners.SubTypes, Scanners.TypesAnnotated));
                 Set<Class<?>> clazzes = reflections.getTypesAnnotatedWith(Bookmark.class);
                 Set<String> bookmarks = new TreeSet<>();

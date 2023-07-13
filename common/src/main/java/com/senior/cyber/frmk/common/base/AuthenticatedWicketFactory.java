@@ -12,27 +12,18 @@ import org.apache.wicket.protocol.http.WicketFilter;
 import org.apache.wicket.request.resource.*;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
-import org.reflections.scanners.SubTypesScanner;
-import org.reflections.scanners.TypeAnnotationsScanner;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 import java.util.TreeSet;
-import java.util.concurrent.Executors;
 
 public abstract class AuthenticatedWicketFactory extends AuthenticatedWebApplication
         implements IWebApplicationFactory, IResourceReferenceFactory {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticatedWicketFactory.class);
-
-    transient static ApplicationContext applicationContext;
+    static ApplicationContext applicationContext;
 
     private WebUiProperties webUiProperties;
 
@@ -47,13 +38,14 @@ public abstract class AuthenticatedWicketFactory extends AuthenticatedWebApplica
             getSecuritySettings().setCryptFactory(new KeyInSessionSunJceCryptFactory());
             setRootRequestMapper(new CryptoMapper(getRootRequestMapper(), this));
         } else {
-            if (this.webUiProperties.getPkg() != null && !"".equals(this.webUiProperties.getPkg())) {
-                Reflections reflections = new Reflections(new ConfigurationBuilder()
-                        .setUrls(ClasspathHelper.forPackage(this.webUiProperties.getPkg()))
+            var pages = this.webUiProperties.getPages();
+            if (pages != null && !"".equals(pages)) {
+                var reflections = new Reflections(new ConfigurationBuilder()
+                        .setUrls(ClasspathHelper.forPackage(pages))
                         .setScanners(Scanners.SubTypes, Scanners.TypesAnnotated));
-                Set<Class<?>> clazzes = reflections.getTypesAnnotatedWith(Bookmark.class);
-                Set<String> bookmarks = new TreeSet<>();
-                Map<String, Class<?>> existedPages = new HashMap<>();
+                var clazzes = reflections.getTypesAnnotatedWith(Bookmark.class);
+                var bookmarks = new TreeSet<String>();
+                var existedPages = new HashMap<String, Class<?>>();
                 if (clazzes != null && !clazzes.isEmpty()) {
                     for (Class<?> clazz : clazzes) {
                         Bookmark bookmark = clazz.getAnnotation(Bookmark.class);
