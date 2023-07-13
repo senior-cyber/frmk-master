@@ -5,7 +5,6 @@ spring:
     servlet:
       load-on-startup: ${spring-mvc-servlet-load-on-startup:1}
       path: ${spring-mvc-servlet-path:/api}
-
 webui:
   servlet:
     load-on-startup: ${webui-servlet-load-on-startup:2}
