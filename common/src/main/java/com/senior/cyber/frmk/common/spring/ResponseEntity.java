@@ -1,5 +1,6 @@
 package com.senior.cyber.frmk.common.spring;
 
+import java.io.Serializable;
 import java.net.URI;
 import java.time.Instant;
 import java.time.ZonedDateTime;
@@ -14,7 +15,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.ObjectUtils;
 
-public class ResponseEntity<T> extends HttpEntity<T> {
+public class ResponseEntity<T> extends HttpEntity<T> implements Serializable {
 
     private final Object status;
 

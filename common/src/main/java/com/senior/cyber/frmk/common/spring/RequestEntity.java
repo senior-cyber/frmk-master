@@ -1,5 +1,6 @@
 package com.senior.cyber.frmk.common.spring;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.net.URI;
 import java.nio.charset.Charset;
@@ -16,7 +17,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.ObjectUtils;
 
-public class RequestEntity<T> extends HttpEntity<T> {
+public class RequestEntity<T> extends HttpEntity<T> implements Serializable {
 
     @Nullable
     private final HttpMethod method;

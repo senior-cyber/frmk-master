@@ -5,7 +5,9 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.ObjectUtils;
 
-public class HttpEntity<T> {
+import java.io.Serializable;
+
+public class HttpEntity<T> implements Serializable {
 
     public static final HttpEntity<?> EMPTY = new HttpEntity<>();
 

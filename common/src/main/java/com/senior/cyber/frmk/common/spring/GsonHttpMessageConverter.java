@@ -1,6 +1,8 @@
 package com.senior.cyber.frmk.common.spring;
 
 import com.google.gson.Gson;
+import com.senior.cyber.frmk.common.simulator.SimulateEnum;
+import com.senior.cyber.frmk.common.simulator.SimulateHttpEntity;
 import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 
