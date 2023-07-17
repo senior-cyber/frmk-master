@@ -1,11 +1,14 @@
 package com.senior.cyber.frmk.common.base;
 
+import com.senior.cyber.frmk.common.simulator.SimulateEnum;
+import com.senior.cyber.frmk.common.simulator.SimulateHttpEntity;
 import org.apache.wicket.RuntimeConfigurationType;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.util.Assert;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.Map;
 
 @ConfigurationProperties(prefix = "webui")
 public class WebUiProperties implements Serializable {
@@ -16,6 +19,16 @@ public class WebUiProperties implements Serializable {
     private static final long serialVersionUID = -7645741440087458926L;
 
     private RuntimeConfigurationType configurationType = RuntimeConfigurationType.DEPLOYMENT;
+
+    private Map<String, SimulateEnum> simulation;
+
+    public Map<String, SimulateEnum> getSimulation() {
+        return simulation;
+    }
+
+    public void setSimulation(Map<String, SimulateEnum> simulation) {
+        this.simulation = simulation;
+    }
 
     private String pages;
 
