@@ -37,10 +37,14 @@ public class PrivateKeyUtils {
             Object objectHolder = parser.readObject();
             if (objectHolder instanceof PEMKeyPair) {
                 PEMKeyPair holder = (PEMKeyPair) objectHolder;
-                return new JcaPEMKeyConverter().getPrivateKey(holder.getPrivateKeyInfo());
+                JcaPEMKeyConverter converter = new JcaPEMKeyConverter();
+                converter.setProvider(BouncyCastleProvider.PROVIDER_NAME);
+                return converter.getPrivateKey(holder.getPrivateKeyInfo());
             } else if (objectHolder instanceof PrivateKeyInfo) {
                 PrivateKeyInfo holder = (PrivateKeyInfo) objectHolder;
-                return new JcaPEMKeyConverter().getPrivateKey(holder);
+                JcaPEMKeyConverter converter = new JcaPEMKeyConverter();
+                converter.setProvider(BouncyCastleProvider.PROVIDER_NAME);
+                return converter.getPrivateKey(holder);
             } else {
                 throw new java.lang.UnsupportedOperationException(objectHolder.getClass().getName());
             }

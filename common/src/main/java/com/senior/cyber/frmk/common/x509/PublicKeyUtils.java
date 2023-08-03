@@ -45,7 +45,9 @@ public class PublicKeyUtils {
                 return certificate.getPublicKey();
             } else if (object instanceof SubjectPublicKeyInfo) {
                 SubjectPublicKeyInfo subjectPublicKeyInfo = (SubjectPublicKeyInfo) object;
-                return new JcaPEMKeyConverter().getPublicKey(subjectPublicKeyInfo);
+                JcaPEMKeyConverter converter = new JcaPEMKeyConverter();
+                converter.setProvider(BouncyCastleProvider.PROVIDER_NAME);
+                return converter.getPublicKey(subjectPublicKeyInfo);
             } else {
                 throw new java.lang.UnsupportedOperationException(object.getClass().getName());
             }
