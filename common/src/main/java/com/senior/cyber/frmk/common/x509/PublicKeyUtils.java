@@ -31,7 +31,7 @@ public class PublicKeyUtils {
     private static final SecureRandom RANDOM = new SecureRandom();
 
     static {
-        if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) != null) {
+        if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) == null) {
             Security.addProvider(new BouncyCastleProvider());
         }
     }
