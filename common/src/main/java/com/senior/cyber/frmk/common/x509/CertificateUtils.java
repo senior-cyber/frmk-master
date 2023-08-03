@@ -29,25 +29,32 @@ import org.bouncycastle.operator.jcajce.JcaDigestCalculatorProviderBuilder;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.SignatureException;
+import java.security.*;
 import java.security.cert.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CertificateUtils {
 
+    static {
+        if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) == null) {
+            Security.addProvider(new BouncyCastleProvider());
+        }
+    }
+
     public static X509Certificate read(String pem) throws IOException, CertificateException {
         try (PEMParser parser = new PEMParser(new StringReader(pem))) {
             Object object = parser.readObject();
             if (object instanceof JcaX509CertificateHolder) {
                 JcaX509CertificateHolder holder = (JcaX509CertificateHolder) object;
-                return new JcaX509CertificateConverter().getCertificate(holder);
+                JcaX509CertificateConverter converter = new JcaX509CertificateConverter();
+                converter.setProvider(BouncyCastleProvider.PROVIDER_NAME);
+                return converter.getCertificate(holder);
             } else if (object instanceof X509CertificateHolder) {
                 X509CertificateHolder holder = (X509CertificateHolder) object;
-                return new JcaX509CertificateConverter().getCertificate(holder);
+                JcaX509CertificateConverter converter = new JcaX509CertificateConverter();
+                converter.setProvider(BouncyCastleProvider.PROVIDER_NAME);
+                return converter.getCertificate(holder);
             } else {
                 throw new java.lang.UnsupportedOperationException(object.getClass().getName());
             }
@@ -185,7 +192,8 @@ public class CertificateUtils {
                 }
             }
             return true;
-        } catch (CertificateException | SignatureException | NoSuchProviderException | InvalidKeyException | NoSuchAlgorithmException e) {
+        } catch (CertificateException | SignatureException | NoSuchProviderException | InvalidKeyException |
+                 NoSuchAlgorithmException e) {
             return false;
         }
     }

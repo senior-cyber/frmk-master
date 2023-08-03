@@ -1,5 +1,7 @@
 package com.senior.cyber.frmk.common.x509;
 
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+
 import javax.net.ssl.*;
 import java.io.File;
 import java.io.FileInputStream;
