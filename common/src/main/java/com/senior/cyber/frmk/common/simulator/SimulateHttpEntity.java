@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface SimulateHttpEntity {
 
-    SimulateEnum type() default SimulateEnum.Replay;
+    SimulateEnum type() default SimulateEnum.None;
 
 }

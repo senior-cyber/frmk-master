@@ -41,7 +41,9 @@ public class PublicKeyUtils {
             Object object = parser.readObject();
             if (object instanceof X509CertificateHolder) {
                 X509CertificateHolder holder = (X509CertificateHolder) object;
-                X509Certificate certificate = new JcaX509CertificateConverter().getCertificate(holder);
+                JcaX509CertificateConverter converter = new JcaX509CertificateConverter();
+                converter.setProvider(BouncyCastleProvider.PROVIDER_NAME);
+                X509Certificate certificate = converter.getCertificate(holder);
                 return certificate.getPublicKey();
             } else if (object instanceof SubjectPublicKeyInfo) {
                 SubjectPublicKeyInfo subjectPublicKeyInfo = (SubjectPublicKeyInfo) object;

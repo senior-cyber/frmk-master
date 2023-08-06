@@ -60,7 +60,6 @@ publishing {
 
 dependencies {
     implementation project(":jdbc-query")
-    implementation "com.google.code.gson:gson:${gson}"
     implementation "org.apache.poi:poi-ooxml:${poi}"
     implementation "org.apache.poi:poi:${poi}"
     implementation "joda-time:joda-time:${joda_time}"
@@ -81,6 +80,7 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web:${spring_boot}"
     implementation "org.springframework.boot:spring-boot-starter-aop:${spring_boot}"
     implementation "org.springframework.boot:spring-boot-starter-jdbc:${spring_boot}"
+    implementation "org.springframework.boot:spring-boot-starter-json:${spring_boot}"
     implementation "org.springframework.boot:spring-boot-starter-data-jpa:${spring_boot}"
     implementation "org.apache.httpcomponents:httpclient:${httpclient}"
     compileOnly "jakarta.servlet:jakarta.servlet-api:${servlet}"
