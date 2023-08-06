@@ -11,9 +11,8 @@ import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.security.Security;
-import java.security.cert.X509Certificate;
 
-public class CertificationSerializer extends StdSerializer<X509Certificate> {
+public class CertificateRequestSerializer extends StdSerializer<PKCS10CertificationRequest> {
 
     static {
         if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) == null) {
@@ -21,24 +20,24 @@ public class CertificationSerializer extends StdSerializer<X509Certificate> {
         }
     }
 
-    public CertificationSerializer(Class<X509Certificate> t) {
+    public CertificateRequestSerializer(Class<PKCS10CertificationRequest> t) {
         super(t);
     }
 
-    public CertificationSerializer(JavaType type) {
+    public CertificateRequestSerializer(JavaType type) {
         super(type);
     }
 
-    public CertificationSerializer(Class<?> t, boolean dummy) {
+    public CertificateRequestSerializer(Class<?> t, boolean dummy) {
         super(t, dummy);
     }
 
-    public CertificationSerializer(StdSerializer<?> src) {
+    public CertificateRequestSerializer(StdSerializer<?> src) {
         super(src);
     }
 
     @Override
-    public void serialize(X509Certificate value, JsonGenerator json, SerializerProvider provider) throws IOException {
+    public void serialize(PKCS10CertificationRequest value, JsonGenerator json, SerializerProvider provider) throws IOException {
         if (value == null) {
             json.writeNull();
         } else {

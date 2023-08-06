@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.security.Security;
 
-public class CertificationRequestDeserializer extends StdDeserializer<PKCS10CertificationRequest> {
+public class CertificateRequestDeserializer extends StdDeserializer<PKCS10CertificationRequest> {
 
     static {
         if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) == null) {
@@ -22,15 +22,15 @@ public class CertificationRequestDeserializer extends StdDeserializer<PKCS10Cert
         }
     }
 
-    public CertificationRequestDeserializer(Class<?> vc) {
+    public CertificateRequestDeserializer(Class<?> vc) {
         super(vc);
     }
 
-    public CertificationRequestDeserializer(JavaType valueType) {
+    public CertificateRequestDeserializer(JavaType valueType) {
         super(valueType);
     }
 
-    public CertificationRequestDeserializer(StdDeserializer<?> src) {
+    public CertificateRequestDeserializer(StdDeserializer<?> src) {
         super(src);
     }
 

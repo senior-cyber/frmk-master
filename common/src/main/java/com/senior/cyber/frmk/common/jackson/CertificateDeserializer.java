@@ -10,7 +10,6 @@ import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.openssl.PEMParser;
-import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -18,7 +17,7 @@ import java.security.Security;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
-public class CertificationDeserializer extends StdDeserializer<X509Certificate> {
+public class CertificateDeserializer extends StdDeserializer<X509Certificate> {
 
     static {
         if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) == null) {
@@ -26,15 +25,15 @@ public class CertificationDeserializer extends StdDeserializer<X509Certificate> 
         }
     }
 
-    public CertificationDeserializer(Class<?> vc) {
+    public CertificateDeserializer(Class<?> vc) {
         super(vc);
     }
 
-    public CertificationDeserializer(JavaType valueType) {
+    public CertificateDeserializer(JavaType valueType) {
         super(valueType);
     }
 
-    public CertificationDeserializer(StdDeserializer<?> src) {
+    public CertificateDeserializer(StdDeserializer<?> src) {
         super(src);
     }
 
