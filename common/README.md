@@ -3,15 +3,15 @@
 spring:
   mvc:
     servlet:
-      load-on-startup: ${spring-mvc-servlet-load-on-startup:1}
-      path: ${spring-mvc-servlet-path:/api}
+      load-on-startup: ${override.spring.mvc.servlet.load-on-startup:1}
+      path: ${override.spring.mvc.servlet.path:/api}
 webui:
   servlet:
-    load-on-startup: ${webui-servlet-load-on-startup:2}
-    path: ${webui-servlet-path:/*}
-  configuration-type: ${webui-configuration-type:DEVELOPMENT}
-  csrf: ${webui-csrf:false}
-  wicket-factory: # Wicket Factory Class
-  pkg: # Pages packages
-  admin-lte: # Admin LTE
+    load-on-startup: ${override.webui.servlet.load-on-startup:2}
+    path: ${override.webui.servlet.path:/*}
+  configuration-type: ${override.webui.configuration-type:DEVELOPMENT}
+  csrf: ${override.webui.csrf:false}
+  wicket-factory: ${override.webui.wicket-factory} # Wicket Factory Class
+  pages: ${override.webui.pages} # Pages packages
+  admin-lte: ${override.webui.admin-lte} # Admin LTE
 ```

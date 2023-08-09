@@ -12,3 +12,10 @@ fixes select2 height :
 final result should be like this
 <span class="select2-selection" role="combobox" style="height: 38px;"
 ```
+
+## AdminLTE V3
+```text
+git clone https://github.com/ColorlibHQ/AdminLTE.git
+cd AdminLTE
+git checkout v3
+```

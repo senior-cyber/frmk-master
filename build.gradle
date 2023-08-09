@@ -3,11 +3,6 @@ buildscript {
 
         java_version = JavaVersion.VERSION_17
 
-        // Nexus Repository Configuration
-        // nexus_url = 'https://149.56.22.39:8443/repository'
-        // nexus_uid = 'admin'
-        // nexus_pwd = System.getProperty('nexusPassword')
-
         // Dependency Management
         poi = '5.2.3' // https://mvnrepository.com/artifact/org.apache.poi/poi
         wicket = '10.0.0-M1' // https://mvnrepository.com/artifact/org.apache.wicket/wicket
@@ -34,9 +29,5 @@ buildscript {
     repositories {
         mavenLocal()
         mavenCentral()
-        // maven {
-        //    url "$nexus_url/maven-public/"
-        //    allowInsecureProtocol = true
-        // }
     }
 }

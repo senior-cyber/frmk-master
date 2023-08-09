@@ -34,10 +34,6 @@ jacoco {
 repositories {
     mavenLocal()
     mavenCentral()
-    // maven {
-    //     url "$nexus_url/maven-public/"
-    //     allowInsecureProtocol = true
-    // }
 }
 
 publishing {
@@ -46,16 +42,6 @@ publishing {
             from components.java
         }
     }
-    // repositories {
-    //     maven {
-    //         credentials {
-    //             username = "$nexus_uid"
-    //             password = "$nexus_pwd"
-    //         }
-    //         url = "$nexus_url/maven-releases/"
-    //         allowInsecureProtocol = true
-    //     }
-    // }
 }
 
 dependencies {
