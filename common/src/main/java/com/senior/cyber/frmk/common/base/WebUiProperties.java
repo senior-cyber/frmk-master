@@ -2,6 +2,8 @@ package com.senior.cyber.frmk.common.base;
 
 import com.senior.cyber.frmk.common.simulator.SimulateEnum;
 import com.senior.cyber.frmk.common.simulator.SimulateHttpEntity;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.wicket.RuntimeConfigurationType;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.util.Assert;
@@ -10,6 +12,8 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.Map;
 
+@Getter
+@Setter
 @ConfigurationProperties(prefix = "webui")
 public class WebUiProperties implements Serializable {
 
@@ -22,14 +26,6 @@ public class WebUiProperties implements Serializable {
 
     private Map<String, SimulateEnum> simulation;
 
-    public Map<String, SimulateEnum> getSimulation() {
-        return simulation;
-    }
-
-    public void setSimulation(Map<String, SimulateEnum> simulation) {
-        this.simulation = simulation;
-    }
-
     private String pages;
 
     private boolean csrf;
@@ -38,51 +34,7 @@ public class WebUiProperties implements Serializable {
 
     private File adminLte;
 
-    public String getPages() {
-        return pages;
-    }
-
-    public void setPages(String pages) {
-        this.pages = pages;
-    }
-
-    public File getAdminLte() {
-        return adminLte;
-    }
-
-    public void setAdminLte(File adminLte) {
-        this.adminLte = adminLte;
-    }
-
-    private final Servlet servlet = new Servlet();
-
-    public Servlet getServlet() {
-        return servlet;
-    }
-
-    public boolean isCsrf() {
-        return csrf;
-    }
-
-    public void setCsrf(boolean csrf) {
-        this.csrf = csrf;
-    }
-
-    public RuntimeConfigurationType getConfigurationType() {
-        return configurationType;
-    }
-
-    public void setConfigurationType(RuntimeConfigurationType configurationType) {
-        this.configurationType = configurationType;
-    }
-
-    public Class<?> getWicketFactory() {
-        return wicketFactory;
-    }
-
-    public void setWicketFactory(Class<?> wicketFactory) {
-        this.wicketFactory = wicketFactory;
-    }
+    private Servlet servlet = new Servlet();
 
     public static class Servlet {
 

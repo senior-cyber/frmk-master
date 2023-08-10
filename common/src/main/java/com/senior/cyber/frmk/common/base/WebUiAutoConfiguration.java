@@ -23,11 +23,11 @@ import org.springframework.context.annotation.Configuration;
 @AutoConfigureAfter({WebMvcAutoConfiguration.class})
 public class WebUiAutoConfiguration {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(WebUiAutoConfiguration.class);
+
     @ConditionalOnClass(WicketFactory.class)
     @EnableConfigurationProperties({WebUiProperties.class, WebMvcProperties.class})
     static class WebUi {
-
-        private static final Logger LOGGER = LoggerFactory.getLogger(WebUiAutoConfiguration.class);
 
         private final WebMvcProperties webMvcProperties;
 
