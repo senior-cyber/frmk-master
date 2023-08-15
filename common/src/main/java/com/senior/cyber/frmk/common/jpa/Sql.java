@@ -45,7 +45,12 @@ public class Sql {
                 JoinColumn joinColumn = joinTable.joinColumns()[0];
                 return tableName + "." + joinColumn.name();
             } else {
-                return tableName + "." + columnDsl.getName();
+                JoinColumn joinColumn = f.getAnnotation(JoinColumn.class);
+                if (joinColumn != null && StringUtils.isNotEmpty(joinColumn.name())) {
+                    return tableName + "." + joinColumn.name();
+                } else {
+                    return tableName + "." + columnDsl.getName();
+                }
             }
         }
     }
