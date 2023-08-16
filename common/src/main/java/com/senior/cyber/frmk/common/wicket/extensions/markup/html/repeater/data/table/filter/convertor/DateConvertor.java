@@ -2,6 +2,7 @@ package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data
 
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.translator.IFilterTranslator;
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.translator.filter.jdbc.FilterDateTranslator;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.wicket.util.convert.ConversionException;
 
@@ -20,12 +21,18 @@ public class DateConvertor implements Convertor<Date> {
 
     @Override
     public Date convertToObject(String value, Locale locale) throws ConversionException {
+        if (StringUtils.isEmpty(value)) {
+            return null;
+        }
         LocalDate localDate = LocalDate.parse(value, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         return Date.valueOf(localDate);
     }
 
     @Override
     public String convertToString(Date value, Locale locale) {
+        if (value == null) {
+            return "";
+        }
         return DateFormatUtils.ISO_8601_EXTENDED_DATE_FORMAT.format(value);
     }
 
