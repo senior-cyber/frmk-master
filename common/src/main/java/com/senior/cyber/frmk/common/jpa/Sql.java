@@ -25,6 +25,35 @@ public class Sql {
         return name;
     }
 
+    public static String name(String tableName, Attribute<?, ?> columnDsl) {
+        Field f = (Field) columnDsl.getJavaMember();
+        OneToMany oneToMany = f.getAnnotation(OneToMany.class);
+        OneToOne oneToOne = f.getAnnotation(OneToOne.class);
+        ManyToOne manyToOne = f.getAnnotation(ManyToOne.class);
+        ManyToMany manyToMany = f.getAnnotation(ManyToMany.class);
+        if (oneToMany == null && oneToOne == null && manyToOne == null && manyToMany == null) {
+            Column column = f.getAnnotation(Column.class);
+            if (column != null && StringUtils.isNotEmpty(column.name())) {
+                return tableName + "." + column.name();
+            } else {
+                return tableName + "." + columnDsl.getName();
+            }
+        } else {
+            if (manyToMany != null) {
+                JoinTable joinTable = f.getAnnotation(JoinTable.class);
+                JoinColumn joinColumn = joinTable.joinColumns()[0];
+                return tableName + "." + joinColumn.name();
+            } else {
+                JoinColumn joinColumn = f.getAnnotation(JoinColumn.class);
+                if (joinColumn != null && StringUtils.isNotEmpty(joinColumn.name())) {
+                    return tableName + "." + joinColumn.name();
+                } else {
+                    return tableName + "." + columnDsl.getName();
+                }
+            }
+        }
+    }
+
     public static String name(Attribute<?, ?> columnDsl) {
         String tableName = name(columnDsl.getJavaMember().getDeclaringClass());
         Field f = (Field) columnDsl.getJavaMember();
