@@ -9,7 +9,7 @@ import java.lang.reflect.Field;
 
 public class Sql {
 
-    public static String name(Class<?> tableDsl) {
+    public static String table(Class<?> tableDsl) {
         String name;
         Class<?> clazz = tableDsl;
         StaticMetamodel staticMetamodel = tableDsl.getAnnotation(StaticMetamodel.class);
@@ -25,7 +25,8 @@ public class Sql {
         return name;
     }
 
-    public static String name(String tableName, Attribute<?, ?> columnDsl) {
+    public static String column(String aliasTableName, Attribute<?, ?> columnDsl) {
+        String tableName = aliasTableName;
         Field f = (Field) columnDsl.getJavaMember();
         OneToMany oneToMany = f.getAnnotation(OneToMany.class);
         OneToOne oneToOne = f.getAnnotation(OneToOne.class);
@@ -54,8 +55,8 @@ public class Sql {
         }
     }
 
-    public static String name(Attribute<?, ?> columnDsl) {
-        String tableName = name(columnDsl.getJavaMember().getDeclaringClass());
+    public static String column(Attribute<?, ?> columnDsl) {
+        String tableName = table(columnDsl.getJavaMember().getDeclaringClass());
         Field f = (Field) columnDsl.getJavaMember();
         OneToMany oneToMany = f.getAnnotation(OneToMany.class);
         OneToOne oneToOne = f.getAnnotation(OneToOne.class);
