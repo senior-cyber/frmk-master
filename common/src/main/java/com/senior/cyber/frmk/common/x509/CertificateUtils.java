@@ -1,14 +1,6 @@
 package com.senior.cyber.frmk.common.x509;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.client.methods.RequestBuilder;
-import org.apache.http.entity.ByteArrayEntity;
-import org.apache.http.entity.ContentType;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
 import org.bouncycastle.asn1.*;
 import org.bouncycastle.asn1.x509.*;
 import org.bouncycastle.asn1.x509.Extension;
@@ -28,6 +20,10 @@ import org.bouncycastle.operator.jcajce.JcaContentVerifierProviderBuilder;
 import org.bouncycastle.operator.jcajce.JcaDigestCalculatorProviderBuilder;
 
 import java.io.*;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.cert.*;
@@ -107,46 +103,47 @@ public class CertificateUtils {
         return urls;
     }
 
-    public static boolean crlValidation(X509Certificate certificate, String crlUrl) throws IOException, CRLException {
-        try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
-            HttpUriRequest request = RequestBuilder.get().setUri(crlUrl).build();
-            try (CloseableHttpResponse response = client.execute(request)) {
-                byte[] raw = EntityUtils.toByteArray(response.getEntity());
-                CertificateFactory certificateFactory = new CertificateFactory();
-                CRL crl = certificateFactory.engineGenerateCRL(new ByteArrayInputStream(raw));
-                return crl.isRevoked(certificate);
-            }
-        }
+    public static boolean crlValidation(X509Certificate certificate, String crlUrl) throws IOException, CRLException, InterruptedException {
+        HttpClient client = HttpClient.newBuilder().build();
+        HttpRequest request = HttpRequest.newBuilder(URI.create(crlUrl))
+                .GET()
+                .build();
+        HttpResponse<byte[]> response = client.send(request, HttpResponse.BodyHandlers.ofByteArray());
+        byte[] raw = response.body();
+        CertificateFactory certificateFactory = new CertificateFactory();
+        CRL crl = certificateFactory.engineGenerateCRL(new ByteArrayInputStream(raw));
+        return crl.isRevoked(certificate);
     }
 
-    public static boolean ocspValidation(X509Certificate certificate, X509Certificate issuerCertificate, String ocspUri) throws OCSPException, OperatorCreationException, IOException, CertificateException {
+    public static boolean ocspValidation(X509Certificate certificate, X509Certificate issuerCertificate, String ocspUri) throws OCSPException, OperatorCreationException, IOException, CertificateException, InterruptedException {
         DigestCalculatorProvider digestCalculatorProvider = new JcaDigestCalculatorProviderBuilder().setProvider(BouncyCastleProvider.PROVIDER_NAME).build();
         CertificateID certificateID = new JcaCertificateID(digestCalculatorProvider.get(CertificateID.HASH_SHA1), issuerCertificate, certificate.getSerialNumber());
         OCSPReqBuilder ocspReqBuilder = new OCSPReqBuilder();
         ocspReqBuilder.addRequest(certificateID);
         OCSPReq ocspReq = ocspReqBuilder.build();
 
-        try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
-            ByteArrayEntity entity = new ByteArrayEntity(ocspReq.getEncoded(), ContentType.parse("application/ocsp-request"));
-            HttpUriRequest request = RequestBuilder.post().setUri(ocspUri).setEntity(entity).build();
-            try (CloseableHttpResponse response = client.execute(request)) {
-                byte[] raw = EntityUtils.toByteArray(response.getEntity());
-                OCSPResp ocspResponse = new OCSPResp(raw);
+        HttpClient client = HttpClient.newBuilder().build();
 
-                BasicOCSPResp basicOCSPResp = (BasicOCSPResp) ocspResponse.getResponseObject();
-                X509CertificateHolder[] certificateHolders = basicOCSPResp.getCerts();
-                X509Certificate signerCert = new JcaX509CertificateConverter().getCertificate(certificateHolders[0]);
-                JcaContentVerifierProviderBuilder jcaContentVerifierProviderBuilder = new JcaContentVerifierProviderBuilder();
-                ContentVerifierProvider contentVerifierProvider = jcaContentVerifierProviderBuilder.build(signerCert.getPublicKey());
-                if (basicOCSPResp.isSignatureValid(contentVerifierProvider)) {
-                    SingleResp[] singleResps = basicOCSPResp.getResponses();
-                    JcaX509CertificateHolder holder = new JcaX509CertificateHolder(issuerCertificate);
-                    return singleResps[0].getCertID().matchesIssuer(holder, digestCalculatorProvider)
-                            && singleResps[0].getCertID().getSerialNumber().compareTo((certificate).getSerialNumber()) == 0
-                            && singleResps[0].getCertStatus() == null;
-                }
+        HttpRequest request = HttpRequest.newBuilder(URI.create(ocspUri))
+                .POST(HttpRequest.BodyPublishers.ofByteArray(ocspReq.getEncoded()))
+                .header("Content-Type", "application/ocsp-request")
+                .build();
 
-            }
+        HttpResponse<byte[]> response = client.send(request, HttpResponse.BodyHandlers.ofByteArray());
+        byte[] raw = response.body();
+        OCSPResp ocspResponse = new OCSPResp(raw);
+
+        BasicOCSPResp basicOCSPResp = (BasicOCSPResp) ocspResponse.getResponseObject();
+        X509CertificateHolder[] certificateHolders = basicOCSPResp.getCerts();
+        X509Certificate signerCert = new JcaX509CertificateConverter().getCertificate(certificateHolders[0]);
+        JcaContentVerifierProviderBuilder jcaContentVerifierProviderBuilder = new JcaContentVerifierProviderBuilder();
+        ContentVerifierProvider contentVerifierProvider = jcaContentVerifierProviderBuilder.build(signerCert.getPublicKey());
+        if (basicOCSPResp.isSignatureValid(contentVerifierProvider)) {
+            SingleResp[] singleResps = basicOCSPResp.getResponses();
+            JcaX509CertificateHolder holder = new JcaX509CertificateHolder(issuerCertificate);
+            return singleResps[0].getCertID().matchesIssuer(holder, digestCalculatorProvider)
+                    && singleResps[0].getCertID().getSerialNumber().compareTo((certificate).getSerialNumber()) == 0
+                    && singleResps[0].getCertStatus() == null;
         }
         return false;
     }
@@ -187,7 +184,7 @@ public class CertificateUtils {
                 X509Certificate certificate = certificateChain.get(i);
                 X509Certificate issuerCertificate = certificateChain.get(i - 1);
                 certificate.verify(issuerCertificate.getPublicKey());
-                if (!certificate.getIssuerDN().equals(issuerCertificate.getSubjectDN())) {
+                if (!certificate.getIssuerX500Principal().equals(issuerCertificate.getSubjectX500Principal())) {
                     return false;
                 }
             }
