@@ -1,7 +1,6 @@
 package com.senior.cyber.frmk.common.jackson;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -12,7 +11,6 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.security.PrivateKey;
 import java.security.Security;
-import java.security.cert.X509Certificate;
 
 public class PrivateKeySerializer extends StdSerializer<PrivateKey> {
 
@@ -22,20 +20,8 @@ public class PrivateKeySerializer extends StdSerializer<PrivateKey> {
         }
     }
 
-    public PrivateKeySerializer(Class<PrivateKey> t) {
-        super(t);
-    }
-
-    public PrivateKeySerializer(JavaType type) {
-        super(type);
-    }
-
-    public PrivateKeySerializer(Class<?> t, boolean dummy) {
-        super(t, dummy);
-    }
-
-    public PrivateKeySerializer(StdSerializer<?> src) {
-        super(src);
+    public PrivateKeySerializer() {
+        super(PrivateKey.class);
     }
 
     @Override

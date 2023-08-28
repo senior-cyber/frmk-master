@@ -1,14 +1,10 @@
 package com.senior.cyber.frmk.common.jackson;
 
-import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import org.apache.commons.lang3.StringUtils;
 import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
-import org.bouncycastle.cert.X509CertificateHolder;
-import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.openssl.PEMKeyPair;
 import org.bouncycastle.openssl.PEMParser;
@@ -18,8 +14,6 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.security.PrivateKey;
 import java.security.Security;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
 
 public class PrivateKeyDeserializer extends StdDeserializer<PrivateKey> {
 
@@ -29,20 +23,12 @@ public class PrivateKeyDeserializer extends StdDeserializer<PrivateKey> {
         }
     }
 
-    public PrivateKeyDeserializer(Class<?> vc) {
-        super(vc);
-    }
-
-    public PrivateKeyDeserializer(JavaType valueType) {
-        super(valueType);
-    }
-
-    public PrivateKeyDeserializer(StdDeserializer<?> src) {
-        super(src);
+    public PrivateKeyDeserializer() {
+        super(PrivateKey.class);
     }
 
     @Override
-    public PrivateKey deserialize(JsonParser json, DeserializationContext context) throws IOException, JacksonException {
+    public PrivateKey deserialize(JsonParser json, DeserializationContext context) throws IOException {
         String pem = json.readValueAs(String.class);
         if (!StringUtils.isEmpty(pem)) {
             try (StringReader reader = new StringReader(pem)) {
@@ -66,4 +52,5 @@ public class PrivateKeyDeserializer extends StdDeserializer<PrivateKey> {
         }
         return null;
     }
+
 }

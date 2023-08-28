@@ -1,7 +1,6 @@
 package com.senior.cyber.frmk.common.jackson;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -20,20 +19,8 @@ public class CertificateRequestSerializer extends StdSerializer<PKCS10Certificat
         }
     }
 
-    public CertificateRequestSerializer(Class<PKCS10CertificationRequest> t) {
-        super(t);
-    }
-
-    public CertificateRequestSerializer(JavaType type) {
-        super(type);
-    }
-
-    public CertificateRequestSerializer(Class<?> t, boolean dummy) {
-        super(t, dummy);
-    }
-
-    public CertificateRequestSerializer(StdSerializer<?> src) {
-        super(src);
+    public CertificateRequestSerializer() {
+        super(PKCS10CertificationRequest.class);
     }
 
     @Override

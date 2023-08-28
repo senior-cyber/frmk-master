@@ -1,20 +1,15 @@
 package com.senior.cyber.frmk.common.jackson;
 
-import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import org.apache.commons.lang3.StringUtils;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.openssl.PEMParser;
-import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
-import java.io.StringReader;
 import java.security.Security;
 import java.util.Base64;
 
@@ -26,20 +21,12 @@ public class SecretKeyDeserializer extends StdDeserializer<SecretKey> {
         }
     }
 
-    public SecretKeyDeserializer(Class<?> vc) {
-        super(vc);
-    }
-
-    public SecretKeyDeserializer(JavaType valueType) {
-        super(valueType);
-    }
-
-    public SecretKeyDeserializer(StdDeserializer<?> src) {
-        super(src);
+    public SecretKeyDeserializer() {
+        super(SecretKey.class);
     }
 
     @Override
-    public SecretKey deserialize(JsonParser json, DeserializationContext context) throws IOException, JacksonException {
+    public SecretKey deserialize(JsonParser json, DeserializationContext context) throws IOException {
         String value = json.readValueAs(String.class);
         if (!StringUtils.isEmpty(value)) {
             int i = value.indexOf(">");
@@ -55,4 +42,5 @@ public class SecretKeyDeserializer extends StdDeserializer<SecretKey> {
         }
         return null;
     }
+
 }

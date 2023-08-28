@@ -1,7 +1,6 @@
 package com.senior.cyber.frmk.common.jackson;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -20,20 +19,8 @@ public class CertificateSerializer extends StdSerializer<X509Certificate> {
         }
     }
 
-    public CertificateSerializer(Class<X509Certificate> t) {
-        super(t);
-    }
-
-    public CertificateSerializer(JavaType type) {
-        super(type);
-    }
-
-    public CertificateSerializer(Class<?> t, boolean dummy) {
-        super(t, dummy);
-    }
-
-    public CertificateSerializer(StdSerializer<?> src) {
-        super(src);
+    public CertificateSerializer() {
+        super(X509Certificate.class);
     }
 
     @Override

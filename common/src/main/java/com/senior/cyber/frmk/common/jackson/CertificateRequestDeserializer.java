@@ -1,9 +1,7 @@
 package com.senior.cyber.frmk.common.jackson;
 
-import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import org.apache.commons.lang3.StringUtils;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -22,20 +20,12 @@ public class CertificateRequestDeserializer extends StdDeserializer<PKCS10Certif
         }
     }
 
-    public CertificateRequestDeserializer(Class<?> vc) {
-        super(vc);
-    }
-
-    public CertificateRequestDeserializer(JavaType valueType) {
-        super(valueType);
-    }
-
-    public CertificateRequestDeserializer(StdDeserializer<?> src) {
-        super(src);
+    public CertificateRequestDeserializer() {
+        super(PKCS10CertificationRequest.class);
     }
 
     @Override
-    public PKCS10CertificationRequest deserialize(JsonParser json, DeserializationContext context) throws IOException, JacksonException {
+    public PKCS10CertificationRequest deserialize(JsonParser json, DeserializationContext context) throws IOException {
         String pem = json.readValueAs(String.class);
         if (!StringUtils.isEmpty(pem)) {
             StringReader reader = new StringReader(pem);
@@ -46,4 +36,5 @@ public class CertificateRequestDeserializer extends StdDeserializer<PKCS10Certif
         }
         return null;
     }
+
 }

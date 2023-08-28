@@ -1,9 +1,7 @@
 package com.senior.cyber.frmk.common.jackson;
 
-import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import org.apache.commons.lang3.StringUtils;
 import org.bouncycastle.cert.X509CertificateHolder;
@@ -25,20 +23,12 @@ public class CertificateDeserializer extends StdDeserializer<X509Certificate> {
         }
     }
 
-    public CertificateDeserializer(Class<?> vc) {
-        super(vc);
-    }
-
-    public CertificateDeserializer(JavaType valueType) {
-        super(valueType);
-    }
-
-    public CertificateDeserializer(StdDeserializer<?> src) {
-        super(src);
+    public CertificateDeserializer() {
+        super(X509Certificate.class);
     }
 
     @Override
-    public X509Certificate deserialize(JsonParser json, DeserializationContext context) throws IOException, JacksonException {
+    public X509Certificate deserialize(JsonParser json, DeserializationContext context) throws IOException {
         String pem = json.readValueAs(String.class);
         if (!StringUtils.isEmpty(pem)) {
             try (StringReader reader = new StringReader(pem)) {
@@ -54,4 +44,5 @@ public class CertificateDeserializer extends StdDeserializer<X509Certificate> {
         }
         return null;
     }
+
 }

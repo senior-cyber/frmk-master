@@ -1,23 +1,18 @@
 package com.senior.cyber.frmk.common.jackson;
 
-import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import org.apache.commons.lang3.StringUtils;
-import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
 import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
 import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.openssl.PEMKeyPair;
 import org.bouncycastle.openssl.PEMParser;
 import org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.Security;
 import java.security.cert.CertificateException;
@@ -31,20 +26,12 @@ public class PublicKeyDeserializer extends StdDeserializer<PublicKey> {
         }
     }
 
-    public PublicKeyDeserializer(Class<?> vc) {
-        super(vc);
-    }
-
-    public PublicKeyDeserializer(JavaType valueType) {
-        super(valueType);
-    }
-
-    public PublicKeyDeserializer(StdDeserializer<?> src) {
-        super(src);
+    public PublicKeyDeserializer() {
+        super(PublicKey.class);
     }
 
     @Override
-    public PublicKey deserialize(JsonParser json, DeserializationContext context) throws IOException, JacksonException {
+    public PublicKey deserialize(JsonParser json, DeserializationContext context) throws IOException {
         String pem = json.readValueAs(String.class);
         if (!StringUtils.isEmpty(pem)) {
             try (StringReader reader = new StringReader(pem)) {
@@ -67,4 +54,5 @@ public class PublicKeyDeserializer extends StdDeserializer<PublicKey> {
         }
         return null;
     }
+
 }
