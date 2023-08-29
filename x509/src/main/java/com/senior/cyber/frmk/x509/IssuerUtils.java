@@ -1,8 +1,6 @@
-package com.senior.cyber.frmk.common.x509;
+package com.senior.cyber.frmk.x509;
 
-import org.bouncycastle.asn1.x509.BasicConstraints;
-import org.bouncycastle.asn1.x509.Extension;
-import org.bouncycastle.asn1.x509.KeyUsage;
+import org.bouncycastle.asn1.x509.*;
 import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;
 import org.bouncycastle.cert.jcajce.JcaX509ExtensionUtils;
@@ -17,7 +15,10 @@ import org.joda.time.LocalDate;
 
 import java.io.IOException;
 import java.math.BigInteger;
-import java.security.*;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.Security;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.security.interfaces.DSAPrivateKey;
@@ -25,7 +26,7 @@ import java.security.interfaces.ECPrivateKey;
 import java.security.interfaces.RSAPrivateKey;
 import java.util.Date;
 
-public class RootUtils {
+public class IssuerUtils {
 
     static {
         if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) == null) {
@@ -33,7 +34,7 @@ public class RootUtils {
         }
     }
 
-    public static X509Certificate generate(KeyPair rootKey, PKCS10CertificationRequest csr) throws NoSuchAlgorithmException, IOException, OperatorCreationException, CertificateException, NoSuchProviderException {
+    public static X509Certificate generate(X509Certificate issuerCertificate, PrivateKey issuerKey, PKCS10CertificationRequest csr) throws NoSuchAlgorithmException, IOException, OperatorCreationException, CertificateException {
 
         BigInteger serial = BigInteger.valueOf(System.currentTimeMillis());
 
@@ -51,36 +52,36 @@ public class RootUtils {
         JcaX509ExtensionUtils utils = new JcaX509ExtensionUtils();
 
         Date notBefore = LocalDate.now().toDate();
-        Date notAfter = LocalDate.now().plusYears(10).toDate();
+        Date notAfter = LocalDate.now().plusYears(5).toDate();
 
         PublicKey subjectPublicKey = new JcaPEMKeyConverter()
                 .setProvider(BouncyCastleProvider.PROVIDER_NAME)
                 .getPublicKey(csr.getSubjectPublicKeyInfo());
 
-        JcaX509v3CertificateBuilder builder = new JcaX509v3CertificateBuilder(csr.getSubject(), serial, notBefore, notAfter, csr.getSubject(), subjectPublicKey);
-        builder.addExtension(Extension.authorityKeyIdentifier, authorityKeyIdentifierCritical, utils.createAuthorityKeyIdentifier(subjectPublicKey));
+        JcaX509v3CertificateBuilder builder = new JcaX509v3CertificateBuilder(issuerCertificate, serial, notBefore, notAfter, csr.getSubject(), subjectPublicKey);
+        builder.addExtension(Extension.authorityKeyIdentifier, authorityKeyIdentifierCritical, utils.createAuthorityKeyIdentifier(issuerCertificate.getPublicKey()));
+
         builder.addExtension(Extension.subjectKeyIdentifier, subjectKeyIdentifierCritical, utils.createSubjectKeyIdentifier(subjectPublicKey));
         builder.addExtension(Extension.basicConstraints, basicConstraintsCritical, new BasicConstraints(basicConstraints));
         builder.addExtension(Extension.keyUsage, keyUsageCritical, new KeyUsage(KeyUsage.digitalSignature | KeyUsage.cRLSign | KeyUsage.keyCertSign));
+        builder.addExtension(Extension.extendedKeyUsage, extendedKeyUsageCritical, new ExtendedKeyUsage(new KeyPurposeId[]{KeyPurposeId.id_kp_serverAuth, KeyPurposeId.id_kp_clientAuth}));
 
         String format = "";
-        if (rootKey.getPrivate() instanceof RSAPrivateKey) {
+        if (issuerKey instanceof RSAPrivateKey) {
             format = "RSA";
-        } else if (rootKey.getPrivate() instanceof ECPrivateKey) {
+        } else if (issuerKey instanceof ECPrivateKey) {
             format = "ECDSA";
-        } else if (rootKey.getPrivate() instanceof DSAPrivateKey) {
+        } else if (issuerKey instanceof DSAPrivateKey) {
             format = "DSA";
         }
 
         int shaSize = 256;
         JcaContentSignerBuilder contentSignerBuilder = new JcaContentSignerBuilder("SHA" + shaSize + "WITH" + format);
         contentSignerBuilder.setProvider(BouncyCastleProvider.PROVIDER_NAME);
-        ContentSigner contentSigner = contentSignerBuilder.build(rootKey.getPrivate());
+        ContentSigner contentSigner = contentSignerBuilder.build(issuerKey);
         X509CertificateHolder holder = builder.build(contentSigner);
 
-        return new JcaX509CertificateConverter()
-                .setProvider(BouncyCastleProvider.PROVIDER_NAME)
-                .getCertificate(holder);
+        return new JcaX509CertificateConverter().setProvider(BouncyCastleProvider.PROVIDER_NAME).getCertificate(holder);
     }
 
 }

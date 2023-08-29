@@ -1,4 +1,4 @@
-package com.senior.cyber.frmk.common.x509;
+package com.senior.cyber.frmk.x509;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.jce.spec.IESParameterSpec;

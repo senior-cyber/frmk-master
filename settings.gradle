@@ -8,7 +8,8 @@ include(
         ":otp",
         ":repository",
         ":admin-lte",
-        ":html"
+        ":html",
+        ":x509"
 )
 project(":common").projectDir = file("./common")
 project(":jdbc-query").projectDir = file("./jdbc-query")
@@ -17,4 +18,5 @@ project(":metamodel").projectDir = file("./metamodel")
 project(":otp").projectDir = file("./otp")
 project(":repository").projectDir = file("./repository")
 project(":html").projectDir = file("./html")
+project(":x509").projectDir = file("./x509")
 project(":admin-lte").projectDir = file("./admin-lte")

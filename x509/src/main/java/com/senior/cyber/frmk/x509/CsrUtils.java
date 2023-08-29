@@ -1,4 +1,4 @@
-package com.senior.cyber.frmk.common.x509;
+package com.senior.cyber.frmk.x509;
 
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
