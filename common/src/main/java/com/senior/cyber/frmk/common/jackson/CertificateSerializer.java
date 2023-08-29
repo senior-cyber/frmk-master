@@ -28,12 +28,16 @@ public class CertificateSerializer extends StdSerializer<X509Certificate> {
         if (value == null) {
             json.writeNull();
         } else {
-            StringWriter pem = new StringWriter();
-            try (JcaPEMWriter writer = new JcaPEMWriter(pem)) {
-                writer.writeObject(value);
-            }
-            json.writeString(pem.toString());
+            json.writeString(convert(value));
         }
+    }
+
+    public static String convert(X509Certificate value) throws IOException {
+        StringWriter pem = new StringWriter();
+        try (JcaPEMWriter writer = new JcaPEMWriter(pem)) {
+            writer.writeObject(value);
+        }
+        return pem.toString();
     }
 
 }

@@ -29,12 +29,16 @@ public class PrivateKeySerializer extends StdSerializer<PrivateKey> {
         if (value == null) {
             json.writeNull();
         } else {
-            StringWriter pem = new StringWriter();
-            try (JcaPEMWriter writer = new JcaPEMWriter(pem)) {
-                writer.writeObject(new JcaPKCS8Generator(value, null));
-            }
-            json.writeString(pem.toString());
+            json.writeString(convert(value));
         }
+    }
+
+    public static String convert(PrivateKey value) throws IOException {
+        StringWriter pem = new StringWriter();
+        try (JcaPEMWriter writer = new JcaPEMWriter(pem)) {
+            writer.writeObject(new JcaPKCS8Generator(value, null));
+        }
+        return pem.toString();
     }
 
 }

@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.security.Security;
 
-public class CertificateRequestSerializer extends StdSerializer<PKCS10CertificationRequest> {
+public class CsrSerializer extends StdSerializer<PKCS10CertificationRequest> {
 
     static {
         if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) == null) {
@@ -19,7 +19,7 @@ public class CertificateRequestSerializer extends StdSerializer<PKCS10Certificat
         }
     }
 
-    public CertificateRequestSerializer() {
+    public CsrSerializer() {
         super(PKCS10CertificationRequest.class);
     }
 
@@ -28,12 +28,16 @@ public class CertificateRequestSerializer extends StdSerializer<PKCS10Certificat
         if (value == null) {
             json.writeNull();
         } else {
-            StringWriter pem = new StringWriter();
-            try (JcaPEMWriter writer = new JcaPEMWriter(pem)) {
-                writer.writeObject(value);
-            }
-            json.writeString(pem.toString());
+            json.writeString(convert(value));
         }
+    }
+
+    public static String convert(PKCS10CertificationRequest value) throws IOException {
+        StringWriter pem = new StringWriter();
+        try (JcaPEMWriter writer = new JcaPEMWriter(pem)) {
+            writer.writeObject(value);
+        }
+        return pem.toString();
     }
 
 }

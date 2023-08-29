@@ -28,12 +28,16 @@ public class PublicKeySerializer extends StdSerializer<PublicKey> {
         if (value == null) {
             json.writeNull();
         } else {
-            StringWriter pem = new StringWriter();
-            try (JcaPEMWriter writer = new JcaPEMWriter(pem)) {
-                writer.writeObject(value);
-            }
-            json.writeString(pem.toString());
+            json.writeString(convert(value));
         }
+    }
+
+    public static String convert(PublicKey value) throws IOException {
+        StringWriter pem = new StringWriter();
+        try (JcaPEMWriter writer = new JcaPEMWriter(pem)) {
+            writer.writeObject(value);
+        }
+        return pem.toString();
     }
 
 }

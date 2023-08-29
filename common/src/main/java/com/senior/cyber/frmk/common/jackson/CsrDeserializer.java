@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.security.Security;
 
-public class CertificateRequestDeserializer extends StdDeserializer<PKCS10CertificationRequest> {
+public class CsrDeserializer extends StdDeserializer<PKCS10CertificationRequest> {
 
     static {
         if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) == null) {
@@ -20,7 +20,7 @@ public class CertificateRequestDeserializer extends StdDeserializer<PKCS10Certif
         }
     }
 
-    public CertificateRequestDeserializer() {
+    public CsrDeserializer() {
         super(PKCS10CertificationRequest.class);
     }
 
@@ -28,13 +28,20 @@ public class CertificateRequestDeserializer extends StdDeserializer<PKCS10Certif
     public PKCS10CertificationRequest deserialize(JsonParser json, DeserializationContext context) throws IOException {
         String pem = json.readValueAs(String.class);
         if (!StringUtils.isEmpty(pem)) {
-            StringReader reader = new StringReader(pem);
-            try (PEMParser pemParser = new PEMParser(reader)) {
-                Object o = pemParser.readObject();
-                return (PKCS10CertificationRequest) o;
-            }
+            return convert(pem);
         }
         return null;
+    }
+
+    public static PKCS10CertificationRequest convert(String value) throws IOException {
+        try (PEMParser parser = new PEMParser(new StringReader(value))) {
+            Object objectHolder = parser.readObject();
+            if (objectHolder instanceof PKCS10CertificationRequest holder) {
+                return holder;
+            } else {
+                throw new java.lang.UnsupportedOperationException(objectHolder.getClass().getName());
+            }
+        }
     }
 
 }

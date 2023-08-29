@@ -1,7 +1,8 @@
 package com.senior.cyber.frmk.common.x509;
 
-import org.bouncycastle.asn1.x500.X500Name;
-import org.bouncycastle.asn1.x509.*;
+import org.bouncycastle.asn1.x509.BasicConstraints;
+import org.bouncycastle.asn1.x509.Extension;
+import org.bouncycastle.asn1.x509.KeyUsage;
 import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;
 import org.bouncycastle.cert.jcajce.JcaX509ExtensionUtils;
@@ -16,20 +17,15 @@ import org.joda.time.LocalDate;
 
 import java.io.IOException;
 import java.math.BigInteger;
-import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.security.Security;
+import java.security.*;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.security.interfaces.DSAPrivateKey;
 import java.security.interfaces.ECPrivateKey;
 import java.security.interfaces.RSAPrivateKey;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-public class CertificateUtils {
+public class RootUtils {
 
     static {
         if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) == null) {
@@ -37,13 +33,14 @@ public class CertificateUtils {
         }
     }
 
-    public static X509Certificate generate(X509Certificate issuerCertificate, PrivateKey issuerKey, PKCS10CertificationRequest csr) throws NoSuchAlgorithmException, IOException, OperatorCreationException, CertificateException {
+    public static X509Certificate generate(KeyPair rootKey, PKCS10CertificationRequest csr) throws NoSuchAlgorithmException, IOException, OperatorCreationException, CertificateException, NoSuchProviderException {
+
         BigInteger serial = BigInteger.valueOf(System.currentTimeMillis());
 
         boolean basicConstraintsCritical = true;
         boolean keyUsageCritical = true;
+        boolean basicConstraints = true;
 
-        boolean basicConstraints = false;
         boolean subjectKeyIdentifierCritical = false;
         boolean authorityKeyIdentifierCritical = false;
         boolean extendedKeyUsageCritical = false;
@@ -54,33 +51,31 @@ public class CertificateUtils {
         JcaX509ExtensionUtils utils = new JcaX509ExtensionUtils();
 
         Date notBefore = LocalDate.now().toDate();
-        Date notAfter = LocalDate.now().plusYears(1).toDate();
+        Date notAfter = LocalDate.now().plusYears(10).toDate();
 
         PublicKey subjectPublicKey = new JcaPEMKeyConverter()
                 .setProvider(BouncyCastleProvider.PROVIDER_NAME)
                 .getPublicKey(csr.getSubjectPublicKeyInfo());
 
-        JcaX509v3CertificateBuilder builder = new JcaX509v3CertificateBuilder(issuerCertificate, serial, notBefore, notAfter, csr.getSubject(), subjectPublicKey);
-        builder.addExtension(Extension.authorityKeyIdentifier, authorityKeyIdentifierCritical, utils.createAuthorityKeyIdentifier(issuerCertificate.getPublicKey()));
+        JcaX509v3CertificateBuilder builder = new JcaX509v3CertificateBuilder(csr.getSubject(), serial, notBefore, notAfter, csr.getSubject(), subjectPublicKey);
+        builder.addExtension(Extension.authorityKeyIdentifier, authorityKeyIdentifierCritical, utils.createAuthorityKeyIdentifier(subjectPublicKey));
         builder.addExtension(Extension.subjectKeyIdentifier, subjectKeyIdentifierCritical, utils.createSubjectKeyIdentifier(subjectPublicKey));
         builder.addExtension(Extension.basicConstraints, basicConstraintsCritical, new BasicConstraints(basicConstraints));
-
-        builder.addExtension(Extension.keyUsage, keyUsageCritical, new KeyUsage(KeyUsage.digitalSignature | KeyUsage.keyAgreement | KeyUsage.dataEncipherment));
-        builder.addExtension(Extension.extendedKeyUsage, extendedKeyUsageCritical, new ExtendedKeyUsage(new KeyPurposeId[]{KeyPurposeId.id_kp_serverAuth, KeyPurposeId.id_kp_clientAuth, KeyPurposeId.id_kp_emailProtection}));
+        builder.addExtension(Extension.keyUsage, keyUsageCritical, new KeyUsage(KeyUsage.digitalSignature | KeyUsage.cRLSign | KeyUsage.keyCertSign));
 
         String format = "";
-        if (issuerKey instanceof RSAPrivateKey) {
+        if (rootKey.getPrivate() instanceof RSAPrivateKey) {
             format = "RSA";
-        } else if (issuerKey instanceof ECPrivateKey) {
+        } else if (rootKey.getPrivate() instanceof ECPrivateKey) {
             format = "ECDSA";
-        } else if (issuerKey instanceof DSAPrivateKey) {
+        } else if (rootKey.getPrivate() instanceof DSAPrivateKey) {
             format = "DSA";
         }
 
         int shaSize = 256;
         JcaContentSignerBuilder contentSignerBuilder = new JcaContentSignerBuilder("SHA" + shaSize + "WITH" + format);
         contentSignerBuilder.setProvider(BouncyCastleProvider.PROVIDER_NAME);
-        ContentSigner contentSigner = contentSignerBuilder.build(issuerKey);
+        ContentSigner contentSigner = contentSignerBuilder.build(rootKey.getPrivate());
         X509CertificateHolder holder = builder.build(contentSigner);
 
         return new JcaX509CertificateConverter()

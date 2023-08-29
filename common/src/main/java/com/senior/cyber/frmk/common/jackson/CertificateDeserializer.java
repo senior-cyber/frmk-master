@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import org.apache.commons.lang3.StringUtils;
 import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;
+import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.openssl.PEMParser;
 
@@ -31,18 +32,26 @@ public class CertificateDeserializer extends StdDeserializer<X509Certificate> {
     public X509Certificate deserialize(JsonParser json, DeserializationContext context) throws IOException {
         String pem = json.readValueAs(String.class);
         if (!StringUtils.isEmpty(pem)) {
-            try (StringReader reader = new StringReader(pem)) {
-                try (PEMParser parser = new PEMParser(reader)) {
-                    X509CertificateHolder holder = (X509CertificateHolder) parser.readObject();
-                    JcaX509CertificateConverter converter = new JcaX509CertificateConverter();
-                    converter.setProvider(BouncyCastleProvider.PROVIDER_NAME);
-                    return converter.getCertificate(holder);
-                } catch (CertificateException e) {
-                    throw new IOException(e);
-                }
-            }
+            return convert(pem);
         }
         return null;
+    }
+
+    public static X509Certificate convert(String value) throws IOException {
+        try (PEMParser parser = new PEMParser(new StringReader(value))) {
+            Object object = parser.readObject();
+            JcaX509CertificateConverter converter = new JcaX509CertificateConverter();
+            converter.setProvider(BouncyCastleProvider.PROVIDER_NAME);
+            if (object instanceof JcaX509CertificateHolder holder) {
+                return converter.getCertificate(holder);
+            } else if (object instanceof X509CertificateHolder holder) {
+                return converter.getCertificate(holder);
+            } else {
+                throw new java.lang.UnsupportedOperationException(object.getClass().getName());
+            }
+        } catch (CertificateException e) {
+            throw new IOException(e);
+        }
     }
 
 }

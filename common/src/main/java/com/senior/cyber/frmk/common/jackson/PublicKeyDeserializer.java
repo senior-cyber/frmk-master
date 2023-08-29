@@ -34,25 +34,29 @@ public class PublicKeyDeserializer extends StdDeserializer<PublicKey> {
     public PublicKey deserialize(JsonParser json, DeserializationContext context) throws IOException {
         String pem = json.readValueAs(String.class);
         if (!StringUtils.isEmpty(pem)) {
-            try (StringReader reader = new StringReader(pem)) {
-                try (PEMParser parser = new PEMParser(reader)) {
-                    Object object = parser.readObject();
-                    if (object instanceof X509CertificateHolder) {
-                        X509CertificateHolder holder = (X509CertificateHolder) object;
-                        X509Certificate certificate = new JcaX509CertificateConverter().getCertificate(holder);
-                        return certificate.getPublicKey();
-                    } else if (object instanceof SubjectPublicKeyInfo) {
-                        SubjectPublicKeyInfo subjectPublicKeyInfo = (SubjectPublicKeyInfo) object;
-                        return new JcaPEMKeyConverter().getPublicKey(subjectPublicKeyInfo);
-                    } else {
-                        throw new IllegalArgumentException(pem + " is not readable");
-                    }
-                } catch (CertificateException e) {
-                    throw new IOException(e);
-                }
-            }
+            return convert(pem);
         }
         return null;
+    }
+
+    public static PublicKey convert(String value) throws IOException {
+        try (PEMParser parser = new PEMParser(new StringReader(value))) {
+            Object object = parser.readObject();
+            if (object instanceof X509CertificateHolder holder) {
+                JcaX509CertificateConverter converter = new JcaX509CertificateConverter();
+                converter.setProvider(BouncyCastleProvider.PROVIDER_NAME);
+                X509Certificate certificate = converter.getCertificate(holder);
+                return certificate.getPublicKey();
+            } else if (object instanceof SubjectPublicKeyInfo holder) {
+                JcaPEMKeyConverter converter = new JcaPEMKeyConverter();
+                converter.setProvider(BouncyCastleProvider.PROVIDER_NAME);
+                return converter.getPublicKey(holder);
+            } else {
+                throw new java.lang.UnsupportedOperationException(object.getClass().getName());
+            }
+        } catch (CertificateException e) {
+            throw new IOException(e);
+        }
     }
 
 }

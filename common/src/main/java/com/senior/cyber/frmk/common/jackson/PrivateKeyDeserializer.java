@@ -31,26 +31,24 @@ public class PrivateKeyDeserializer extends StdDeserializer<PrivateKey> {
     public PrivateKey deserialize(JsonParser json, DeserializationContext context) throws IOException {
         String pem = json.readValueAs(String.class);
         if (!StringUtils.isEmpty(pem)) {
-            try (StringReader reader = new StringReader(pem)) {
-                try (PEMParser parser = new PEMParser(reader)) {
-                    Object objectHolder = parser.readObject();
-                    if (objectHolder instanceof PEMKeyPair) {
-                        PEMKeyPair holder = (PEMKeyPair) objectHolder;
-                        JcaPEMKeyConverter converter = new JcaPEMKeyConverter();
-                        converter.setProvider(BouncyCastleProvider.PROVIDER_NAME);
-                        return converter.getPrivateKey(holder.getPrivateKeyInfo());
-                    } else if (objectHolder instanceof PrivateKeyInfo) {
-                        PrivateKeyInfo holder = (PrivateKeyInfo) objectHolder;
-                        JcaPEMKeyConverter converter = new JcaPEMKeyConverter();
-                        converter.setProvider(BouncyCastleProvider.PROVIDER_NAME);
-                        return converter.getPrivateKey(holder);
-                    } else {
-                        throw new IllegalArgumentException(pem + " is not readable");
-                    }
-                }
-            }
+            return convert(pem);
         }
         return null;
+    }
+
+    public static PrivateKey convert(String value) throws IOException {
+        try (PEMParser parser = new PEMParser(new StringReader(value))) {
+            Object objectHolder = parser.readObject();
+            JcaPEMKeyConverter converter = new JcaPEMKeyConverter();
+            converter.setProvider(BouncyCastleProvider.PROVIDER_NAME);
+            if (objectHolder instanceof PEMKeyPair holder) {
+                return converter.getPrivateKey(holder.getPrivateKeyInfo());
+            } else if (objectHolder instanceof PrivateKeyInfo holder) {
+                return converter.getPrivateKey(holder);
+            } else {
+                throw new java.lang.UnsupportedOperationException(objectHolder.getClass().getName());
+            }
+        }
     }
 
 }

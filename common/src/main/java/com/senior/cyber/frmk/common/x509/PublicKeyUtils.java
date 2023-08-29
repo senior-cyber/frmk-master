@@ -1,27 +1,14 @@
 package com.senior.cyber.frmk.common.x509;
 
-import org.apache.commons.io.FileUtils;
-import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
-import org.bouncycastle.cert.X509CertificateHolder;
-import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.jce.spec.IESParameterSpec;
-import org.bouncycastle.openssl.PEMParser;
-import org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter;
-import org.bouncycastle.openssl.jcajce.JcaPEMWriter;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import java.io.File;
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
 import java.security.interfaces.ECPublicKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Base64;
@@ -34,40 +21,6 @@ public class PublicKeyUtils {
         if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) == null) {
             Security.addProvider(new BouncyCastleProvider());
         }
-    }
-
-    public static PublicKey read(String pem) throws IOException {
-        try (PEMParser parser = new PEMParser(new StringReader(pem))) {
-            Object object = parser.readObject();
-            if (object instanceof X509CertificateHolder) {
-                X509CertificateHolder holder = (X509CertificateHolder) object;
-                JcaX509CertificateConverter converter = new JcaX509CertificateConverter();
-                converter.setProvider(BouncyCastleProvider.PROVIDER_NAME);
-                X509Certificate certificate = converter.getCertificate(holder);
-                return certificate.getPublicKey();
-            } else if (object instanceof SubjectPublicKeyInfo) {
-                SubjectPublicKeyInfo subjectPublicKeyInfo = (SubjectPublicKeyInfo) object;
-                JcaPEMKeyConverter converter = new JcaPEMKeyConverter();
-                converter.setProvider(BouncyCastleProvider.PROVIDER_NAME);
-                return converter.getPublicKey(subjectPublicKeyInfo);
-            } else {
-                throw new java.lang.UnsupportedOperationException(object.getClass().getName());
-            }
-        } catch (CertificateException e) {
-            throw new IOException(e);
-        }
-    }
-
-    public static PublicKey read(File pem) throws IOException {
-        return read(FileUtils.readFileToString(pem, StandardCharsets.UTF_8));
-    }
-
-    public static String write(PublicKey publicKey) throws IOException {
-        StringWriter pem = new StringWriter();
-        try (JcaPEMWriter writer = new JcaPEMWriter(pem)) {
-            writer.writeObject(publicKey);
-        }
-        return pem.toString();
     }
 
     public boolean verifyText(PublicKey publicKey, String text) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
