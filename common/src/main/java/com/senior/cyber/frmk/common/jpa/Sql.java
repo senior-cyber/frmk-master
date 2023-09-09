@@ -25,61 +25,44 @@ public class Sql {
         return name;
     }
 
-    public static String column(String aliasTableName, Attribute<?, ?> columnDsl) {
-        String tableName = aliasTableName;
-        Field f = (Field) columnDsl.getJavaMember();
-        OneToMany oneToMany = f.getAnnotation(OneToMany.class);
-        OneToOne oneToOne = f.getAnnotation(OneToOne.class);
-        ManyToOne manyToOne = f.getAnnotation(ManyToOne.class);
-        ManyToMany manyToMany = f.getAnnotation(ManyToMany.class);
-        if (oneToMany == null && oneToOne == null && manyToOne == null && manyToMany == null) {
-            Column column = f.getAnnotation(Column.class);
-            if (column != null && StringUtils.isNotEmpty(column.name())) {
-                return tableName + "." + column.name();
-            } else {
-                return tableName + "." + columnDsl.getName();
-            }
-        } else {
-            if (manyToMany != null) {
-                JoinTable joinTable = f.getAnnotation(JoinTable.class);
-                JoinColumn joinColumn = joinTable.joinColumns()[0];
-                return tableName + "." + joinColumn.name();
-            } else {
-                JoinColumn joinColumn = f.getAnnotation(JoinColumn.class);
-                if (joinColumn != null && StringUtils.isNotEmpty(joinColumn.name())) {
-                    return tableName + "." + joinColumn.name();
-                } else {
-                    return tableName + "." + columnDsl.getName();
-                }
-            }
-        }
+    public static String column(String tableName, Attribute<?, ?> columnDsl) {
+        Field field = (Field) columnDsl.getJavaMember();
+        return column(tableName, field);
     }
 
     public static String column(Attribute<?, ?> columnDsl) {
-        String tableName = table(columnDsl.getJavaMember().getDeclaringClass());
-        Field f = (Field) columnDsl.getJavaMember();
-        OneToMany oneToMany = f.getAnnotation(OneToMany.class);
-        OneToOne oneToOne = f.getAnnotation(OneToOne.class);
-        ManyToOne manyToOne = f.getAnnotation(ManyToOne.class);
-        ManyToMany manyToMany = f.getAnnotation(ManyToMany.class);
+        Field field = (Field) columnDsl.getJavaMember();
+        return column(field);
+    }
+
+    public static String column(Field field) {
+        String tableName = table(field.getDeclaringClass());
+        return column(tableName, field);
+    }
+
+    public static String column(String tableName, Field field) {
+        OneToMany oneToMany = field.getAnnotation(OneToMany.class);
+        OneToOne oneToOne = field.getAnnotation(OneToOne.class);
+        ManyToOne manyToOne = field.getAnnotation(ManyToOne.class);
+        ManyToMany manyToMany = field.getAnnotation(ManyToMany.class);
         if (oneToMany == null && oneToOne == null && manyToOne == null && manyToMany == null) {
-            Column column = f.getAnnotation(Column.class);
+            Column column = field.getAnnotation(Column.class);
             if (column != null && StringUtils.isNotEmpty(column.name())) {
                 return tableName + "." + column.name();
             } else {
-                return tableName + "." + columnDsl.getName();
+                return tableName + "." + field.getName();
             }
         } else {
             if (manyToMany != null) {
-                JoinTable joinTable = f.getAnnotation(JoinTable.class);
+                JoinTable joinTable = field.getAnnotation(JoinTable.class);
                 JoinColumn joinColumn = joinTable.joinColumns()[0];
                 return tableName + "." + joinColumn.name();
             } else {
-                JoinColumn joinColumn = f.getAnnotation(JoinColumn.class);
+                JoinColumn joinColumn = field.getAnnotation(JoinColumn.class);
                 if (joinColumn != null && StringUtils.isNotEmpty(joinColumn.name())) {
                     return tableName + "." + joinColumn.name();
                 } else {
-                    return tableName + "." + columnDsl.getName();
+                    return tableName + "." + field.getName();
                 }
             }
         }
