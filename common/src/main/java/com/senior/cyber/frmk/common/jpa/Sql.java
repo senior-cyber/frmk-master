@@ -40,7 +40,7 @@ public class Sql {
         return column(tableName, field);
     }
 
-    public static String column(String tableName, Field field) {
+    private static String column(String tableName, Field field) {
         OneToMany oneToMany = field.getAnnotation(OneToMany.class);
         OneToOne oneToOne = field.getAnnotation(OneToOne.class);
         ManyToOne manyToOne = field.getAnnotation(ManyToOne.class);
