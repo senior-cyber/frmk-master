@@ -2,6 +2,7 @@ package com.senior.cyber.frmk.common.jpa;
 
 import jakarta.persistence.*;
 import jakarta.persistence.metamodel.Attribute;
+import jakarta.persistence.metamodel.EntityType;
 import jakarta.persistence.metamodel.StaticMetamodel;
 import org.apache.commons.lang3.StringUtils;
 
@@ -25,6 +26,32 @@ public class Sql {
         return name;
     }
 
+    public static String column(Class<?> tableDsl, Attribute<?, ?> columnDsl) {
+        Field field = (Field) columnDsl.getJavaMember();
+        Id id = field.getAnnotation(Id.class);
+        if (id != null) {
+            EntityType<?> entityType = (EntityType<?>) columnDsl.getDeclaringType();
+            Class<?> fieldOfClazz = entityType.getJavaType();
+
+            Class<?> clazz = tableDsl;
+            StaticMetamodel staticMetamodel = tableDsl.getAnnotation(StaticMetamodel.class);
+            if (staticMetamodel != null) {
+                clazz = staticMetamodel.value();
+            }
+
+            String table = table(clazz);
+            PrimaryKeyJoinColumn primaryKeyJoinColumn = clazz.getAnnotation(PrimaryKeyJoinColumn.class);
+            if (primaryKeyJoinColumn != null) {
+                return table + "." + primaryKeyJoinColumn.name();
+            } else {
+                Column column = field.getAnnotation(Column.class);
+                return table + "." + column.name();
+            }
+        } else {
+            return column(table(tableDsl), field);
+        }
+    }
+
     public static String column(String tableName, Attribute<?, ?> columnDsl) {
         Field field = (Field) columnDsl.getJavaMember();
         return column(tableName, field);
@@ -35,7 +62,7 @@ public class Sql {
         return column(field);
     }
 
-    public static String column(Field field) {
+    private static String column(Field field) {
         String tableName = table(field.getDeclaringClass());
         return column(tableName, field);
     }
