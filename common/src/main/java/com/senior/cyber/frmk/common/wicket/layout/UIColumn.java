@@ -8,10 +8,7 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 
 public class UIColumn extends WebMarkupContainer {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4973030497551512588L;
+    private static final long serialVersionUID = 1L;
 
     protected Size size;
 

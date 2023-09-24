@@ -11,10 +11,7 @@ import java.util.List;
 
 public class FullCalendarItem implements Serializable {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3370848291462739218L;
+    private static final long serialVersionUID = 1L;
 
     private Date end;
 

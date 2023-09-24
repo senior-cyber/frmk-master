@@ -9,10 +9,7 @@ import java.util.Date;
 
 public class MonthYearTextField extends org.apache.wicket.extensions.markup.html.form.DateTextField {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4608299654476751883L;
+    private static final long serialVersionUID = 1L;
 
     private static final String JAVA_PARTTERN = "MM/yyyy";
     private static final String JAVASCRIPT_PARTTERN = "mm/yyyy";

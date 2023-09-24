@@ -7,10 +7,7 @@ import org.apache.wicket.markup.ComponentTag;
 
 public class ComponentFeedbackPanel extends org.apache.wicket.markup.html.panel.ComponentFeedbackPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2638799339364446222L;
+    private static final long serialVersionUID = 1L;
 
     protected final String errorClass;
 

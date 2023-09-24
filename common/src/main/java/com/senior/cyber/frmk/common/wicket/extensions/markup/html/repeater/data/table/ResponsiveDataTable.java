@@ -1,7 +1,6 @@
 package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table;
 
-import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.ISortableDataProvider;
+import jakarta.persistence.Tuple;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.OddEvenItem;
@@ -11,12 +10,16 @@ import org.apache.wicket.util.string.Strings;
 
 import java.util.List;
 
-public class ResponsiveDataTable<T, S> extends AbstractDataTable<T, S> {
+public class ResponsiveDataTable extends DataTable {
+
+    protected static final int FLAG_OUTPUT_MARKUP_ID = 0x4000;
+
+    protected static final String MARKUP_ID_ATTR_NAME = "id";
 
     /**
      *
      */
-    private static final long serialVersionUID = 2947371120252535158L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Constructor
@@ -26,11 +29,11 @@ public class ResponsiveDataTable<T, S> extends AbstractDataTable<T, S> {
      * @param dataProvider data provider
      * @param rowsPerPage  number of rows per page
      */
-    public ResponsiveDataTable(final String id, final List<? extends IColumn<T, S>> columns,
-                               final ISortableDataProvider<T, S> dataProvider, final int rowsPerPage) {
+    public ResponsiveDataTable(final String id, final List<? extends IColumn> columns,
+                               final ISortableDataProvider dataProvider, final int rowsPerPage) {
         super(id, columns, dataProvider, rowsPerPage);
         setOutputMarkupId(true);
-        addTopToolbar(new HeadersToolbar<>(this, dataProvider));
+        addTopToolbar(new HeadersToolbar(this, dataProvider));
         addBottomToolbar(new NoRecordsToolbar(this));
         addBottomToolbar(new NavigationToolbar(this));
     }
@@ -59,7 +62,8 @@ public class ResponsiveDataTable<T, S> extends AbstractDataTable<T, S> {
     }
 
     @Override
-    protected Item<T> newRowItem(final String id, final int index, final IModel<T> model) {
+    protected Item<Tuple> newRowItem(final String id, final int index, final IModel<Tuple> model) {
         return new OddEvenItem<>(id, index, model);
     }
+
 }

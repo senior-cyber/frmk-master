@@ -14,10 +14,7 @@ import java.util.List;
 
 public class ItemIconLink<T> extends Panel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1564296998080424794L;
+    private static final long serialVersionUID = 1L;
 
     public ItemIconLink(String id, IModel<T> rowModel, WicketTwoFunction<String, T, ItemCss> itemCss,
                         WicketThreeConsumer<String, T, AjaxRequestTarget> itemClick, String identity) {

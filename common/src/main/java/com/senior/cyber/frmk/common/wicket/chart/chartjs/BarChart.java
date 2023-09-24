@@ -19,10 +19,7 @@ import java.util.List;
 
 public class BarChart extends WebComponent {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2031773587523085812L;
+    private static final long serialVersionUID = 1L;
 
     private IModel<BarData> dataset;
 
@@ -59,10 +56,7 @@ public class BarChart extends WebComponent {
 
     public static class BarItem implements Serializable {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -2390987653208130338L;
+        private static final long serialVersionUID = 1L;
 
         private String label;
 
@@ -123,10 +117,7 @@ public class BarChart extends WebComponent {
 
     public static class BarData implements Serializable {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -6094082066773162902L;
+        private static final long serialVersionUID = 1L;
 
         private List<String> labels = new LinkedList<>();
 

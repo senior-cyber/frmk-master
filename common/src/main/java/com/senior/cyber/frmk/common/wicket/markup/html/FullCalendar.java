@@ -21,10 +21,7 @@ import java.util.List;
 
 public class FullCalendar extends WebComponent implements IRequestListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6685111743530419855L;
+    private static final long serialVersionUID = 1L;
 
     private FullCalendarProvider provider;
 

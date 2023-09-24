@@ -10,10 +10,7 @@ import java.util.List;
 
 public abstract class OptionListModel extends ListModel<Option> {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2868650190922370946L;
+    private static final long serialVersionUID = 1L;
 
     private List<String> where = null;
 

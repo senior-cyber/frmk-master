@@ -17,10 +17,7 @@ import java.util.Date;
 
 public class ClickableCell extends ItemPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6137165359712366201L;
+    private static final long serialVersionUID = 1L;
 
     private WicketTwoConsumer<Tuple, Link<Void>> onClick;
 

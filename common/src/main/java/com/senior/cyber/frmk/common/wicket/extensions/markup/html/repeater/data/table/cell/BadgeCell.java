@@ -17,10 +17,7 @@ import java.util.Date;
 
 public class BadgeCell extends ItemPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8405681252766451341L;
+    private static final long serialVersionUID = 1L;
 
     private BadgeType type;
 

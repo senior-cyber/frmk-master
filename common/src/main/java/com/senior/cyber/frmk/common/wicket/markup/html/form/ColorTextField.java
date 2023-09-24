@@ -7,10 +7,7 @@ import org.apache.wicket.model.IModel;
 
 public class ColorTextField extends TextField<String> {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3933130617714702467L;
+    private static final long serialVersionUID = 1L;
 
     public ColorTextField(String id) {
         super(id, String.class);

@@ -11,10 +11,7 @@ import org.apache.wicket.model.IModel;
 
 public class ItemTextLink<T> extends Panel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 566391360952711919L;
+    private static final long serialVersionUID = 1L;
 
     public ItemTextLink(String id, IModel<T> rowModel, IModel<?> model, WicketTwoFunction<String, T, ItemCss> itemCss,
                         WicketThreeConsumer<String, T, AjaxRequestTarget> itemClick, String identity) {

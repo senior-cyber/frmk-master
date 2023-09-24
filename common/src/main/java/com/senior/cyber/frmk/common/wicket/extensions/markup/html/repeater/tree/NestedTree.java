@@ -12,25 +12,19 @@ import java.util.Set;
 
 public class NestedTree<T> extends DefaultNestedTree<T> {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2336213290953236724L;
+    private static final long serialVersionUID = 1L;
 
     private WicketTwoFunction<String, IModel<T>, Component> labelFactory;
 
     private WicketTwoFunction<String, IModel<T>, MarkupContainer> linkFactory;
 
-    public NestedTree(String id, ITreeProvider<T> provider, WicketTwoFunction<String, IModel<T>, Component> labelFactory,
-                      WicketTwoFunction<String, IModel<T>, MarkupContainer> linkFactory) {
+    public NestedTree(String id, ITreeProvider<T> provider, WicketTwoFunction<String, IModel<T>, Component> labelFactory, WicketTwoFunction<String, IModel<T>, MarkupContainer> linkFactory) {
         super(id, provider);
         this.labelFactory = labelFactory;
         this.linkFactory = linkFactory;
     }
 
-    public NestedTree(String id, ITreeProvider<T> provider, IModel<? extends Set<T>> state,
-                      WicketTwoFunction<String, IModel<T>, Component> labelFactory,
-                      WicketTwoFunction<String, IModel<T>, MarkupContainer> linkFactory) {
+    public NestedTree(String id, ITreeProvider<T> provider, IModel<? extends Set<T>> state, WicketTwoFunction<String, IModel<T>, Component> labelFactory, WicketTwoFunction<String, IModel<T>, MarkupContainer> linkFactory) {
         super(id, provider, state);
         this.labelFactory = labelFactory;
         this.linkFactory = linkFactory;
@@ -43,10 +37,7 @@ public class NestedTree<T> extends DefaultNestedTree<T> {
 
     public class Folder extends org.apache.wicket.extensions.markup.html.repeater.tree.content.Folder<T> {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -2261932935927139709L;
+        private static final long serialVersionUID = 1L;
 
         public Folder(String id, AbstractTree<T> tree, IModel<T> model) {
             super(id, tree, model);

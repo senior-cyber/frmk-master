@@ -12,10 +12,7 @@ import java.util.List;
 
 public class SmartTextField extends DefaultCssAutoCompleteTextField<String> {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6024731169531918099L;
+    private static final long serialVersionUID = 1L;
 
     private SmartTextProvider provider;
 

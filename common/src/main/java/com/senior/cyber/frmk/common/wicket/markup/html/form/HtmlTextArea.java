@@ -6,10 +6,8 @@ import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.model.IModel;
 
 public class HtmlTextArea extends TextArea<String> {
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8643032505619924748L;
+
+    private static final long serialVersionUID = 1L;
 
     public HtmlTextArea(String id) {
         super(id);

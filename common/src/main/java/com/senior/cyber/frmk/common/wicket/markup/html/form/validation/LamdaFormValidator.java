@@ -7,10 +7,7 @@ import org.apache.wicket.markup.html.form.FormComponent;
 
 public class LamdaFormValidator implements org.apache.wicket.markup.html.form.validation.IFormValidator {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4512493086950772591L;
+    private static final long serialVersionUID = 1L;
 
     protected FormComponent<?>[] components;
 

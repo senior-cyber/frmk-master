@@ -10,10 +10,7 @@ import java.util.Date;
 
 public class TimeTextField extends DateTextField {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3540516807902774139L;
+    private static final long serialVersionUID = 1L;
 
 
     private static final String JAVA_PARTTERN = "HH:mm";

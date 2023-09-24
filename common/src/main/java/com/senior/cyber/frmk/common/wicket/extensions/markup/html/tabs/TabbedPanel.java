@@ -8,10 +8,7 @@ import java.util.List;
 
 public class TabbedPanel extends org.apache.wicket.extensions.markup.html.tabs.TabbedPanel<Tab> {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6277003017054964423L;
+    private static final long serialVersionUID = 1L;
 
     private List<Tab> tabs;
 

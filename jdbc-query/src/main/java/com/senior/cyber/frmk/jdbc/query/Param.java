@@ -1,6 +1,8 @@
 package com.senior.cyber.frmk.jdbc.query;
 
-public class Param {
+import java.io.Serializable;
+
+public class Param implements Serializable {
 
     private final String name;
 

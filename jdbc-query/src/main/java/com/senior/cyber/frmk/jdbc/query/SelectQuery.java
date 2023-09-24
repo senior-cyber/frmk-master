@@ -1,8 +1,7 @@
 package com.senior.cyber.frmk.jdbc.query;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 public abstract class SelectQuery extends WhereQuery {
 
@@ -117,5 +116,5 @@ public abstract class SelectQuery extends WhereQuery {
     }
 
     public abstract String toSQL();
-    
+
 }

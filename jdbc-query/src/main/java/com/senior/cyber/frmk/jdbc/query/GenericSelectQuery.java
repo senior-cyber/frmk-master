@@ -2,6 +2,9 @@ package com.senior.cyber.frmk.jdbc.query;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GenericSelectQuery extends SelectQuery {
 
     public GenericSelectQuery(String tableName) {
@@ -12,33 +15,38 @@ public class GenericSelectQuery extends SelectQuery {
         if (!this.dirty) {
             return this.cached;
         }
-        StringBuilder builder = new StringBuilder();
-        builder.append("SELECT ");
+        List<String> segment = new ArrayList<>();
+        segment.add("SELECT");
         if (this.field.isEmpty()) {
             this.field.add("*");
         }
-        builder.append(StringUtils.join(this.field, ", "));
-        builder.append(" FROM ");
-        builder.append(this.tableName);
+        segment.add(StringUtils.join(this.field, ", "));
+        segment.add("FROM");
+        segment.add(this.tableName);
         if (!this.join.isEmpty()) {
-            builder.append(" ").append(StringUtils.join(this.join, " "));
+            segment.add(StringUtils.join(this.join, " "));
         }
         if (!this.where.isEmpty()) {
-            builder.append(" WHERE ").append(StringUtils.join(this.where, " AND "));
+            segment.add("WHERE");
+            segment.add(StringUtils.join(this.where, " AND "));
         }
         if (!this.groupBy.isEmpty()) {
-            builder.append(" GROUP BY ").append(StringUtils.join(this.groupBy, ", "));
+            segment.add("GROUP BY");
+            segment.add(StringUtils.join(this.groupBy, ", "));
         }
         if (!this.having.isEmpty()) {
-            builder.append(" HAVING ").append(StringUtils.join(this.having, " AND "));
+            segment.add("HAVING");
+            segment.add(StringUtils.join(this.having, " AND "));
         }
         if (!this.orderBy.isEmpty()) {
-            builder.append(" ORDER BY ").append(StringUtils.join(this.orderBy, ", "));
+            segment.add("ORDER BY");
+            segment.add(StringUtils.join(this.orderBy, ", "));
         }
         if (this.pagination) {
-            builder.append(" LIMIT ").append(this.offset).append(",").append(this.number);
+            segment.add("LIMIT");
+            segment.add(this.offset + "," + this.number);
         }
-        this.cached = builder.toString();
+        this.cached = StringUtils.join(segment, " ");
         this.dirty = false;
         return this.cached;
     }

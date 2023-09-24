@@ -5,10 +5,7 @@ import org.apache.wicket.model.IModel;
 
 public abstract class Panel extends org.apache.wicket.markup.html.panel.Panel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4083430395397049647L;
+    private static final long serialVersionUID = 1L;
 
     public Panel(String id) {
         super(id);

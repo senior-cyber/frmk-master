@@ -17,10 +17,7 @@ import java.util.List;
 
 public class PieChart extends WebComponent {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5090750359586454073L;
+    private static final long serialVersionUID = 1L;
 
     private IModel<PieData> dataset;
 
@@ -55,10 +52,7 @@ public class PieChart extends WebComponent {
 
     public static class PieItem implements Serializable {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -2605733189776683748L;
+        private static final long serialVersionUID = 1L;
 
         private List<String> data = new LinkedList<>();
 

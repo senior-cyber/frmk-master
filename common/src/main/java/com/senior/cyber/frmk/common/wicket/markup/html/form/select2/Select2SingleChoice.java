@@ -15,9 +15,10 @@ import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.convert.ConversionException;
-import org.apache.wicket.util.convert.IConverter;
 import org.apache.wicket.util.string.AppendingStringBuffer;
 import org.apache.wicket.util.string.Strings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -26,10 +27,9 @@ import java.util.List;
 
 public class Select2SingleChoice extends FormComponent<Option> implements IRequestListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5094070308383047000L;
+    private static final long serialVersionUID = 1L;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(Select2MultipleChoice.class);
 
     private boolean validValue;
 
@@ -37,20 +37,25 @@ public class Select2SingleChoice extends FormComponent<Option> implements IReque
 
     private boolean convertValue;
 
-    private final ISingleChoiceProvider provider;
+    private AbstractJdbcChoiceProvider provider;
 
     private transient Option convertedInput;
 
     private int inputLength;
 
-    public Select2SingleChoice(String id, IModel<Option> model, ISingleChoiceProvider provider) {
+    public Select2SingleChoice(String id, IModel<Option> model, AbstractJdbcChoiceProvider provider) {
         this(id, model, provider, 0);
     }
 
-    public Select2SingleChoice(String id, IModel<Option> model, ISingleChoiceProvider provider, int inputLength) {
+    public Select2SingleChoice(String id, IModel<Option> model, AbstractJdbcChoiceProvider provider, int inputLength) {
         super(id, model);
         this.provider = provider;
         this.inputLength = inputLength;
+    }
+
+    @Override
+    public final FormComponent<Option> setType(Class<?> type) {
+        throw new UnsupportedOperationException("This class does not support type-conversion because it is performed " + "exclusively by the IChoiceRenderer assigned to this component");
     }
 
     @Override
@@ -85,7 +90,10 @@ public class Select2SingleChoice extends FormComponent<Option> implements IReque
     protected Option convertValue(String[] value) throws ConversionException {
         this.convertValue = true;
         if (value != null && value.length > 0) {
-            this.convertedInput = this.provider.toChoice(value[0]);
+            List<Option> options = this.provider.toChoice(List.of(value[0]));
+            if (!options.isEmpty()) {
+                this.convertedInput = options.get(0);
+            }
             return this.convertedInput;
         } else {
             this.convertedInput = null;
@@ -148,7 +156,7 @@ public class Select2SingleChoice extends FormComponent<Option> implements IReque
     protected void onComponentTag(ComponentTag tag) {
         checkComponentTag(tag, "select");
         String clazz = tag.getAttribute("class");
-        if (clazz == null || "".equals(clazz)) {
+        if (clazz == null || clazz.isEmpty()) {
             clazz = "select2";
         } else {
             if (!clazz.contains("select2")) {
@@ -158,7 +166,7 @@ public class Select2SingleChoice extends FormComponent<Option> implements IReque
         tag.put("class", clazz);
 
         String style = tag.getAttribute("style");
-        if (style == null || "".equals(style)) {
+        if (style == null || style.isEmpty()) {
             style = "width: 100%;";
         } else {
             if (!style.contains("width: 100%")) {
@@ -174,26 +182,14 @@ public class Select2SingleChoice extends FormComponent<Option> implements IReque
     }
 
     protected void appendOptionHtml(AppendingStringBuffer buffer, Option choice, int index) {
-        Object objectValue = this.provider.getDisplayValue(choice);
-        Class<?> objectClass = (objectValue == null ? null : objectValue.getClass());
 
-        String displayValue = "";
-        if (objectClass != null && objectClass != String.class) {
-            @SuppressWarnings("rawtypes")
-            IConverter converter = getConverter(objectClass);
-            displayValue = converter.convertToString(objectValue, getLocale());
-        } else if (objectValue != null) {
-            displayValue = objectValue.toString();
-        }
+        String displayValue = choice.getText();
 
         buffer.append("\n<option ");
         setOptionAttributes(buffer, choice, index);
         buffer.append('>');
 
         String display = displayValue;
-        if (localizeDisplayValues()) {
-            display = getLocalizer().getString(displayValue, this, displayValue);
-        }
 
         CharSequence escaped = display;
         if (getEscapeModelStrings()) {
@@ -215,7 +211,7 @@ public class Select2SingleChoice extends FormComponent<Option> implements IReque
     protected void setOptionAttributes(AppendingStringBuffer buffer, Option choice, int index) {
         buffer.append("selected=\"selected\" ");
         buffer.append("value=\"");
-        buffer.append(Strings.escapeMarkup(provider.getIdValue(choice, index)));
+        buffer.append(Strings.escapeMarkup(choice.getId()));
         buffer.append('"');
     }
 
@@ -229,8 +225,9 @@ public class Select2SingleChoice extends FormComponent<Option> implements IReque
         term = StringUtils.trimToEmpty(term);
         int page = params.getParameterValue("page").toInt(1);
 
+        LOGGER.info("onRequest q [{}] page [{}]", term, page);
 
-        List<Option> options = this.provider.doQuery(term, page);
+        List<Option> options = this.provider.searchOption(term, page);
 
         Select2Response response = new Select2Response();
         response.setMore(this.provider.hasMore(term, page));
@@ -271,4 +268,5 @@ public class Select2SingleChoice extends FormComponent<Option> implements IReque
     public boolean rendersPage() {
         return false;
     }
+
 }

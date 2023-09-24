@@ -7,10 +7,7 @@ import org.apache.wicket.model.IModel;
 
 public class SQLTextArea extends TextArea<String> {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8575938078854599841L;
+    private static final long serialVersionUID = 1L;
 
     public SQLTextArea(String id) {
         super(id);

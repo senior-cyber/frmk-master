@@ -20,10 +20,7 @@ import java.util.*;
 
 public class ReadOnlyView extends Label {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1209085172730265676L;
+    private static final long serialVersionUID = 1L;
 
     protected String format;
 

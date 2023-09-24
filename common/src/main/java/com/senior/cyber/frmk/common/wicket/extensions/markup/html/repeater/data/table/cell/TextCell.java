@@ -15,10 +15,7 @@ import java.util.Date;
 
 public class TextCell extends ItemPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4862773639352630850L;
+    private static final long serialVersionUID = 1L;
 
     private IModel<?> model;
 

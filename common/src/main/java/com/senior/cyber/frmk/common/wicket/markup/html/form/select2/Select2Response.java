@@ -6,10 +6,7 @@ import java.util.List;
 
 public class Select2Response implements Serializable {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5251203920993448696L;
+    private static final long serialVersionUID = 1L;
 
     private int page = 1;
 

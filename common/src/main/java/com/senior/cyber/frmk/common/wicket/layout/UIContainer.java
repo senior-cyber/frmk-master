@@ -6,10 +6,7 @@ import org.apache.wicket.markup.html.form.FormComponent;
 
 public class UIContainer extends WebMarkupContainer {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2599850482317800532L;
+    private static final long serialVersionUID = 1L;
 
     protected UIContainer(final String id) {
         super(id);

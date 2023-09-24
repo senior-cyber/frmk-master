@@ -8,10 +8,7 @@ import org.apache.wicket.model.IModel;
 
 public class IPTextField extends TextField<String> {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3349883874886789180L;
+    private static final long serialVersionUID = 1L;
 
     public IPTextField(String id, IModel<String> model) {
         super(id, model);

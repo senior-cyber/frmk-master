@@ -18,10 +18,7 @@ import java.util.List;
 
 public class LineChart extends WebComponent {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1845751700055205233L;
+    private static final long serialVersionUID = 1L;
 
     private IModel<LineData> dataset;
 
@@ -58,10 +55,7 @@ public class LineChart extends WebComponent {
 
     public static class LineItem implements Serializable {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -1781030396007424540L;
+        private static final long serialVersionUID = 1L;
 
         private String label;
 
@@ -169,10 +163,7 @@ public class LineChart extends WebComponent {
 
     public static class LineData implements Serializable {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 2449830332813435975L;
+        private static final long serialVersionUID = 1L;
 
         private List<String> labels = new LinkedList<>();
 

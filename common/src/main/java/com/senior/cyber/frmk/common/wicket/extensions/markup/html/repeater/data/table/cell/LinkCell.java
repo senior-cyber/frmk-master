@@ -18,10 +18,7 @@ import java.util.Date;
 
 public class LinkCell extends ItemPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1561026390001794196L;
+    private static final long serialVersionUID = 1L;
 
     private Class<? extends Page> page;
 

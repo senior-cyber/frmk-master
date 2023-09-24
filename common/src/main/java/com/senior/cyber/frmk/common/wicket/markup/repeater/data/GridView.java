@@ -8,10 +8,7 @@ import java.io.Serializable;
 
 public class GridView<T> extends org.apache.wicket.markup.repeater.data.GridView<T> {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4285596298189375512L;
+    private static final long serialVersionUID = 1L;
 
     private PopulateEmptyItem<T> populateEmptyItem;
 

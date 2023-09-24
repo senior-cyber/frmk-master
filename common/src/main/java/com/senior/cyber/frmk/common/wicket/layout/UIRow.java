@@ -11,10 +11,7 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 
 public class UIRow extends WebMarkupContainer {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8898635649074095061L;
+    private static final long serialVersionUID = 1L;
 
     private int size = 0;
 

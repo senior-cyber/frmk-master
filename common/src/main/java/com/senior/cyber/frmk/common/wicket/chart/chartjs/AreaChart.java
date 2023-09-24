@@ -18,10 +18,7 @@ import java.util.List;
 
 public class AreaChart extends WebComponent {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1845751700055205233L;
+    private static final long serialVersionUID = 1L;
 
     private IModel<AreaData> dataset;
 
@@ -58,10 +55,7 @@ public class AreaChart extends WebComponent {
 
     public static class AreaItem implements Serializable {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -1781030396007424540L;
+        private static final long serialVersionUID = 1L;
 
         private String label;
 
@@ -168,10 +162,7 @@ public class AreaChart extends WebComponent {
 
     public static class AreaData implements Serializable {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 2449830332813435975L;
+        private static final long serialVersionUID = 1L;
 
         private List<String> labels = new LinkedList<>();
 

@@ -9,10 +9,7 @@ import java.util.List;
 
 public class ActionItem implements Serializable, Comparable<ActionItem> {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1297779255222859837L;
+    private static final long serialVersionUID = 1L;
 
     private final String link;
 

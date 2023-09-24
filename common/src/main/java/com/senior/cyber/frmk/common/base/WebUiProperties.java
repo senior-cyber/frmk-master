@@ -20,7 +20,7 @@ public class WebUiProperties implements Serializable {
     /**
      *
      */
-    private static final long serialVersionUID = -7645741440087458926L;
+    private static final long serialVersionUID = 1L;
 
     private RuntimeConfigurationType configurationType = RuntimeConfigurationType.DEPLOYMENT;
 

@@ -19,13 +19,9 @@ import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.List;
 
-public class ExcelDataExporter
-        extends AbstractDataExporter {
+public class ExcelDataExporter extends AbstractDataExporter {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8744527077878620125L;
+    private static final long serialVersionUID = 1L;
 
     private boolean exportHeadersEnabled = true;
 

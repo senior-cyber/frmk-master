@@ -7,10 +7,7 @@ import org.apache.wicket.model.IModel;
 
 public class JavascriptTextArea extends TextArea<String> {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7590641085407244298L;
+    private static final long serialVersionUID = 1L;
 
     public JavascriptTextArea(String id) {
         super(id);

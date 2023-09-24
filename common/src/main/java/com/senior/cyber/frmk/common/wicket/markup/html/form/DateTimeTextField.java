@@ -9,10 +9,7 @@ import java.util.Date;
 
 public class DateTimeTextField extends org.apache.wicket.extensions.markup.html.form.DateTextField {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 3349883874886789180L;
+    private static final long serialVersionUID = 1L;
 
     private static final String JAVA_PARTTERN = "dd/MM/yyyy HH:mm";
     private static final String JAVASCRIPT_PARTTERN = "dd/mm/yyyy HH:MM";

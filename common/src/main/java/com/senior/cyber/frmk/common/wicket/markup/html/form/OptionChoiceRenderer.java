@@ -8,10 +8,7 @@ import java.util.List;
 
 public class OptionChoiceRenderer implements IChoiceRenderer<Option> {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2485200113034042088L;
+    private static final long serialVersionUID = 1L;
 
     public OptionChoiceRenderer() {
     }

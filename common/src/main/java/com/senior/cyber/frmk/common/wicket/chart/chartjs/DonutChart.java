@@ -17,10 +17,7 @@ import java.util.List;
 
 public class DonutChart extends WebComponent {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6151147556159777408L;
+    private static final long serialVersionUID = 1L;
 
     private IModel<DonutData> dataset;
 
@@ -55,10 +52,7 @@ public class DonutChart extends WebComponent {
 
     public static class DonutItem implements Serializable {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -4787513975967780341L;
+        private static final long serialVersionUID = 1L;
 
         private List<String> data = new LinkedList<>();
 
