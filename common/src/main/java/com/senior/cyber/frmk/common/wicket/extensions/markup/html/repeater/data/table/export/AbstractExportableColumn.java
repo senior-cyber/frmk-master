@@ -2,7 +2,6 @@ package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data
 
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.AbstractColumn;
-import jakarta.persistence.Tuple;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.repeater.Item;
@@ -13,7 +12,7 @@ import java.io.Serializable;
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.export.AbstractExportableColumn
  */
-public abstract class AbstractExportableColumn<T extends Serializable> extends AbstractColumn implements IExportableColumn<T> {
+public abstract class AbstractExportableColumn<RowType, CellType extends Serializable> extends AbstractColumn<RowType, CellType> implements IExportableColumn<RowType, CellType> {
 
     /**
      * Creates a new {@link AbstractExportableColumn} with the provided display model, and without a sort property.
@@ -58,7 +57,7 @@ public abstract class AbstractExportableColumn<T extends Serializable> extends A
      * @param rowModel    A model of the row data.
      */
     @Override
-    public void populateItem(Item<ICellPopulator> cellItem, String componentId, IModel<Tuple> rowModel) {
+    public void populateItem(Item<ICellPopulator<RowType, CellType>> cellItem, String componentId, IModel<RowType> rowModel) {
         cellItem.add(createDisplayComponent(componentId, getDataModel(rowModel)));
     }
 

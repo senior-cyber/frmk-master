@@ -22,7 +22,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import java.io.Serializable;
 import java.util.*;
 
-public abstract class AbstractJdbcDataProvider extends SortableDataProvider implements IFilterStateLocator {
+public abstract class AbstractJdbcDataProvider extends SortableDataProvider<Tuple> implements IFilterStateLocator {
 
 
     public static final String WHERE = "WHERE ";

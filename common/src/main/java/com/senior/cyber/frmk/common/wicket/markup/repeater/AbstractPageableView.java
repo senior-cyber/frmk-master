@@ -14,7 +14,7 @@ import java.util.NoSuchElementException;
 /**
  * @see org.apache.wicket.markup.repeater.AbstractPageableView
  */
-public abstract class AbstractPageableView extends RefreshingView implements IPageableItems {
+public abstract class AbstractPageableView<RowType> extends RefreshingView<RowType> implements IPageableItems {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractPageableView.class);
 
@@ -66,13 +66,13 @@ public abstract class AbstractPageableView extends RefreshingView implements IPa
      * @return iterator over models for items in the current page
      */
     @Override
-    protected Iterator<IModel<Tuple>> getItemModels() {
+    protected Iterator<IModel<RowType>> getItemModels() {
         int offset = getFirstItemOffset();
         int size = getViewSize();
 
-        Iterator<IModel<Tuple>> models = getItemModels(offset, size);
+        Iterator<IModel<RowType>> models = getItemModels(offset, size);
 
-        models = new CappedIteratorAdapter<Tuple>(models, size);
+        models = new CappedIteratorAdapter<RowType>(models, size);
 
         return models;
     }
@@ -94,7 +94,7 @@ public abstract class AbstractPageableView extends RefreshingView implements IPa
      * @param size   number of items that will be shown in the current page
      * @return an iterator over models for items in the current page
      */
-    protected abstract Iterator<IModel<Tuple>> getItemModels(int offset, int size);
+    protected abstract Iterator<IModel<RowType>> getItemModels(int offset, int size);
 
     // /////////////////////////////////////////////////////////////////////////
     // ITEM COUNT CACHE

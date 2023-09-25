@@ -10,7 +10,7 @@ import org.apache.wicket.util.string.Strings;
 
 import java.util.List;
 
-public class ResponsiveDataTable extends DataTable {
+public class ResponsiveDataTable<RowType, CellType> extends DataTable<RowType, CellType> {
 
     protected static final int FLAG_OUTPUT_MARKUP_ID = 0x4000;
 
@@ -29,7 +29,7 @@ public class ResponsiveDataTable extends DataTable {
      * @param dataProvider data provider
      * @param rowsPerPage  number of rows per page
      */
-    public ResponsiveDataTable(final String id, final List<? extends IColumn> columns,
+    public ResponsiveDataTable(final String id, final List<? extends IColumn<RowType, CellType>> columns,
                                final ISortableDataProvider dataProvider, final int rowsPerPage) {
         super(id, columns, dataProvider, rowsPerPage);
         setOutputMarkupId(true);
@@ -62,7 +62,7 @@ public class ResponsiveDataTable extends DataTable {
     }
 
     @Override
-    protected Item<Tuple> newRowItem(final String id, final int index, final IModel<Tuple> model) {
+    protected Item<RowType> newRowItem(final String id, final int index, final IModel<RowType> model) {
         return new OddEvenItem<>(id, index, model);
     }
 

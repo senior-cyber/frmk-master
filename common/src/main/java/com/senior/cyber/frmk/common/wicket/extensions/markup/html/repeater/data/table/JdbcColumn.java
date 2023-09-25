@@ -17,17 +17,17 @@ import java.io.Serializable;
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn
  */
-public class JdbcColumn<T extends Serializable> extends AbstractColumn implements IExportableColumn<T> {
+public class JdbcColumn<CellType extends Serializable> extends AbstractColumn<Tuple, CellType> implements IExportableColumn<Tuple, CellType> {
 
     private static final long serialVersionUID = 1L;
 
     private String keyExpression;
 
-    private Class<T> typeClass;
+    private Class<CellType> typeClass;
 
-    protected SerializerFunction<T> serializer;
+    protected SerializerFunction<CellType> serializer;
 
-    protected CellSerializerFunction<T> cellSerializer;
+    protected CellSerializerFunction<CellType> cellSerializer;
 
     public JdbcColumn(final IModel<String> displayModel) {
         super(displayModel);
@@ -38,8 +38,8 @@ public class JdbcColumn<T extends Serializable> extends AbstractColumn implement
     }
 
     @Override
-    public void populateItem(final Item<ICellPopulator> cellItem, final String componentId, final IModel<Tuple> rowModel) {
-        IModel<T> m = getDataModel(rowModel);
+    public void populateItem(final Item<ICellPopulator<Tuple, CellType>> cellItem, final String componentId, final IModel<Tuple> rowModel) {
+        IModel<CellType> m = getDataModel(rowModel);
 
         ItemPanel itemPanel = this.cellSerializer == null ? null : this.cellSerializer.apply(this.keyExpression, rowModel.getObject(), m.getObject());
         if (itemPanel == null) {
@@ -52,11 +52,11 @@ public class JdbcColumn<T extends Serializable> extends AbstractColumn implement
         }
     }
 
-    public Class<T> getTypeClass() {
+    public Class<CellType> getTypeClass() {
         return typeClass;
     }
 
-    public void setTypeClass(Class<T> typeClass) {
+    public void setTypeClass(Class<CellType> typeClass) {
         this.typeClass = typeClass;
     }
 
@@ -65,7 +65,7 @@ public class JdbcColumn<T extends Serializable> extends AbstractColumn implement
     }
 
     @Override
-    public IModel<T> getDataModel(IModel<Tuple> rowModel) {
+    public IModel<CellType> getDataModel(IModel<Tuple> rowModel) {
         Tuple tuple = rowModel.getObject();
         return Model.of(tuple.get(this.keyExpression, this.typeClass));
     }
@@ -74,11 +74,11 @@ public class JdbcColumn<T extends Serializable> extends AbstractColumn implement
         this.keyExpression = keyExpression;
     }
 
-    public void setSerializer(SerializerFunction<T> serializer) {
+    public void setSerializer(SerializerFunction<CellType> serializer) {
         this.serializer = serializer;
     }
 
-    public void setCellSerializer(CellSerializerFunction<T> cellSerializer) {
+    public void setCellSerializer(CellSerializerFunction<CellType> cellSerializer) {
         this.cellSerializer = cellSerializer;
     }
 

@@ -1,6 +1,5 @@
 package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table;
 
-import jakarta.persistence.Tuple;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.OddEvenItem;
 import org.apache.wicket.model.IModel;
@@ -10,7 +9,7 @@ import java.util.List;
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataTable
  */
-public class DefaultDataTable extends DataTable {
+public class DefaultDataTable<RowType, CellType> extends DataTable<RowType, CellType> {
 
     private static final long serialVersionUID = 1L;
 
@@ -22,7 +21,7 @@ public class DefaultDataTable extends DataTable {
      * @param dataProvider data provider
      * @param rowsPerPage  number of rows per page
      */
-    public DefaultDataTable(final String id, final List<? extends IColumn> columns, final ISortableDataProvider dataProvider, final int rowsPerPage) {
+    public DefaultDataTable(final String id, final List<? extends IColumn<RowType, CellType>> columns, final ISortableDataProvider dataProvider, final int rowsPerPage) {
         super(id, columns, dataProvider, rowsPerPage);
 
         addTopToolbar(new HeadersToolbar(this, dataProvider));
@@ -31,7 +30,7 @@ public class DefaultDataTable extends DataTable {
     }
 
     @Override
-    protected Item<Tuple> newRowItem(final String id, final int index, final IModel<Tuple> model) {
+    protected Item<RowType> newRowItem(final String id, final int index, final IModel<RowType> model) {
         return new OddEvenItem<>(id, index, model);
     }
 

@@ -1,7 +1,6 @@
 package com.senior.cyber.frmk.common.wicket.markup.repeater.data;
 
 import com.senior.cyber.frmk.common.wicket.markup.repeater.AbstractPageableView;
-import jakarta.persistence.Tuple;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
 
@@ -10,17 +9,17 @@ import java.util.Iterator;
 /**
  * @see org.apache.wicket.markup.repeater.data.DataViewBase
  */
-public abstract class DataViewBase extends AbstractPageableView {
+public abstract class DataViewBase<RowType> extends AbstractPageableView<RowType> {
 
     private static final long serialVersionUID = 1L;
 
-    private final IDataProvider dataProvider;
+    private final IDataProvider<RowType> dataProvider;
 
     /**
      * @param id           component id
      * @param dataProvider data provider
      */
-    public DataViewBase(String id, IDataProvider dataProvider) {
+    public DataViewBase(String id, IDataProvider<RowType> dataProvider) {
         super(id);
 
         this.dataProvider = Args.notNull(dataProvider, "dataProvider");
@@ -29,14 +28,14 @@ public abstract class DataViewBase extends AbstractPageableView {
     /**
      * @return data provider associated with this view
      */
-    protected final IDataProvider internalGetDataProvider() {
+    protected final IDataProvider<RowType> internalGetDataProvider() {
         return dataProvider;
     }
 
 
     @Override
-    protected final Iterator<IModel<Tuple>> getItemModels(int offset, int count) {
-        return new ModelIterator(internalGetDataProvider(), offset, count);
+    protected final Iterator<IModel<RowType>> getItemModels(int offset, int count) {
+        return new ModelIterator<>(internalGetDataProvider(), offset, count);
     }
 
     /**
@@ -44,9 +43,9 @@ public abstract class DataViewBase extends AbstractPageableView {
      *
      * @author Igor Vaynberg (ivaynberg)
      */
-    private static final class ModelIterator implements Iterator<IModel<Tuple>> {
-        private final Iterator<? extends Tuple> items;
-        private final IDataProvider dataProvider;
+    private static final class ModelIterator<RowType> implements Iterator<IModel<RowType>> {
+        private final Iterator<? extends RowType> items;
+        private final IDataProvider<RowType> dataProvider;
         private final int max;
         private long index;
 
@@ -57,7 +56,7 @@ public abstract class DataViewBase extends AbstractPageableView {
          * @param offset       index of first item
          * @param count        max number of items to return
          */
-        public ModelIterator(IDataProvider dataProvider, int offset, int count) {
+        public ModelIterator(IDataProvider<RowType> dataProvider, int offset, int count) {
             this.dataProvider = dataProvider;
             max = count;
 
@@ -84,7 +83,7 @@ public abstract class DataViewBase extends AbstractPageableView {
          * @see java.util.Iterator#next()
          */
         @Override
-        public IModel<Tuple> next() {
+        public IModel<RowType> next() {
             index++;
             return dataProvider.model(items.next());
         }
@@ -103,4 +102,5 @@ public abstract class DataViewBase extends AbstractPageableView {
         dataProvider.detach();
         super.onDetach();
     }
+
 }

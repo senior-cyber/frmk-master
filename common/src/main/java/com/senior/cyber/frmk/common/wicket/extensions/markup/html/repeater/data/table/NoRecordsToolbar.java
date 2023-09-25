@@ -9,7 +9,7 @@ import org.apache.wicket.model.ResourceModel;
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.NoRecordsToolbar
  */
-public class NoRecordsToolbar extends AbstractToolbar {
+public class NoRecordsToolbar<RowType, CellType> extends AbstractToolbar<RowType, CellType> {
 
     private static final long serialVersionUID = 1L;
 
@@ -20,7 +20,7 @@ public class NoRecordsToolbar extends AbstractToolbar {
      *
      * @param table data table this toolbar will be attached to
      */
-    public NoRecordsToolbar(final DataTable table) {
+    public NoRecordsToolbar(final DataTable<RowType, CellType> table) {
         this(table, DEFAULT_MESSAGE_MODEL);
         setOutputMarkupId(true);
     }
@@ -29,7 +29,7 @@ public class NoRecordsToolbar extends AbstractToolbar {
      * @param table        data table this toolbar will be attached to
      * @param messageModel model that will be used to display the "no records found" message
      */
-    public NoRecordsToolbar(final DataTable table, final IModel<String> messageModel) {
+    public NoRecordsToolbar(final DataTable<RowType, CellType> table, final IModel<String> messageModel) {
         super(table);
         setOutputMarkupId(true);
         WebMarkupContainer td = new WebMarkupContainer("td");

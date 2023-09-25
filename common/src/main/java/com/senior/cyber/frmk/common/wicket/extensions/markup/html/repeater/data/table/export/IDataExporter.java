@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.export.IDataExporter
  */
-public interface IDataExporter extends IClusterable {
+public interface IDataExporter<RowType, CellType> extends IClusterable {
     /**
      * Returns a model of the exported data format name. This should be something like "CSV" or "Excel" etc. The
      * value of the model returned is displayed as the export type in the {@link ExportToolbar}.
@@ -39,12 +39,11 @@ public interface IDataExporter extends IClusterable {
     /**
      * Exports the data provided by the {@link IDataProvider} to the {@link OutputStream}.
      *
-     * @param <T>          The type of each row of data provided by the {@link IDataProvider}.
      * @param dataProvider The {@link IDataProvider} from which to retrieve the data.
      * @param columns      The {@link IExportableColumn} to use to describe the data.
      * @param outputStream The {@link OutputStream} to which to write the exported data.
      * @throws IOException If an error occurs.
      */
-    <T> void exportData(IDataProvider dataProvider, List<IExportableColumn<T>> columns, OutputStream outputStream) throws IOException;
+    void exportData(IDataProvider<RowType> dataProvider, List<IExportableColumn<RowType, CellType>> columns, OutputStream outputStream) throws IOException;
 
 }

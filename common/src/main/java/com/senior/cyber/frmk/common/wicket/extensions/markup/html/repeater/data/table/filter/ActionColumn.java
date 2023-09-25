@@ -4,7 +4,6 @@ import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.AbstractColumn;
 import com.senior.cyber.frmk.common.wicket.functional.WicketThreeConsumer;
 import com.senior.cyber.frmk.common.wicket.functional.WicketTwoFunction;
-import jakarta.persistence.Tuple;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.repeater.Item;
@@ -15,21 +14,21 @@ import org.apache.wicket.model.Model;
 import java.util.Collections;
 import java.util.List;
 
-public class ActionColumn extends AbstractColumn {
+public class ActionColumn<RowType, CellType> extends AbstractColumn<RowType, CellType> {
 
     /**
      *
      */
     private static final long serialVersionUID = 1L;
 
-    protected WicketThreeConsumer<String, Tuple, AjaxRequestTarget> itemClick;
+    protected WicketThreeConsumer<String, RowType, AjaxRequestTarget> itemClick;
 
-    protected WicketTwoFunction<String, Tuple, List<ActionItem>> actions;
+    protected WicketTwoFunction<String, RowType, List<ActionItem>> actions;
 
     protected IModel<String> separator;
 
-    public ActionColumn(IModel<String> displayModel, WicketTwoFunction<String, Tuple, List<ActionItem>> actions,
-                        WicketThreeConsumer<String, Tuple, AjaxRequestTarget> itemClick) {
+    public ActionColumn(IModel<String> displayModel, WicketTwoFunction<String, RowType, List<ActionItem>> actions,
+                        WicketThreeConsumer<String, RowType, AjaxRequestTarget> itemClick) {
         super(displayModel);
         this.actions = actions;
         this.itemClick = itemClick;
@@ -37,8 +36,8 @@ public class ActionColumn extends AbstractColumn {
     }
 
     public ActionColumn(IModel<String> displayModel, IModel<String> separator,
-                        WicketTwoFunction<String, Tuple, List<ActionItem>> actions,
-                        WicketThreeConsumer<String, Tuple, AjaxRequestTarget> itemClick) {
+                        WicketTwoFunction<String, RowType, List<ActionItem>> actions,
+                        WicketThreeConsumer<String, RowType, AjaxRequestTarget> itemClick) {
         super(displayModel);
         this.actions = actions;
         this.itemClick = itemClick;
@@ -46,7 +45,7 @@ public class ActionColumn extends AbstractColumn {
     }
 
     @Override
-    public void populateItem(Item<ICellPopulator> item, String componentId, IModel<Tuple> rowModel) {
+    public void populateItem(Item<ICellPopulator<RowType, CellType>> item, String componentId, IModel<RowType> rowModel) {
         List<ActionItem> actionItems = this.actions.apply(getDisplayModel().getObject(), rowModel.getObject());
         if (actionItems == null || actionItems.isEmpty()) {
             Label label = new Label(componentId, "");

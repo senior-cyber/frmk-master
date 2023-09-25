@@ -5,7 +5,6 @@ import com.senior.cyber.frmk.common.wicket.markup.html.navigation.paging.IPageab
 import com.senior.cyber.frmk.common.wicket.markup.html.navigation.paging.IPageableItems;
 import com.senior.cyber.frmk.common.wicket.markup.repeater.RefreshingView;
 import com.senior.cyber.frmk.common.wicket.markup.repeater.data.IDataProvider;
-import jakarta.persistence.Tuple;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
@@ -29,7 +28,7 @@ import java.util.List;
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable
  */
-public class DataTable extends Panel implements IPageableItems {
+public class DataTable<RowType, CellType> extends Panel implements IPageableItems {
 
     static abstract class CssAttributeBehavior extends Behavior {
 
@@ -55,7 +54,7 @@ public class DataTable extends Panel implements IPageableItems {
 
     private final WebMarkupContainer body;
 
-    private final List<? extends IColumn> columns;
+    protected final List<? extends IColumn<RowType, CellType>> columns;
 
     private final ToolbarsContainer topToolbars;
 
@@ -75,7 +74,7 @@ public class DataTable extends Panel implements IPageableItems {
      * @param dataProvider imodel for data provider
      * @param rowsPerPage  number of rows per page
      */
-    public DataTable(final String id, final List<? extends IColumn> columns, final IDataProvider dataProvider, final int rowsPerPage) {
+    public DataTable(final String id, final List<? extends IColumn<RowType, CellType>> columns, final IDataProvider<RowType> dataProvider, final int rowsPerPage) {
         super(id);
         setOutputMarkupId(true);
         add(AttributeModifier.replace("class", "table table-bordered table-hover table-striped table-sm"));
@@ -105,8 +104,8 @@ public class DataTable extends Panel implements IPageableItems {
      * @param dataProvider imodel for data provider
      * @return the data grid view
      */
-    protected DataGridView newDataGridView(String id, List<? extends IColumn> columns, IDataProvider dataProvider) {
-        return new DefaultDataGridView(id, columns, dataProvider);
+    protected DataGridView<RowType, CellType> newDataGridView(String id, List<? extends IColumn<RowType, CellType>> columns, IDataProvider<RowType> dataProvider) {
+        return new DefaultDataGridView<>(id, columns, dataProvider);
     }
 
     /**
@@ -194,14 +193,14 @@ public class DataTable extends Panel implements IPageableItems {
     /**
      * @return dataprovider
      */
-    public final IDataProvider getDataProvider() {
+    public final IDataProvider<RowType> getDataProvider() {
         return datagrid.getDataProvider();
     }
 
     /**
      * @return array of column objects this table displays
      */
-    public final List<? extends IColumn> getColumns() {
+    public final List<? extends IColumn<RowType, CellType>> getColumns() {
         return columns;
     }
 
@@ -292,7 +291,7 @@ public class DataTable extends Panel implements IPageableItems {
      * @return DataItem created DataItem
      * @see Item
      */
-    protected Item<IColumn> newCellItem(final String id, final int index, final IModel<IColumn> model) {
+    protected Item<IColumn<RowType, CellType>> newCellItem(final String id, final int index, final IModel<IColumn<RowType, CellType>> model) {
         return new Item<>(id, index, model);
     }
 
@@ -305,7 +304,7 @@ public class DataTable extends Panel implements IPageableItems {
      * @return DataItem created DataItem
      * @see Item
      */
-    protected Item<Tuple> newRowItem(final String id, final int index, final IModel<Tuple> model) {
+    protected Item<RowType> newRowItem(final String id, final int index, final IModel<RowType> model) {
         return new OddEvenItem<>(id, index, model);
     }
 
@@ -316,7 +315,7 @@ public class DataTable extends Panel implements IPageableItems {
     protected void onDetach() {
         super.onDetach();
 
-        for (IColumn column : columns) {
+        for (IColumn<RowType, CellType> column : columns) {
             column.detach();
         }
     }
@@ -427,23 +426,26 @@ public class DataTable extends Panel implements IPageableItems {
         }
     }
 
-    private class DefaultDataGridView extends DataGridView {
-        public DefaultDataGridView(String id, List<? extends IColumn> columns, IDataProvider dataProvider) {
+    private class DefaultDataGridView<RowType, CellType> extends DataGridView<RowType, CellType> {
+
+        private DataTable<RowType, CellType> table;
+
+        public DefaultDataGridView(String id, List<? extends IColumn<RowType, CellType>> columns, IDataProvider<RowType> dataProvider) {
             super(id, columns, dataProvider);
         }
 
         @SuppressWarnings({"rawtypes", "unchecked"})
         @Override
         protected Item newCellItem(final String id, final int index, final IModel model) {
-            Item item = DataTable.this.newCellItem(id, index, model);
-            final IColumn column = DataTable.this.columns.get(index);
+            Item item = table.newCellItem(id, index, model);
+            final IColumn<RowType, CellType> column = table.columns.get(index);
             if (column instanceof IStyledColumn) {
                 item.add(new CssAttributeBehavior() {
                     private static final long serialVersionUID = 1L;
 
                     @Override
                     protected String getCssClass() {
-                        return ((IStyledColumn) column).getCssClass();
+                        return ((IStyledColumn<RowType, CellType>) column).getCssClass();
                     }
                 });
             }
@@ -451,8 +453,8 @@ public class DataTable extends Panel implements IPageableItems {
         }
 
         @Override
-        protected Item<Tuple> newRowItem(final String id, final int index, final IModel<Tuple> model) {
-            return DataTable.this.newRowItem(id, index, model);
+        protected Item<RowType> newRowItem(final String id, final int index, final IModel<RowType> model) {
+            return table.newRowItem(id, index, model);
         }
     }
 }

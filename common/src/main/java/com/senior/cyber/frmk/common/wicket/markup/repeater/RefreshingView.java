@@ -1,6 +1,5 @@
 package com.senior.cyber.frmk.common.wicket.markup.repeater;
 
-import jakarta.persistence.Tuple;
 import org.apache.wicket.markup.repeater.*;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Generics;
@@ -10,7 +9,7 @@ import java.util.Iterator;
 /**
  * @see org.apache.wicket.markup.repeater.RefreshingView
  */
-public abstract class RefreshingView extends RepeatingView {
+public abstract class RefreshingView<RowType> extends RepeatingView {
 
     private static final long serialVersionUID = 1L;
 
@@ -47,8 +46,8 @@ public abstract class RefreshingView extends RepeatingView {
      */
     @Override
     protected final void onPopulate() {
-        Iterator<IModel<Tuple>> models = getItemModels();
-        Iterator<Item<Tuple>> items = getItemReuseStrategy().getItems(newItemFactory(), models, getItems());
+        Iterator<IModel<RowType>> models = getItemModels();
+        Iterator<Item<RowType>> items = getItemReuseStrategy().getItems(newItemFactory(), models, getItems());
         removeAll();
         addItems(items);
     }
@@ -58,10 +57,10 @@ public abstract class RefreshingView extends RepeatingView {
      *
      * @return An Item factory that delegates to the RefreshingView
      */
-    protected IItemFactory<Tuple> newItemFactory() {
+    protected IItemFactory<RowType> newItemFactory() {
         return (index, model) -> {
             String id = RefreshingView.this.newChildId();
-            Item<Tuple> item = RefreshingView.this.newItem(id, index, model);
+            Item<RowType> item = RefreshingView.this.newItem(id, index, model);
             RefreshingView.this.populateItem(item);
             return item;
         };
@@ -73,7 +72,7 @@ public abstract class RefreshingView extends RepeatingView {
      *
      * @return an iterator over models for items that will be added to this view
      */
-    protected abstract Iterator<IModel<Tuple>> getItemModels();
+    protected abstract Iterator<IModel<RowType>> getItemModels();
 
     /**
      * Populate the given Item container.
@@ -94,7 +93,7 @@ public abstract class RefreshingView extends RepeatingView {
      *
      * @param item The item to populate
      */
-    protected abstract void populateItem(final Item<Tuple> item);
+    protected abstract void populateItem(final Item<RowType> item);
 
     /**
      * Factory method for Item container. Item containers are simple MarkupContainer used to
@@ -106,14 +105,14 @@ public abstract class RefreshingView extends RepeatingView {
      * @return DataItem created DataItem
      * @see Item
      */
-    protected Item<Tuple> newItem(final String id, int index, final IModel<Tuple> model) {
+    protected Item<RowType> newItem(final String id, int index, final IModel<RowType> model) {
         return new Item<>(id, index, model);
     }
 
     /**
      * @return iterator over item instances that exist as children of this view
      */
-    public Iterator<Item<Tuple>> getItems() {
+    public Iterator<Item<RowType>> getItems() {
         return Generics.iterator(iterator());
     }
 
@@ -123,10 +122,10 @@ public abstract class RefreshingView extends RepeatingView {
      *
      * @param items item instances to be added to this view
      */
-    protected void addItems(Iterator<Item<Tuple>> items) {
+    protected void addItems(Iterator<Item<RowType>> items) {
         int index = 0;
         while (items.hasNext()) {
-            Item<Tuple> item = items.next();
+            Item<RowType> item = items.next();
             item.setIndex(index);
             add(item);
             ++index;
@@ -156,7 +155,7 @@ public abstract class RefreshingView extends RepeatingView {
      * @return this for chaining
      * @see IItemReuseStrategy
      */
-    public RefreshingView setItemReuseStrategy(IItemReuseStrategy strategy) {
+    public RefreshingView<RowType> setItemReuseStrategy(IItemReuseStrategy strategy) {
         if (strategy == null) {
             throw new IllegalArgumentException();
         }

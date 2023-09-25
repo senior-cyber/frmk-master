@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.HeadersToolbar
  */
-public class HeadersToolbar extends AbstractToolbar {
+public class HeadersToolbar<RowType, CellType> extends AbstractToolbar {
 
     private static final long serialVersionUID = 1L;
 
@@ -26,17 +26,17 @@ public class HeadersToolbar extends AbstractToolbar {
      * @param table        data table this toolbar will be attached to
      * @param stateLocator locator for the ISortState implementation used by sortable headers
      */
-    public HeadersToolbar(final DataTable table, final ISortStateLocator stateLocator) {
+    public HeadersToolbar(final DataTable<RowType, CellType> table, final ISortStateLocator stateLocator) {
         super(table);
         setOutputMarkupId(true);
-        RefreshingView<IColumn> headers = new RefreshingView<IColumn>("headers") {
+        RefreshingView<IColumn<RowType, CellType>> headers = new RefreshingView<>("headers") {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected Iterator<IModel<IColumn>> getItemModels() {
-                List<IModel<IColumn>> columnsModels = new LinkedList<>();
+            protected Iterator<IModel<IColumn<RowType, CellType>>> getItemModels() {
+                List<IModel<IColumn<RowType, CellType>>> columnsModels = new LinkedList<>();
 
-                for (IColumn column : table.getColumns()) {
+                for (IColumn<RowType, CellType> column : table.getColumns()) {
                     columnsModels.add(Model.of(column));
                 }
 
@@ -44,8 +44,8 @@ public class HeadersToolbar extends AbstractToolbar {
             }
 
             @Override
-            protected void populateItem(Item<IColumn> item) {
-                final IColumn column = item.getModelObject();
+            protected void populateItem(Item<IColumn<RowType, CellType>> item) {
+                final IColumn<RowType, CellType> column = item.getModelObject();
 
                 WebMarkupContainer header;
 
@@ -61,7 +61,7 @@ public class HeadersToolbar extends AbstractToolbar {
 
                         @Override
                         protected String getCssClass() {
-                            return ((IStyledColumn) column).getCssClass();
+                            return ((IStyledColumn<RowType, CellType>) column).getCssClass();
                         }
                     };
 

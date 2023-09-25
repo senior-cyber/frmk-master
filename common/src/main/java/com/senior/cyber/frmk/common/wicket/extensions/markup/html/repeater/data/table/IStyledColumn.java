@@ -3,7 +3,7 @@ package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.IStyledColumn
  */
-public interface IStyledColumn extends IColumn {
+public interface IStyledColumn<RowType, CellType> extends IColumn<RowType, CellType> {
     /**
      * Returns the css class for this column.
      *

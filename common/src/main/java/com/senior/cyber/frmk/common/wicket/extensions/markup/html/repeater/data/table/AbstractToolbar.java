@@ -6,11 +6,11 @@ import org.apache.wicket.model.IModel;
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractToolbar
  */
-public abstract class AbstractToolbar extends Panel {
+public abstract class AbstractToolbar<RowType, CellType> extends Panel {
 
     private static final long serialVersionUID = 1L;
 
-    private final DataTable table;
+    private final DataTable<RowType, CellType> table;
 
     /**
      * Constructor
@@ -18,7 +18,7 @@ public abstract class AbstractToolbar extends Panel {
      * @param model model
      * @param table data table this toolbar will be attached to
      */
-    public AbstractToolbar(final IModel<?> model, final DataTable table) {
+    public AbstractToolbar(final IModel<?> model, final DataTable<RowType, CellType> table) {
         super(table.newToolbarId(), model);
         this.table = table;
     }
@@ -28,14 +28,14 @@ public abstract class AbstractToolbar extends Panel {
      *
      * @param table data table this toolbar will be attached to
      */
-    public AbstractToolbar(final DataTable table) {
+    public AbstractToolbar(final DataTable<RowType, CellType> table) {
         this(null, table);
     }
 
     /**
      * @return DataTable this toolbar is attached to
      */
-    protected DataTable getTable() {
+    protected DataTable<RowType, CellType> getTable() {
         return table;
     }
 

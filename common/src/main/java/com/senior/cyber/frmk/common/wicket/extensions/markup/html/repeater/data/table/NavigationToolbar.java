@@ -9,7 +9,7 @@ import org.apache.wicket.model.IModel;
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.NavigationToolbar
  */
-public class NavigationToolbar extends AbstractToolbar {
+public class NavigationToolbar<RowType, CellType> extends AbstractToolbar<RowType, CellType> {
 
     private static final long serialVersionUID = 1L;
 
@@ -18,7 +18,7 @@ public class NavigationToolbar extends AbstractToolbar {
      *
      * @param table data table this toolbar will be attached to
      */
-    public NavigationToolbar(final DataTable table) {
+    public NavigationToolbar(final DataTable<RowType, CellType> table) {
         super(table);
         setOutputMarkupId(true);
         WebMarkupContainer span = new WebMarkupContainer("span");
@@ -37,7 +37,7 @@ public class NavigationToolbar extends AbstractToolbar {
      * @return paging navigator that will be used to navigate the data table
      */
     protected PagingNavigator newPagingNavigator(final String navigatorId,
-                                                 final DataTable table) {
+                                                 final DataTable<RowType, CellType> table) {
         return new PagingNavigator(navigatorId, table);
     }
 
@@ -48,7 +48,7 @@ public class NavigationToolbar extends AbstractToolbar {
      * @param table       DataTable used by datatable
      * @return navigator label that will be used to navigate the data table
      */
-    protected Component newNavigatorLabel(final String navigatorId, final DataTable table) {
+    protected Component newNavigatorLabel(final String navigatorId, final DataTable<RowType, CellType> table) {
         return new NavigatorLabel(navigatorId, table);
     }
 

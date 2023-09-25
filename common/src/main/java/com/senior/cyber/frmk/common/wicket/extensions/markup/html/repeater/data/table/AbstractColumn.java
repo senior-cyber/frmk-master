@@ -8,7 +8,7 @@ import org.apache.wicket.model.IModel;
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn
  */
-public abstract class AbstractColumn implements IStyledColumn {
+public abstract class AbstractColumn<RowType, CellType> implements IStyledColumn<RowType, CellType> {
 
     private static final long serialVersionUID = 1L;
 

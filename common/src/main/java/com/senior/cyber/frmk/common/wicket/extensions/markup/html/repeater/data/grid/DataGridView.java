@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.grid.DataGridView
  */
-public class DataGridView extends AbstractDataGridView {
+public class DataGridView<RowType, CellType> extends AbstractDataGridView<RowType, CellType> {
 
     private static final long serialVersionUID = 1L;
 
@@ -20,8 +20,8 @@ public class DataGridView extends AbstractDataGridView {
      * @param populators   list of ICellPopulators used to populate cells
      * @param dataProvider data provider
      */
-    public DataGridView(final String id, final List<? extends ICellPopulator> populators,
-                        final IDataProvider dataProvider) {
+    public DataGridView(final String id, final List<? extends ICellPopulator<RowType, CellType>> populators,
+                        final IDataProvider<RowType> dataProvider) {
         super(id, populators, dataProvider);
     }
 
@@ -30,7 +30,7 @@ public class DataGridView extends AbstractDataGridView {
      *
      * @return the list of cell populators
      */
-    public List<? extends ICellPopulator> getPopulators() {
+    public List<? extends ICellPopulator<RowType, CellType>> getPopulators() {
         return internalGetPopulators();
     }
 
@@ -39,7 +39,7 @@ public class DataGridView extends AbstractDataGridView {
      *
      * @return data provider
      */
-    public IDataProvider getDataProvider() {
+    public IDataProvider<RowType> getDataProvider() {
         return internalGetDataProvider();
     }
 

@@ -10,7 +10,7 @@ import org.apache.wicket.model.Model;
 
 import java.util.List;
 
-public class ActionFilteredColumn extends ActionColumn implements IFilteredColumn {
+public class ActionFilteredColumn<RowType, CellType> extends ActionColumn<RowType, CellType> implements IFilteredColumn<RowType, CellType> {
 
     private static final long serialVersionUID = 1L;
 
@@ -18,28 +18,28 @@ public class ActionFilteredColumn extends ActionColumn implements IFilteredColum
 
     protected IModel<String> clear;
 
-    public ActionFilteredColumn(IModel<String> displayModel, WicketTwoFunction<String, Tuple, List<ActionItem>> actions,
-                                WicketThreeConsumer<String, Tuple, AjaxRequestTarget> itemClick) {
+    public ActionFilteredColumn(IModel<String> displayModel, WicketTwoFunction<String, RowType, List<ActionItem>> actions,
+                                WicketThreeConsumer<String, RowType, AjaxRequestTarget> itemClick) {
         this(displayModel, Model.of("Filter"), Model.of("Clear"), actions, itemClick);
     }
 
     public ActionFilteredColumn(IModel<String> displayModel, IModel<String> filter, IModel<String> clear,
-                                WicketTwoFunction<String, Tuple, List<ActionItem>> actions,
-                                WicketThreeConsumer<String, Tuple, AjaxRequestTarget> itemClick) {
+                                WicketTwoFunction<String, RowType, List<ActionItem>> actions,
+                                WicketThreeConsumer<String, RowType, AjaxRequestTarget> itemClick) {
         super(displayModel, actions, itemClick);
         this.filter = filter;
         this.clear = clear;
     }
 
     public ActionFilteredColumn(IModel<String> displayModel, IModel<String> separator,
-                                WicketTwoFunction<String, Tuple, List<ActionItem>> actions,
-                                WicketThreeConsumer<String, Tuple, AjaxRequestTarget> itemClick) {
+                                WicketTwoFunction<String, RowType, List<ActionItem>> actions,
+                                WicketThreeConsumer<String, RowType, AjaxRequestTarget> itemClick) {
         this(displayModel, separator, Model.of("Filter"), Model.of("Clear"), actions, itemClick);
     }
 
     public ActionFilteredColumn(IModel<String> displayModel, IModel<String> separator, IModel<String> filter,
-                                IModel<String> clear, WicketTwoFunction<String, Tuple, List<ActionItem>> actions,
-                                WicketThreeConsumer<String, Tuple, AjaxRequestTarget> itemClick) {
+                                IModel<String> clear, WicketTwoFunction<String, RowType, List<ActionItem>> actions,
+                                WicketThreeConsumer<String, RowType, AjaxRequestTarget> itemClick) {
         super(displayModel, separator, actions, itemClick);
         this.filter = filter;
         this.clear = clear;

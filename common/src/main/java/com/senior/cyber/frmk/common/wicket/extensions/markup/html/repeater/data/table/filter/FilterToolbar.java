@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.filter.FilterToolbar
  */
-public class FilterToolbar extends AbstractToolbar {
+public class FilterToolbar<RowType, CellType> extends AbstractToolbar {
 
     private static final String FILTER_ID = "filter";
 
@@ -31,29 +31,29 @@ public class FilterToolbar extends AbstractToolbar {
      * @param table data table this toolbar will be added to
      * @param form  the filter form
      */
-    public FilterToolbar(final DataTable table, final FilterForm form) {
+    public FilterToolbar(final DataTable<RowType, CellType> table, final FilterForm form) {
         super(table);
         setOutputMarkupId(true);
         Args.notNull(table, "table");
 
-        IModel<List<IColumn>> model = new IModel<>() {
+        IModel<List<IColumn<RowType, CellType>>> model = new IModel<>() {
 
             private static final long serialVersionUID = 1L;
 
             @Override
-            public List<IColumn> getObject() {
+            public List<IColumn<RowType, CellType>> getObject() {
                 return new LinkedList<>(table.getColumns());
             }
 
         };
 
         // populate the toolbar with components provided by filtered columns
-        ListView<IColumn> filters = new ListView<>("filters", model) {
+        ListView<IColumn<RowType, CellType>> filters = new ListView<>("filters", model) {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void populateItem(ListItem<IColumn> item) {
-                final IColumn col = item.getModelObject();
+            protected void populateItem(ListItem<IColumn<RowType, CellType>> item) {
+                final IColumn<RowType, CellType> col = item.getModelObject();
                 item.setRenderBodyOnly(true);
 
                 Component filter = null;
@@ -80,7 +80,7 @@ public class FilterToolbar extends AbstractToolbar {
                          */
                         @Override
                         public void onComponentTag(final Component component, final ComponentTag tag) {
-                            String className = ((IStyledColumn) col).getCssClass();
+                            String className = ((IStyledColumn<RowType, CellType>) col).getCssClass();
                             if (!Strings.isEmpty(className)) {
                                 tag.append("class", className, " ");
                             }

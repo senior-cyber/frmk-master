@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.export.ExportToolbar
  */
-public class ExportToolbar extends AbstractToolbar {
+public class ExportToolbar<RowType, CellType> extends AbstractToolbar<RowType, CellType> {
 
     private static final long serialVersionUID = 1L;
 
@@ -36,7 +36,7 @@ public class ExportToolbar extends AbstractToolbar {
 
     private static final IModel<String> DEFAULT_FILE_NAME_MODEL = new ResourceModel("datatable.export-file-name");
 
-    private final List<IDataExporter> dataExporters = new LinkedList<>();
+    private final List<IDataExporter<RowType, CellType>> dataExporters = new LinkedList<>();
 
     private IModel<String> messageModel;
 
@@ -48,7 +48,7 @@ public class ExportToolbar extends AbstractToolbar {
      *
      * @param table The data table this toolbar belongs to.
      */
-    public ExportToolbar(final DataTable table) {
+    public ExportToolbar(final DataTable<RowType, CellType> table) {
         this(table, DEFAULT_MESSAGE_MODEL, DEFAULT_FILE_NAME_MODEL);
         setOutputMarkupId(true);
     }
@@ -59,7 +59,7 @@ public class ExportToolbar extends AbstractToolbar {
      * @param table         The table to which this toolbar belongs.
      * @param fileNameModel The model of the file name. This should exclude the file extensions.
      */
-    public ExportToolbar(DataTable table, IModel<String> fileNameModel) {
+    public ExportToolbar(DataTable<RowType, CellType> table, IModel<String> fileNameModel) {
         this(table, DEFAULT_MESSAGE_MODEL, fileNameModel);
         setOutputMarkupId(true);
     }
@@ -71,7 +71,7 @@ public class ExportToolbar extends AbstractToolbar {
      * @param messageModel  The model of the export message.
      * @param fileNameModel The model of the file name. This should exclude the file extensions.
      */
-    public ExportToolbar(DataTable table, IModel<String> messageModel, IModel<String> fileNameModel) {
+    public ExportToolbar(DataTable<RowType, CellType> table, IModel<String> messageModel, IModel<String> fileNameModel) {
         super(table);
         setOutputMarkupId(true);
         setMessageModel(messageModel);
@@ -84,7 +84,7 @@ public class ExportToolbar extends AbstractToolbar {
      * @param messageModel the models of the export message displayed in the toolbar.
      * @return {@code this}, for chaining.
      */
-    public ExportToolbar setMessageModel(IModel<String> messageModel) {
+    public ExportToolbar<RowType, CellType> setMessageModel(IModel<String> messageModel) {
         this.messageModel = wrap(Args.notNull(messageModel, "messageModel"));
         return this;
     }
@@ -95,7 +95,7 @@ public class ExportToolbar extends AbstractToolbar {
      * @param fileNameModel The model of the file name used for the exported data.
      * @return {@code this}, for chaining.
      */
-    public ExportToolbar setFileNameModel(IModel<String> fileNameModel) {
+    public ExportToolbar<RowType, CellType> setFileNameModel(IModel<String> fileNameModel) {
         this.fileNameModel = wrap(Args.notNull(fileNameModel, "fileNameModel"));
         return this;
     }
@@ -142,7 +142,7 @@ public class ExportToolbar extends AbstractToolbar {
         RepeatingView linkContainers = new RepeatingView("linkContainer");
         td.add(linkContainers);
 
-        for (IDataExporter exporter : dataExporters) {
+        for (IDataExporter<RowType, CellType> exporter : dataExporters) {
             WebMarkupContainer span = new WebMarkupContainer(linkContainers.newChildId());
             linkContainers.add(span);
 
@@ -157,7 +157,7 @@ public class ExportToolbar extends AbstractToolbar {
      * @param dataExporter The data exporter to use to export the data.
      * @return a new link to the exported data for the provided {@link IDataExporter}.
      */
-    protected Component createExportLink(String componentId, final IDataExporter dataExporter) {
+    protected Component createExportLink(String componentId, final IDataExporter<RowType, CellType> dataExporter) {
         IResource resource = new ResourceStreamResource() {
             /**
              * Set fileName and cacheDuration lazily
@@ -171,7 +171,7 @@ public class ExportToolbar extends AbstractToolbar {
 
             @Override
             protected IResourceStream getResourceStream(Attributes attributes) {
-                return new DataExportResourceStreamWriter(dataExporter, getTable());
+                return new DataExportResourceStreamWriter<RowType, CellType>(dataExporter, getTable());
             }
         };
 
@@ -206,7 +206,7 @@ public class ExportToolbar extends AbstractToolbar {
             isVisible = false;
         } else {
             boolean foundExportableColumn = false;
-            for (IColumn col : getTable().getColumns()) {
+            for (IColumn<RowType, CellType> col : getTable().getColumns()) {
                 if (col instanceof IExportableColumn) {
                     foundExportableColumn = true;
                     break;
@@ -240,10 +240,10 @@ public class ExportToolbar extends AbstractToolbar {
     /**
      * An {@link IResourceStreamWriter} which writes the exportable data from a table to an output stream.
      */
-    public static class DataExportResourceStreamWriter extends AbstractResourceStreamWriter {
-        private final IDataExporter dataExporter;
+    public static class DataExportResourceStreamWriter<RowType, CellType> extends AbstractResourceStreamWriter {
+        private final IDataExporter<RowType, CellType> dataExporter;
 
-        private final DataTable dataTable;
+        private final DataTable<RowType, CellType> dataTable;
 
         /**
          * Creates a new instance using the provided {@link IDataExporter} to export data.
@@ -251,7 +251,7 @@ public class ExportToolbar extends AbstractToolbar {
          * @param dataExporter The {@link IDataExporter} to use to export data.
          * @param dataTable    The {@link DataTable} from which to export.
          */
-        public DataExportResourceStreamWriter(IDataExporter dataExporter, DataTable dataTable) {
+        public DataExportResourceStreamWriter(IDataExporter<RowType, CellType> dataExporter, DataTable<RowType, CellType> dataTable) {
             this.dataExporter = dataExporter;
             this.dataTable = dataTable;
         }
@@ -285,19 +285,17 @@ public class ExportToolbar extends AbstractToolbar {
          * This methods calls {@link IDataExporter#exportData(IDataProvider, java.util.List, java.io.OutputStream) }
          * passing it the {@link IDataProvider} of the {@link DataTable}, and a list of the {@link IExportableColumn}s in the table.
          *
-         * @param <T>          The type of each row in the data table.
-         * @param <S>          The type of the sort property of the table.
          * @param dataTable    The {@link DataTable} to export.
          * @param dataExporter The {@link IDataExporter} to use to export the data.
          * @param outputStream The {@link OutputStream} to which the data should be exported to.
          * @throws IOException
          */
-        private <T, S> void exportData(DataTable dataTable, IDataExporter dataExporter, OutputStream outputStream) throws IOException {
-            IDataProvider dataProvider = dataTable.getDataProvider();
-            List<IExportableColumn<T>> exportableColumns = new LinkedList<>();
-            for (IColumn col : dataTable.getColumns()) {
+        private void exportData(DataTable<RowType, CellType> dataTable, IDataExporter<RowType, CellType> dataExporter, OutputStream outputStream) throws IOException {
+            IDataProvider<RowType> dataProvider = dataTable.getDataProvider();
+            List<IExportableColumn<RowType, CellType>> exportableColumns = new LinkedList<>();
+            for (IColumn<RowType, CellType> col : dataTable.getColumns()) {
                 if (col instanceof IExportableColumn) {
-                    exportableColumns.add((IExportableColumn<T>) col);
+                    exportableColumns.add((IExportableColumn<RowType, CellType>) col);
                 }
             }
             dataExporter.exportData(dataProvider, exportableColumns, outputStream);

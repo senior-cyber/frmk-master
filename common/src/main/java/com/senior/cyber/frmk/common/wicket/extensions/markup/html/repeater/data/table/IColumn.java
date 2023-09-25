@@ -6,7 +6,7 @@ import org.apache.wicket.Component;
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn
  */
-public interface IColumn extends ICellPopulator {
+public interface IColumn<RowType, CellType> extends ICellPopulator<RowType, CellType> {
 
     /**
      * Returns the component that will be used as the header for the column.

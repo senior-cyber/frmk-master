@@ -6,7 +6,7 @@ import org.apache.wicket.Component;
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.filter.IFilteredColumn
  */
-public interface IFilteredColumn extends IColumn {
+public interface IFilteredColumn<RowType, CellType> extends IColumn<RowType, CellType> {
 
     /**
      * Returns the component used by user to filter the column. If null is returned, no filter will

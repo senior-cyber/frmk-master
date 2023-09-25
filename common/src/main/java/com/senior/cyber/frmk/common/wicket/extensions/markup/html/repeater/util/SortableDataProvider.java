@@ -7,7 +7,7 @@ import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider
  */
-public abstract class SortableDataProvider implements ISortableDataProvider {
+public abstract class SortableDataProvider<RowType> implements ISortableDataProvider<RowType> {
 
     private static final long serialVersionUID = 1L;
 

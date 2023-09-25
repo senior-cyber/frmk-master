@@ -3,7 +3,6 @@ package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data
 import com.senior.cyber.frmk.common.wicket.markup.repeater.RefreshingView;
 import com.senior.cyber.frmk.common.wicket.markup.repeater.data.DataViewBase;
 import com.senior.cyber.frmk.common.wicket.markup.repeater.data.IDataProvider;
-import jakarta.persistence.Tuple;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.RepeatingView;
@@ -15,14 +14,14 @@ import java.util.List;
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.grid.AbstractDataGridView
  */
-public abstract class AbstractDataGridView extends DataViewBase {
+public abstract class AbstractDataGridView<RowType, CellType> extends DataViewBase<RowType> {
 
     private static final long serialVersionUID = 1L;
 
     private static final String CELL_REPEATER_ID = "cells";
     private static final String CELL_ITEM_ID = "cell";
 
-    private final List<? extends ICellPopulator> populators;
+    private final List<? extends ICellPopulator<RowType, CellType>> populators;
 
     /**
      * Constructor
@@ -31,13 +30,13 @@ public abstract class AbstractDataGridView extends DataViewBase {
      * @param populators   array of ICellPopulator objects that will be used to populate cell items
      * @param dataProvider data provider
      */
-    public AbstractDataGridView(final String id, final List<? extends ICellPopulator> populators, final IDataProvider dataProvider) {
+    public AbstractDataGridView(final String id, final List<? extends ICellPopulator<RowType, CellType>> populators, final IDataProvider<RowType> dataProvider) {
         super(id, dataProvider);
 
         this.populators = populators;
     }
 
-    protected final List<? extends ICellPopulator> internalGetPopulators() {
+    protected final List<? extends ICellPopulator<RowType, CellType>> internalGetPopulators() {
         return populators;
     }
 
@@ -52,12 +51,12 @@ public abstract class AbstractDataGridView extends DataViewBase {
      * @see Item
      * @see RefreshingView#newItem(String, int, IModel)
      */
-    protected Item<ICellPopulator> newCellItem(final String id, final int index, final IModel<ICellPopulator> model) {
+    protected Item<ICellPopulator<RowType, CellType>> newCellItem(final String id, final int index, final IModel<ICellPopulator<RowType, CellType>> model) {
         return new Item<>(id, index, model);
     }
 
     @Override
-    protected final Item<Tuple> newItem(final String id, final int index, final IModel<Tuple> model) {
+    protected final Item<RowType> newItem(final String id, final int index, final IModel<RowType> model) {
         return newRowItem(id, index, model);
     }
 
@@ -71,7 +70,7 @@ public abstract class AbstractDataGridView extends DataViewBase {
      * @see Item
      * @see RefreshingView#newItem(String, int, IModel)
      */
-    protected Item<Tuple> newRowItem(final String id, final int index, final IModel<Tuple> model) {
+    protected Item<RowType> newRowItem(final String id, final int index, final IModel<RowType> model) {
         return new Item<>(id, index, model);
     }
 
@@ -83,7 +82,7 @@ public abstract class AbstractDataGridView extends DataViewBase {
     protected void onDetach() {
         super.onDetach();
         if (populators != null) {
-            for (ICellPopulator populator : populators) {
+            for (ICellPopulator<RowType, CellType> populator : populators) {
                 populator.detach();
             }
         }
@@ -93,15 +92,15 @@ public abstract class AbstractDataGridView extends DataViewBase {
      * @see RefreshingView#populateItem(org.apache.wicket.markup.repeater.Item)
      */
     @Override
-    protected final void populateItem(final Item<Tuple> item) {
+    protected final void populateItem(final Item<RowType> item) {
         RepeatingView cells = new RepeatingView(CELL_REPEATER_ID);
         item.add(cells);
 
         int populatorsNumber = populators.size();
         for (int i = 0; i < populatorsNumber; i++) {
-            ICellPopulator populator = populators.get(i);
-            IModel<ICellPopulator> populatorModel = new Model<>(populator);
-            Item<ICellPopulator> cellItem = newCellItem(cells.newChildId(), i, populatorModel);
+            ICellPopulator<RowType, CellType> populator = populators.get(i);
+            IModel<ICellPopulator<RowType, CellType>> populatorModel = new Model<>(populator);
+            Item<ICellPopulator<RowType, CellType>> cellItem = newCellItem(cells.newChildId(), i, populatorModel);
             cells.add(cellItem);
 
             populator.populateItem(cellItem, CELL_ITEM_ID, item.getModel());

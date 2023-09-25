@@ -1,7 +1,4 @@
-## publish into local m2 folder
-```shell
-./gradlew publishToMavenLocal
-```
+## select2 hack
 
 ```shell
 fixes select2 height :
@@ -14,8 +11,15 @@ final result should be like this
 ```
 
 ## AdminLTE V3
+
 ```text
 git clone https://github.com/ColorlibHQ/AdminLTE.git
 cd AdminLTE
 git checkout v3
+```
+
+## publish into local m2 folder
+
+```shell
+./gradlew publishToMavenLocal
 ```
