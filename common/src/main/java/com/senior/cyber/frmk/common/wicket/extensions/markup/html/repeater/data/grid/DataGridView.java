@@ -1,5 +1,6 @@
 package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.grid;
 
+import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import com.senior.cyber.frmk.common.wicket.markup.repeater.data.IDataProvider;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class DataGridView<RowType, CellType> extends AbstractDataGridView<RowTyp
      * @param populators   list of ICellPopulators used to populate cells
      * @param dataProvider data provider
      */
-    public DataGridView(final String id, final List<? extends ICellPopulator<RowType, CellType>> populators,
+    public DataGridView(final String id, final List<? extends IColumn<RowType, CellType>> populators,
                         final IDataProvider<RowType> dataProvider) {
         super(id, populators, dataProvider);
     }
@@ -30,7 +31,7 @@ public class DataGridView<RowType, CellType> extends AbstractDataGridView<RowTyp
      *
      * @return the list of cell populators
      */
-    public List<? extends ICellPopulator<RowType, CellType>> getPopulators() {
+    public List<? extends IColumn<RowType, CellType>> getPopulators() {
         return internalGetPopulators();
     }
 

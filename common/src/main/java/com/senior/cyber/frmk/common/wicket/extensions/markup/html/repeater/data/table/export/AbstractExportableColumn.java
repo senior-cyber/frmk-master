@@ -2,6 +2,7 @@ package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data
 
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.AbstractColumn;
+import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.repeater.Item;
@@ -57,7 +58,7 @@ public abstract class AbstractExportableColumn<RowType, CellType extends Seriali
      * @param rowModel    A model of the row data.
      */
     @Override
-    public void populateItem(Item<ICellPopulator<RowType, CellType>> cellItem, String componentId, IModel<RowType> rowModel) {
+    public void populateItem(Item<IColumn<RowType, CellType>> cellItem, String componentId, IModel<RowType> rowModel) {
         cellItem.add(createDisplayComponent(componentId, getDataModel(rowModel)));
     }
 

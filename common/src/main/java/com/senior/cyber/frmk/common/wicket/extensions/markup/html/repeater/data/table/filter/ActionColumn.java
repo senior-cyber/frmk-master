@@ -2,6 +2,7 @@ package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data
 
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.AbstractColumn;
+import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import com.senior.cyber.frmk.common.wicket.functional.WicketThreeConsumer;
 import com.senior.cyber.frmk.common.wicket.functional.WicketTwoFunction;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -45,7 +46,7 @@ public class ActionColumn<RowType, CellType> extends AbstractColumn<RowType, Cel
     }
 
     @Override
-    public void populateItem(Item<ICellPopulator<RowType, CellType>> item, String componentId, IModel<RowType> rowModel) {
+    public void populateItem(Item<IColumn<RowType, CellType>> item, String componentId, IModel<RowType> rowModel) {
         List<ActionItem> actionItems = this.actions.apply(getDisplayModel().getObject(), rowModel.getObject());
         if (actionItems == null || actionItems.isEmpty()) {
             Label label = new Label(componentId, "");

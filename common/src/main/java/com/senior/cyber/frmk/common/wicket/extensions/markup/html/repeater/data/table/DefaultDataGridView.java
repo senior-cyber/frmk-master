@@ -16,10 +16,9 @@ public class DefaultDataGridView<RowType, CellType> extends DataGridView<RowType
         this.table = table;
     }
 
-    @SuppressWarnings({"rawtypes", "unchecked"})
     @Override
-    protected Item newCellItem(final String id, final int index, final IModel model) {
-        Item item = table.newCellItem(id, index, model);
+    protected Item<IColumn<RowType, CellType>> newCellItem(String id, int index, IModel<IColumn<RowType, CellType>> model) {
+        Item<IColumn<RowType, CellType>> item = table.newCellItem(id, index, model);
         final IColumn<RowType, CellType> column = table.columns.get(index);
         if (column instanceof IStyledColumn) {
             item.add(new DataTable.CssAttributeBehavior() {

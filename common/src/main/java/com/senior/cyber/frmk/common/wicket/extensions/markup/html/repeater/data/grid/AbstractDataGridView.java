@@ -1,5 +1,6 @@
 package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.grid;
 
+import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import com.senior.cyber.frmk.common.wicket.markup.repeater.RefreshingView;
 import com.senior.cyber.frmk.common.wicket.markup.repeater.data.DataViewBase;
 import com.senior.cyber.frmk.common.wicket.markup.repeater.data.IDataProvider;
@@ -21,7 +22,7 @@ public abstract class AbstractDataGridView<RowType, CellType> extends DataViewBa
     private static final String CELL_REPEATER_ID = "cells";
     private static final String CELL_ITEM_ID = "cell";
 
-    private final List<? extends ICellPopulator<RowType, CellType>> populators;
+    private final List<? extends IColumn<RowType, CellType>> populators;
 
     /**
      * Constructor
@@ -30,13 +31,13 @@ public abstract class AbstractDataGridView<RowType, CellType> extends DataViewBa
      * @param populators   array of ICellPopulator objects that will be used to populate cell items
      * @param dataProvider data provider
      */
-    public AbstractDataGridView(final String id, final List<? extends ICellPopulator<RowType, CellType>> populators, final IDataProvider<RowType> dataProvider) {
+    public AbstractDataGridView(final String id, final List<? extends IColumn<RowType, CellType>> populators, final IDataProvider<RowType> dataProvider) {
         super(id, dataProvider);
 
         this.populators = populators;
     }
 
-    protected final List<? extends ICellPopulator<RowType, CellType>> internalGetPopulators() {
+    protected final List<? extends IColumn<RowType, CellType>> internalGetPopulators() {
         return populators;
     }
 
@@ -51,7 +52,7 @@ public abstract class AbstractDataGridView<RowType, CellType> extends DataViewBa
      * @see Item
      * @see RefreshingView#newItem(String, int, IModel)
      */
-    protected Item<ICellPopulator<RowType, CellType>> newCellItem(final String id, final int index, final IModel<ICellPopulator<RowType, CellType>> model) {
+    protected Item<IColumn<RowType, CellType>> newCellItem(final String id, final int index, final IModel<IColumn<RowType, CellType>> model) {
         return new Item<>(id, index, model);
     }
 
@@ -98,9 +99,9 @@ public abstract class AbstractDataGridView<RowType, CellType> extends DataViewBa
 
         int populatorsNumber = populators.size();
         for (int i = 0; i < populatorsNumber; i++) {
-            ICellPopulator<RowType, CellType> populator = populators.get(i);
-            IModel<ICellPopulator<RowType, CellType>> populatorModel = new Model<>(populator);
-            Item<ICellPopulator<RowType, CellType>> cellItem = newCellItem(cells.newChildId(), i, populatorModel);
+            IColumn<RowType, CellType> populator = populators.get(i);
+            IModel<IColumn<RowType, CellType>> populatorModel = new Model<>(populator);
+            Item<IColumn<RowType, CellType>> cellItem = newCellItem(cells.newChildId(), i, populatorModel);
             cells.add(cellItem);
 
             populator.populateItem(cellItem, CELL_ITEM_ID, item.getModel());

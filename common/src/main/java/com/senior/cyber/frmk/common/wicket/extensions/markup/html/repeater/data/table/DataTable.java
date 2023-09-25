@@ -105,7 +105,7 @@ public class DataTable<RowType, CellType> extends Panel implements IPageableItem
      * @return the data grid view
      */
     protected DataGridView<RowType, CellType> newDataGridView(String id, List<? extends IColumn<RowType, CellType>> columns, IDataProvider<RowType> dataProvider) {
-        return new DefaultDataGridView<>(id, columns, dataProvider);
+        return new DefaultDataGridView(id, columns, dataProvider);
     }
 
     /**
@@ -426,19 +426,19 @@ public class DataTable<RowType, CellType> extends Panel implements IPageableItem
         }
     }
 
-    private class DefaultDataGridView<RowType, CellType> extends DataGridView<RowType, CellType> {
-
-        private DataTable<RowType, CellType> table;
+    private class DefaultDataGridView extends DataGridView<RowType, CellType> {
 
         public DefaultDataGridView(String id, List<? extends IColumn<RowType, CellType>> columns, IDataProvider<RowType> dataProvider) {
             super(id, columns, dataProvider);
         }
 
-        @SuppressWarnings({"rawtypes", "unchecked"})
+
         @Override
-        protected Item newCellItem(final String id, final int index, final IModel model) {
-            Item item = table.newCellItem(id, index, model);
-            final IColumn<RowType, CellType> column = table.columns.get(index);
+        protected Item<IColumn<RowType, CellType>> newCellItem(String id, int index, IModel<IColumn<RowType, CellType>> model) {
+
+            Item<IColumn<RowType, CellType>> item = DataTable.this.newCellItem(id, index, model);
+
+            final IColumn<RowType, CellType> column = DataTable.this.columns.get(index);
             if (column instanceof IStyledColumn) {
                 item.add(new CssAttributeBehavior() {
                     private static final long serialVersionUID = 1L;
@@ -454,7 +454,8 @@ public class DataTable<RowType, CellType> extends Panel implements IPageableItem
 
         @Override
         protected Item<RowType> newRowItem(final String id, final int index, final IModel<RowType> model) {
-            return table.newRowItem(id, index, model);
+            return DataTable.this.newRowItem(id, index, model);
         }
     }
+
 }
