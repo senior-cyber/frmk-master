@@ -5,8 +5,11 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.model.IModel;
 
+import java.io.Serial;
+
 public class RichTextField extends TextArea<String> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public RichTextField(String id) {

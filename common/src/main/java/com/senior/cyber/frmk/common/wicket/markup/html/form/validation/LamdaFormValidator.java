@@ -5,8 +5,11 @@ import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
 
+import java.io.Serial;
+
 public class LamdaFormValidator implements org.apache.wicket.markup.html.form.validation.IFormValidator {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     protected FormComponent<?>[] components;

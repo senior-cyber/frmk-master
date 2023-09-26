@@ -4,10 +4,12 @@ import com.senior.cyber.frmk.common.wicket.markup.html.form.select2.Option;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.model.IModel;
 
+import java.io.Serial;
 import java.util.List;
 
 public class OptionChoiceRenderer implements IChoiceRenderer<Option> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public OptionChoiceRenderer() {

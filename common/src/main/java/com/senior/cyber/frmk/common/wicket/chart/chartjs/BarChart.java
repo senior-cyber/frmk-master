@@ -12,6 +12,7 @@ import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.markup.parser.XmlTag.TagType;
 import org.apache.wicket.model.IModel;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -19,6 +20,7 @@ import java.util.List;
 
 public class BarChart extends WebComponent {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private IModel<BarData> dataset;
@@ -56,6 +58,7 @@ public class BarChart extends WebComponent {
 
     public static class BarItem implements Serializable {
 
+        @Serial
         private static final long serialVersionUID = 1L;
 
         private String label;
@@ -117,6 +120,7 @@ public class BarChart extends WebComponent {
 
     public static class BarData implements Serializable {
 
+        @Serial
         private static final long serialVersionUID = 1L;
 
         private List<String> labels = new LinkedList<>();

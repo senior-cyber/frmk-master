@@ -5,8 +5,11 @@ import org.apache.wicket.Component;
 import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
 
+import java.io.Serial;
+
 public class ComponentFeedbackPanel extends org.apache.wicket.markup.html.panel.ComponentFeedbackPanel {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     protected final String errorClass;

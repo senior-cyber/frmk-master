@@ -4,6 +4,7 @@ import com.senior.cyber.frmk.common.wicket.markup.repeater.AbstractPageableView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
 
+import java.io.Serial;
 import java.util.Iterator;
 
 /**
@@ -11,6 +12,7 @@ import java.util.Iterator;
  */
 public abstract class DataViewBase<RowType> extends AbstractPageableView<RowType> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private final IDataProvider<RowType> dataProvider;

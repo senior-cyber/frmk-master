@@ -4,8 +4,11 @@ import com.senior.cyber.frmk.common.wicket.markup.html.panel.ComponentFeedbackPa
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.FormComponent;
 
+import java.io.Serial;
+
 public class UIContainer extends WebMarkupContainer {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     protected UIContainer(final String id) {

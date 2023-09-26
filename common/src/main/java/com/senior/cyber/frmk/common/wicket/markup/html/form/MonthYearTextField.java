@@ -5,10 +5,12 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.model.IModel;
 
+import java.io.Serial;
 import java.util.Date;
 
 public class MonthYearTextField extends org.apache.wicket.extensions.markup.html.form.DateTextField {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private static final String JAVA_PARTTERN = "MM/yyyy";

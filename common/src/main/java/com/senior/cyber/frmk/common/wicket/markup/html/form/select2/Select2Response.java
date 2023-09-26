@@ -1,11 +1,13 @@
 package com.senior.cyber.frmk.common.wicket.markup.html.form.select2;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Select2Response implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private int page = 1;

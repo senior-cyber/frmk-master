@@ -10,6 +10,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
+import java.io.Serial;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Time;
@@ -20,6 +21,7 @@ import java.util.*;
 
 public class ReadOnlyView extends Label {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     protected String format;

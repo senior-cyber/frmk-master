@@ -4,10 +4,12 @@ import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class GridView<T> extends org.apache.wicket.markup.repeater.data.GridView<T> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private PopulateEmptyItem<T> populateEmptyItem;

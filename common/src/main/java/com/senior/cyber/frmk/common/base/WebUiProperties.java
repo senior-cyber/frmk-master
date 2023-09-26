@@ -9,6 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.util.Assert;
 
 import java.io.File;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Map;
 
@@ -17,9 +18,7 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "webui")
 public class WebUiProperties implements Serializable {
 
-    /**
-     *
-     */
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private RuntimeConfigurationType configurationType = RuntimeConfigurationType.DEPLOYMENT;

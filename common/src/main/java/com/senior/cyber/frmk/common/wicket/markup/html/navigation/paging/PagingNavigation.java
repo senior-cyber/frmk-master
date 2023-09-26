@@ -10,6 +10,7 @@ import org.apache.wicket.markup.html.list.Loop;
 import org.apache.wicket.markup.html.list.LoopItem;
 import org.apache.wicket.model.Model;
 
+import java.io.Serial;
 import java.util.Map;
 
 /**
@@ -17,6 +18,7 @@ import java.util.Map;
  */
 public class PagingNavigation extends Loop {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**
@@ -281,7 +283,10 @@ public class PagingNavigation extends Loop {
      * @author igor.vaynberg
      */
     private final class TitleAppender extends Behavior {
+
+        @Serial
         private static final long serialVersionUID = 1L;
+
         /**
          * resource key for the message
          */

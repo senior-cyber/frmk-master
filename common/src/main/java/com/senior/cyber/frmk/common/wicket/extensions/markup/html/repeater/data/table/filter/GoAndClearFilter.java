@@ -62,6 +62,8 @@ public class GoAndClearFilter extends GoFilter {
         this.originalState = originalState;
 
         clear = new Button("clear", clearModel) {
+
+            @Serial
             private static final long serialVersionUID = 1L;
 
             @Override

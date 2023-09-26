@@ -9,8 +9,11 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 
+import java.io.Serial;
+
 public class UIRow extends WebMarkupContainer {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private int size = 0;

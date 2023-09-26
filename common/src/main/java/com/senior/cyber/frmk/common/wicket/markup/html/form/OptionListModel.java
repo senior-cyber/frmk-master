@@ -5,11 +5,13 @@ import com.senior.cyber.frmk.jdbc.query.GenericSelectQuery;
 import com.senior.cyber.frmk.jdbc.query.SelectQuery;
 import org.apache.wicket.model.util.ListModel;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class OptionListModel extends ListModel<Option> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private List<String> where = null;

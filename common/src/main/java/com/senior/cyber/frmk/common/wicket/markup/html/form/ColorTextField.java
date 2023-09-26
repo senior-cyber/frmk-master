@@ -5,8 +5,11 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 
+import java.io.Serial;
+
 public class ColorTextField extends TextField<String> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public ColorTextField(String id) {

@@ -6,11 +6,14 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.link.AbstractLink;
 import org.apache.wicket.markup.html.panel.Panel;
 
+import java.io.Serial;
+
 /**
  * @see org.apache.wicket.markup.html.navigation.paging.PagingNavigator
  */
 public class PagingNavigator extends Panel {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**
@@ -124,6 +127,7 @@ public class PagingNavigator extends Panel {
      */
     private final class TitleAppender extends Behavior {
 
+        @Serial
         private static final long serialVersionUID = 1L;
 
         private final String resourceKey;

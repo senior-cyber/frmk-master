@@ -5,10 +5,12 @@ import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.model.IModel;
 
+import java.io.Serial;
 import java.util.List;
 
 public class ListView<T> extends org.apache.wicket.markup.html.list.ListView<T> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private WicketTwoConsumer<ListView<T>, ListItem<T>> populateItem;

@@ -8,8 +8,11 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.PropertyModel;
 
+import java.io.Serial;
+
 public class ModalDialog extends Panel {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private static final String DIALOG_ID = "dialog";

@@ -132,6 +132,8 @@ public class ExportToolbar<RowType, CellType> extends AbstractToolbar<RowType, C
         add(td);
 
         td.add(AttributeModifier.replace("colspan", new IModel<String>() {
+
+            @Serial
             private static final long serialVersionUID = 1L;
 
             @Override

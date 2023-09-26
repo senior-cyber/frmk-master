@@ -6,12 +6,14 @@ import org.apache.wicket.extensions.ajax.markup.html.autocomplete.DefaultCssAuto
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.IAutoCompleteRenderer;
 import org.apache.wicket.model.IModel;
 
+import java.io.Serial;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
 public class SmartTextField extends DefaultCssAutoCompleteTextField<String> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private SmartTextProvider provider;

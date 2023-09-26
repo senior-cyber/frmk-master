@@ -6,8 +6,11 @@ import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 
+import java.io.Serial;
+
 public class UIColumn extends WebMarkupContainer {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     protected Size size;

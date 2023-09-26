@@ -4,6 +4,7 @@ import org.apache.wicket.markup.repeater.*;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Generics;
 
+import java.io.Serial;
 import java.util.Iterator;
 
 /**
@@ -11,6 +12,7 @@ import java.util.Iterator;
  */
 public abstract class RefreshingView<RowType> extends RepeatingView {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**

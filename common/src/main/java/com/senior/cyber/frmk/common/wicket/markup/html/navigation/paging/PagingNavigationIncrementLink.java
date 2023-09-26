@@ -4,11 +4,14 @@ import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.link.DisabledAttributeLinkBehavior;
 import org.apache.wicket.markup.html.link.Link;
 
+import java.io.Serial;
+
 /**
  * @see org.apache.wicket.markup.html.navigation.paging.PagingNavigationIncrementLink
  */
 public class PagingNavigationIncrementLink<T> extends Link<T> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**

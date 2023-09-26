@@ -7,9 +7,9 @@ import org.apache.wicket.model.IModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serial;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 /**
  * @see org.apache.wicket.markup.repeater.AbstractPageableView
@@ -18,9 +18,7 @@ public abstract class AbstractPageableView<RowType> extends RefreshingView<RowTy
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractPageableView.class);
 
-    /**
-     *
-     */
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**
@@ -245,62 +243,6 @@ public abstract class AbstractPageableView<RowType> extends RefreshingView<RowTy
         return Math.min(getItemsPerPage(), getRowCount() - getFirstItemOffset());
     }
 
-    // /////////////////////////////////////////////////////////////////////////
-    // HELPER CLASSES
-    // /////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Iterator adapter that makes sure only the specified max number of items can be accessed from
-     * its delegate.
-     *
-     * @param <T> Model object type
-     */
-    private static class CappedIteratorAdapter<T> implements Iterator<IModel<T>> {
-        private final int max;
-        private int index;
-        private final Iterator<IModel<T>> delegate;
-
-        /**
-         * Constructor
-         *
-         * @param delegate delegate iterator
-         * @param max      maximum number of items that can be accessed.
-         */
-        public CappedIteratorAdapter(Iterator<IModel<T>> delegate, int max) {
-            this.delegate = delegate;
-            this.max = max;
-        }
-
-        /**
-         * @see java.util.Iterator#remove()
-         */
-        @Override
-        public void remove() {
-            throw new UnsupportedOperationException();
-        }
-
-        /**
-         * @see java.util.Iterator#hasNext()
-         */
-        @Override
-        public boolean hasNext() {
-            return (index < max) && delegate.hasNext();
-        }
-
-        /**
-         * @see java.util.Iterator#next()
-         */
-        @Override
-        public IModel<T> next() {
-            if (index >= max) {
-                throw new NoSuchElementException();
-            }
-            index++;
-            return delegate.next();
-        }
-
-    }
-
     /**
      * @see org.apache.wicket.Component#onDetach()
      */
@@ -309,4 +251,5 @@ public abstract class AbstractPageableView<RowType> extends RefreshingView<RowTy
         clearCachedItemCount();
         super.onDetach();
     }
+
 }

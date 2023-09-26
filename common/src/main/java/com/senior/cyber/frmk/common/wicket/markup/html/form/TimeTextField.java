@@ -6,12 +6,13 @@ import org.apache.wicket.extensions.markup.html.form.DateTextField;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.model.IModel;
 
+import java.io.Serial;
 import java.util.Date;
 
 public class TimeTextField extends DateTextField {
 
+    @Serial
     private static final long serialVersionUID = 1L;
-
 
     private static final String JAVA_PARTTERN = "HH:mm";
     private static final String JAVASCRIPT_PARTTERN = "HH:MM";

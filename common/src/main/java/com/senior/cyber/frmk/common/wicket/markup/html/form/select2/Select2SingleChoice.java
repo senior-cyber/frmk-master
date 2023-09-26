@@ -22,11 +22,13 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Select2SingleChoice extends FormComponent<Option> implements IRequestListener {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Select2MultipleChoice.class);

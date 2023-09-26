@@ -4,6 +4,7 @@ import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,6 +12,7 @@ import java.util.List;
 
 public class FullCalendarItem implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private Date end;

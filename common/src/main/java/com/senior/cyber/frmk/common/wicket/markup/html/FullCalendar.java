@@ -15,12 +15,14 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.Serial;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
 public class FullCalendar extends WebComponent implements IRequestListener {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private FullCalendarProvider provider;

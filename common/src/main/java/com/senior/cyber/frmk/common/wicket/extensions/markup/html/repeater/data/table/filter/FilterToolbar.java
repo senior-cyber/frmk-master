@@ -57,7 +57,6 @@ public class FilterToolbar<RowType, CellType> extends AbstractToolbar<RowType, C
             @Serial
             private static final long serialVersionUID = 1L;
 
-
             @Override
             protected void populateItem(ListItem<IColumn<RowType, ? extends CellType>> item) {
                 final IColumn<RowType, ? extends CellType> col = item.getModelObject();
@@ -81,6 +80,7 @@ public class FilterToolbar<RowType, CellType> extends AbstractToolbar<RowType, C
                 if (col instanceof IStyledColumn) {
                     filter.add(new Behavior() {
 
+                        @Serial
                         private static final long serialVersionUID = 1L;
 
                         /**

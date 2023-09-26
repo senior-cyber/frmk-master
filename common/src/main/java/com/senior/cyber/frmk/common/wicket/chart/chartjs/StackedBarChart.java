@@ -11,6 +11,7 @@ import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.markup.parser.XmlTag.TagType;
 import org.apache.wicket.model.IModel;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -18,10 +19,8 @@ import java.util.List;
 
 public class StackedBarChart extends WebComponent {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2031773587523085812L;
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private IModel<StackedBarData> dataset;
 
@@ -58,10 +57,8 @@ public class StackedBarChart extends WebComponent {
 
     public static class StackedBarItem implements Serializable {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -2390987653208130338L;
+        @Serial
+        private static final long serialVersionUID = 1L;
 
         private String label;
 
@@ -168,10 +165,8 @@ public class StackedBarChart extends WebComponent {
 
     public static class StackedBarData implements Serializable {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -6094082066773162902L;
+        @Serial
+        private static final long serialVersionUID = 1L;
 
         private List<String> labels = new LinkedList<>();
 

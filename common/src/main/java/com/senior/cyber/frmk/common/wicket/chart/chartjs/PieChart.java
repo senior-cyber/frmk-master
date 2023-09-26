@@ -10,6 +10,7 @@ import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.markup.parser.XmlTag.TagType;
 import org.apache.wicket.model.IModel;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -17,6 +18,7 @@ import java.util.List;
 
 public class PieChart extends WebComponent {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private IModel<PieData> dataset;
@@ -52,6 +54,7 @@ public class PieChart extends WebComponent {
 
     public static class PieItem implements Serializable {
 
+        @Serial
         private static final long serialVersionUID = 1L;
 
         private List<String> data = new LinkedList<>();
