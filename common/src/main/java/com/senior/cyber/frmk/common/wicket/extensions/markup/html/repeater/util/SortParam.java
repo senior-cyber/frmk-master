@@ -3,11 +3,14 @@ package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.util
 import org.apache.wicket.util.io.IClusterable;
 import org.apache.wicket.util.lang.Args;
 
+import java.io.Serial;
+
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.util.SortParam
  */
 public class SortParam implements IClusterable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private final String key;

@@ -5,10 +5,12 @@ import org.apache.wicket.extensions.markup.html.tabs.TabbedPanel;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.model.IModel;
 
+import java.io.Serial;
 import java.util.List;
 
 public class AjaxTabbedPanel extends org.apache.wicket.extensions.ajax.markup.html.tabs.AjaxTabbedPanel<Tab> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private List<Tab> tabs;

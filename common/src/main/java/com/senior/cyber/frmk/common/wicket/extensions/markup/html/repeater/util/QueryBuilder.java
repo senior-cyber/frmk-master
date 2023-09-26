@@ -1,11 +1,13 @@
 package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.util;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class QueryBuilder implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     protected List<String> select = new ArrayList<>();

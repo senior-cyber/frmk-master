@@ -24,7 +24,6 @@ import java.util.*;
 
 public abstract class AbstractJdbcDataProvider extends SortableDataProvider<Tuple> implements IFilterStateLocator {
 
-
     public static final String WHERE = "WHERE ";
     public static final String HAVING = "HAVING ";
 

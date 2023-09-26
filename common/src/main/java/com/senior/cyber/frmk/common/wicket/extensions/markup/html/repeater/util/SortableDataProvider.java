@@ -4,11 +4,14 @@ import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.ISortableDataProvider;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 
+import java.io.Serial;
+
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider
  */
 public abstract class SortableDataProvider<RowType> implements ISortableDataProvider<RowType> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private final SingleSortState state = new SingleSortState();

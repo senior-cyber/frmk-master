@@ -5,11 +5,14 @@ import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.util.io.IClusterable;
 import org.apache.wicket.util.lang.Args;
 
+import java.io.Serial;
+
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.util.SingleSortState
  */
 public class SingleSortState implements ISortState, IClusterable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     SortParam param;
