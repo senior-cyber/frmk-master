@@ -254,7 +254,7 @@ public class DataTable<RowType, CellType> extends Panel implements IPageableItem
      * @return DataItem created DataItem
      * @see Item
      */
-    protected Item<IColumn<RowType, CellType>> newCellItem(final String id, final int index, final IModel<IColumn<RowType, CellType>> model) {
+    protected Item<IColumn<RowType, ? extends CellType>> newCellItem(final String id, final int index, final IModel<IColumn<RowType, ? extends CellType>> model) {
         return new Item<>(id, index, model);
     }
 

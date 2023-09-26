@@ -31,7 +31,7 @@ public abstract class AbstractJdbcDataProvider extends SortableDataProvider<Tupl
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractJdbcDataProvider.class);
 
-    private Map<String, JdbcColumn<?>> column;
+    private Map<String, JdbcColumn<? extends Serializable>> column;
     private Map<String, FilterFunction> callbackFilter;
 
     protected final Map<String, String> join;

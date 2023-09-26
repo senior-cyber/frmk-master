@@ -57,7 +57,7 @@ public abstract class AbstractExportableColumn<RowType, CellType> extends Abstra
      * @param rowModel    A model of the row data.
      */
     @Override
-    public void populateItem(Item<IColumn<RowType, CellType>> cellItem, String componentId, IModel<RowType> rowModel) {
+    public void populateItem(Item<IColumn<RowType, ? extends CellType>> cellItem, String componentId, IModel<RowType> rowModel) {
         cellItem.add(createDisplayComponent(componentId, getDataModel(rowModel)));
     }
 

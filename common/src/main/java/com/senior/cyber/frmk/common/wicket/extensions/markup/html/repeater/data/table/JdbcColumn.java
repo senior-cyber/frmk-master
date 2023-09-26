@@ -46,7 +46,7 @@ public class JdbcColumn<CellType extends Serializable> extends AbstractColumn<Tu
     }
 
     @Override
-    public void populateItem(final Item<IColumn<Tuple, CellType>> cellItem, final String componentId, final IModel<Tuple> rowModel) {
+    public void populateItem(final Item<IColumn<Tuple, ? extends CellType>> cellItem, final String componentId, final IModel<Tuple> rowModel) {
         IModel<CellType> m = getDataModel(rowModel);
 
         ItemPanel itemPanel = this.cellSerializer == null ? null : this.cellSerializer.apply(this.keyExpression, rowModel.getObject(), m.getObject());

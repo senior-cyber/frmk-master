@@ -53,7 +53,7 @@ public abstract class AbstractDataGridView<RowType, CellType> extends DataViewBa
      * @see Item
      * @see RefreshingView#newItem(String, int, IModel)
      */
-    protected Item<IColumn<RowType, CellType>> newCellItem(final String id, final int index, final IModel<IColumn<RowType, CellType>> model) {
+    protected Item<IColumn<RowType, ? extends CellType>> newCellItem(final String id, final int index, final IModel<IColumn<RowType, ? extends CellType>> model) {
         return new Item<>(id, index, model);
     }
 
@@ -101,8 +101,8 @@ public abstract class AbstractDataGridView<RowType, CellType> extends DataViewBa
         int populatorsNumber = populators.size();
         for (int i = 0; i < populatorsNumber; i++) {
             IColumn<RowType, CellType> populator = populators.get(i);
-            IModel<IColumn<RowType, CellType>> populatorModel = new Model<>(populator);
-            Item<IColumn<RowType, CellType>> cellItem = newCellItem(cells.newChildId(), i, populatorModel);
+            IModel<IColumn<RowType, ? extends CellType>> populatorModel = new Model<>(populator);
+            Item<IColumn<RowType, ? extends CellType>> cellItem = newCellItem(cells.newChildId(), i, populatorModel);
             cells.add(cellItem);
 
             populator.populateItem(cellItem, CELL_ITEM_ID, item.getModel());

@@ -2,11 +2,15 @@ package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data
 
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.Component;
+import org.apache.wicket.markup.repeater.Item;
+import org.apache.wicket.model.IModel;
 
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.filter.IFilteredColumn
  */
 public interface IFilteredColumn<RowType, CellType> extends IColumn<RowType, CellType> {
+
+    // void populateItem(final Item<IColumn<RowType, ? extends CellType>> cellItem, final String componentId, final IModel<RowType> rowModel);
 
     /**
      * Returns the component used by user to filter the column. If null is returned, no filter will

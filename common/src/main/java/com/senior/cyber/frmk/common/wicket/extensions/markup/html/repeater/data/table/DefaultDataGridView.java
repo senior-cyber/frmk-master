@@ -18,8 +18,8 @@ public class DefaultDataGridView<RowType, CellType> extends DataGridView<RowType
     }
 
     @Override
-    protected Item<IColumn<RowType, CellType>> newCellItem(String id, int index, IModel<IColumn<RowType, CellType>> model) {
-        Item<IColumn<RowType, CellType>> item = table.newCellItem(id, index, model);
+    protected Item<IColumn<RowType, ? extends CellType>> newCellItem(String id, int index, IModel<IColumn<RowType, ? extends CellType>> model) {
+        Item<IColumn<RowType, ? extends CellType>> item = table.newCellItem(id, index, model);
         final IColumn<RowType, ? extends CellType> column = table.columns.get(index);
         if (column instanceof IStyledColumn) {
             item.add(new CssAttributeBehavior() {

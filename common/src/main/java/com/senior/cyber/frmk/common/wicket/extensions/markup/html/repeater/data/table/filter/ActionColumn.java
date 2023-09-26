@@ -44,7 +44,7 @@ public class ActionColumn<RowType, CellType> extends AbstractColumn<RowType, Cel
     }
 
     @Override
-    public void populateItem(Item<IColumn<RowType, CellType>> item, String componentId, IModel<RowType> rowModel) {
+    public void populateItem(Item<IColumn<RowType, ? extends CellType>> item, String componentId, IModel<RowType> rowModel) {
         List<ActionItem> actionItems = this.actions.apply(getDisplayModel().getObject(), rowModel.getObject());
         if (actionItems == null || actionItems.isEmpty()) {
             Label label = new Label(componentId, "");

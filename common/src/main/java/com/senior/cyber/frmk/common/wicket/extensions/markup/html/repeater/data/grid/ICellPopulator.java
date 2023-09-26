@@ -11,6 +11,6 @@ import org.apache.wicket.util.io.IClusterable;
  */
 public interface ICellPopulator<RowType, CellType> extends IClusterable, IDetachable {
 
-    void populateItem(final Item<IColumn<RowType, CellType>> cellItem, final String componentId, final IModel<RowType> rowModel);
+     void populateItem(final Item<IColumn<RowType, ? extends CellType>> cellItem, final String componentId, final IModel<RowType> rowModel);
 
 }
