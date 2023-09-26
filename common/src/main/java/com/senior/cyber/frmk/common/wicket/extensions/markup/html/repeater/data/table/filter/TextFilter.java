@@ -1,15 +1,16 @@
 package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.filter;
 
-import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.filter.AbstractFilter;
-import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.filter.FilterForm;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
+
+import java.io.Serial;
 
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.filter.TextFilter
  */
 public class TextFilter extends AbstractFilter {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private final TextField<String> filter;

@@ -8,11 +8,14 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.border.Border;
 import org.apache.wicket.util.string.Strings;
 
+import java.io.Serial;
+
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.sort.OrderByBorder
  */
 public class OrderByBorder extends Border {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public static final String SORT_ASCENDING_CSS_CLASS_KEY = CssUtils.key(OrderByLink.class, "ascending");
@@ -54,6 +57,8 @@ public class OrderByBorder extends Border {
      */
     protected OrderByLink newOrderByLink(final String id, final String key, final ISortStateLocator stateLocator) {
         OrderByLink link = new OrderByLink(id, key, stateLocator) {
+
+            @Serial
             private static final long serialVersionUID = 1L;
 
             @Override

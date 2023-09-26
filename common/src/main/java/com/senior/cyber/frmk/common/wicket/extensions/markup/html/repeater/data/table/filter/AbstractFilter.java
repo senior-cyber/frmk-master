@@ -4,11 +4,14 @@ import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 
+import java.io.Serial;
+
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.filter.AbstractFilter
  */
 public class AbstractFilter extends Panel {
-    
+
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private final FilterForm form;

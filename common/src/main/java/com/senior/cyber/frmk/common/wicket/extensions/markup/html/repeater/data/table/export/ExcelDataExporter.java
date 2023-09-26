@@ -16,11 +16,13 @@ import org.apache.wicket.util.convert.IConverter;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.Serial;
 import java.util.Iterator;
 import java.util.List;
 
 public class ExcelDataExporter extends AbstractDataExporter {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private boolean exportHeadersEnabled = true;

@@ -5,11 +5,12 @@ import com.senior.cyber.frmk.common.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 
+import java.io.Serial;
 import java.util.List;
 
 public class DefaultDataGridView<RowType, CellType> extends DataGridView<RowType, CellType> {
 
-    private DataTable<RowType, CellType> table;
+    private final DataTable<RowType, CellType> table;
 
     public DefaultDataGridView(String id, DataTable<RowType, CellType> table, List<? extends IColumn<RowType, CellType>> columns, IDataProvider<RowType> dataProvider) {
         super(id, columns, dataProvider);
@@ -22,6 +23,8 @@ public class DefaultDataGridView<RowType, CellType> extends DataGridView<RowType
         final IColumn<RowType, CellType> column = table.columns.get(index);
         if (column instanceof IStyledColumn) {
             item.add(new DataTable.CssAttributeBehavior() {
+
+                @Serial
                 private static final long serialVersionUID = 1L;
 
                 @Override

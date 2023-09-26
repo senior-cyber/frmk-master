@@ -21,6 +21,7 @@ import org.apache.wicket.util.resource.IResourceStreamWriter;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.Serial;
 import java.time.Duration;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,6 +31,7 @@ import java.util.List;
  */
 public class ExportToolbar<RowType, CellType> extends AbstractToolbar<RowType, CellType> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private static final IModel<String> DEFAULT_MESSAGE_MODEL = new ResourceModel("datatable.export-to");

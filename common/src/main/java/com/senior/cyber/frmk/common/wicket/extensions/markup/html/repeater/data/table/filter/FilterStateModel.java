@@ -2,6 +2,7 @@ package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data
 
 import org.apache.wicket.model.util.MapModel;
 
+import java.io.Serial;
 import java.util.Map;
 
 /**
@@ -9,6 +10,7 @@ import java.util.Map;
  */
 public class FilterStateModel extends MapModel<String, String> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private final IFilterStateLocator locator;

@@ -1,6 +1,5 @@
 package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table;
 
-import jakarta.persistence.Tuple;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.OddEvenItem;
@@ -8,6 +7,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.settings.DebugSettings;
 import org.apache.wicket.util.string.Strings;
 
+import java.io.Serial;
 import java.util.List;
 
 public class ResponsiveDataTable<RowType, CellType> extends DataTable<RowType, CellType> {
@@ -16,9 +16,7 @@ public class ResponsiveDataTable<RowType, CellType> extends DataTable<RowType, C
 
     protected static final String MARKUP_ID_ATTR_NAME = "id";
 
-    /**
-     *
-     */
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**
@@ -30,12 +28,12 @@ public class ResponsiveDataTable<RowType, CellType> extends DataTable<RowType, C
      * @param rowsPerPage  number of rows per page
      */
     public ResponsiveDataTable(final String id, final List<? extends IColumn<RowType, CellType>> columns,
-                               final ISortableDataProvider dataProvider, final int rowsPerPage) {
+                               final ISortableDataProvider<RowType> dataProvider, final int rowsPerPage) {
         super(id, columns, dataProvider, rowsPerPage);
         setOutputMarkupId(true);
-        addTopToolbar(new HeadersToolbar(this, dataProvider));
-        addBottomToolbar(new NoRecordsToolbar(this));
-        addBottomToolbar(new NavigationToolbar(this));
+        addTopToolbar(new HeadersToolbar<>(this, dataProvider));
+        addBottomToolbar(new NoRecordsToolbar<>(this));
+        addBottomToolbar(new NavigationToolbar<>(this));
     }
 
     @Override

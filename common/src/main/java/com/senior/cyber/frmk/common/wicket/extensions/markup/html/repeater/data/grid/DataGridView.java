@@ -3,6 +3,7 @@ package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import com.senior.cyber.frmk.common.wicket.markup.repeater.data.IDataProvider;
 
+import java.io.Serial;
 import java.util.List;
 
 /**
@@ -10,6 +11,7 @@ import java.util.List;
  */
 public class DataGridView<RowType, CellType> extends AbstractDataGridView<RowType, CellType> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**

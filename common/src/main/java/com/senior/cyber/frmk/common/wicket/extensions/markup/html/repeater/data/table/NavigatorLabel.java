@@ -6,11 +6,14 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.util.io.IClusterable;
 
+import java.io.Serial;
+
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.NavigatorLabel
  */
 public class NavigatorLabel extends Label {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**
@@ -26,6 +29,7 @@ public class NavigatorLabel extends Label {
 
     public static class LabelModelObject implements IClusterable {
 
+        @Serial
         private static final long serialVersionUID = 1L;
 
         private final IPageableItems pageable;

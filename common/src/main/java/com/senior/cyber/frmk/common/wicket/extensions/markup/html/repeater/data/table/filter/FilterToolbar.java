@@ -13,17 +13,19 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.string.Strings;
 
+import java.io.Serial;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.filter.FilterToolbar
  */
-public class FilterToolbar<RowType, CellType> extends AbstractToolbar {
+public class FilterToolbar<RowType, CellType> extends AbstractToolbar<RowType, CellType> {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private static final String FILTER_ID = "filter";
-
-    private static final long serialVersionUID = 1L;
 
     /**
      * Constructor

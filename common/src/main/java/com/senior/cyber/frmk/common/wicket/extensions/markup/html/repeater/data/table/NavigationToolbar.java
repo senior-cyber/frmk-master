@@ -6,11 +6,14 @@ import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.model.IModel;
 
+import java.io.Serial;
+
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.NavigationToolbar
  */
 public class NavigationToolbar<RowType, CellType> extends AbstractToolbar<RowType, CellType> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**

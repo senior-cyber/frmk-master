@@ -4,11 +4,14 @@ import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.util.lang.Args;
 
+import java.io.Serial;
+
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.sort.OrderByLink
  */
 public class OrderByLink extends Link<Void> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**

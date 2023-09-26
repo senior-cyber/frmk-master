@@ -6,11 +6,14 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
 
+import java.io.Serial;
+
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.NoRecordsToolbar
  */
 public class NoRecordsToolbar<RowType, CellType> extends AbstractToolbar<RowType, CellType> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private static final IModel<String> DEFAULT_MESSAGE_MODEL = new ResourceModel("datatable.no-records-found");
@@ -36,12 +39,15 @@ public class NoRecordsToolbar<RowType, CellType> extends AbstractToolbar<RowType
         add(td);
 
         td.add(AttributeModifier.replace("colspan", new IModel<String>() {
+
+            @Serial
             private static final long serialVersionUID = 1L;
 
             @Override
             public String getObject() {
                 return String.valueOf(table.getColumns().size()).intern();
             }
+
         }));
         td.add(new Label("msg", messageModel));
     }

@@ -10,6 +10,7 @@ import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
+import java.io.Serial;
 import java.util.List;
 
 /**
@@ -17,6 +18,7 @@ import java.util.List;
  */
 public abstract class AbstractDataGridView<RowType, CellType> extends DataViewBase<RowType> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private static final String CELL_REPEATER_ID = "cells";

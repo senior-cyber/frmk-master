@@ -4,6 +4,7 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.OddEvenItem;
 import org.apache.wicket.model.IModel;
 
+import java.io.Serial;
 import java.util.List;
 
 /**
@@ -11,6 +12,7 @@ import java.util.List;
  */
 public class DefaultDataTable<RowType, CellType> extends DataTable<RowType, CellType> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**
@@ -21,12 +23,12 @@ public class DefaultDataTable<RowType, CellType> extends DataTable<RowType, Cell
      * @param dataProvider data provider
      * @param rowsPerPage  number of rows per page
      */
-    public DefaultDataTable(final String id, final List<? extends IColumn<RowType, CellType>> columns, final ISortableDataProvider dataProvider, final int rowsPerPage) {
+    public DefaultDataTable(final String id, final List<? extends IColumn<RowType, CellType>> columns, final ISortableDataProvider<RowType> dataProvider, final int rowsPerPage) {
         super(id, columns, dataProvider, rowsPerPage);
 
-        addTopToolbar(new HeadersToolbar(this, dataProvider));
-        addBottomToolbar(new NavigationToolbar(this));
-        addBottomToolbar(new NoRecordsToolbar(this));
+        addTopToolbar(new HeadersToolbar<>(this, dataProvider));
+        addBottomToolbar(new NavigationToolbar<>(this));
+        addBottomToolbar(new NoRecordsToolbar<>(this));
     }
 
     @Override

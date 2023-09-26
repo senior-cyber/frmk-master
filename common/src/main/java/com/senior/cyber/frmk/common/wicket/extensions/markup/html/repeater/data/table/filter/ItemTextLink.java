@@ -9,8 +9,11 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 
+import java.io.Serial;
+
 public class ItemTextLink<T> extends Panel {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public ItemTextLink(String id, IModel<T> rowModel, IModel<?> model, WicketTwoFunction<String, T, ItemCss> itemCss,
@@ -21,7 +24,7 @@ public class ItemTextLink<T> extends Panel {
             /**
              *
              */
-            private static final long serialVersionUID = -8413623235924109139L;
+            private static final long serialVersionUID = 1L;
 
             @Override
             public void onClick(AjaxRequestTarget target) {
@@ -54,10 +57,9 @@ public class ItemTextLink<T> extends Panel {
         super(id);
 
         AjaxLink<T> link = new AjaxLink<>("link", rowModel) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 3891810044928474771L;
+
+            @Serial
+            private static final long serialVersionUID = 1L;
 
             @Override
             public void onClick(AjaxRequestTarget target) {

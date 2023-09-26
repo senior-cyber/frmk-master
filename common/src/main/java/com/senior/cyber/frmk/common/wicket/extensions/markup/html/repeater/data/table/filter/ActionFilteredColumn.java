@@ -2,16 +2,17 @@ package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data
 
 import com.senior.cyber.frmk.common.wicket.functional.WicketThreeConsumer;
 import com.senior.cyber.frmk.common.wicket.functional.WicketTwoFunction;
-import jakarta.persistence.Tuple;
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
+import java.io.Serial;
 import java.util.List;
 
 public class ActionFilteredColumn<RowType, CellType> extends ActionColumn<RowType, CellType> implements IFilteredColumn<RowType, CellType> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     protected IModel<String> filter;

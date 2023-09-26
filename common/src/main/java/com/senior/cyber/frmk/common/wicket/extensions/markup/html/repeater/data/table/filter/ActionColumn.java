@@ -1,6 +1,5 @@
 package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.filter;
 
-import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.AbstractColumn;
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import com.senior.cyber.frmk.common.wicket.functional.WicketThreeConsumer;
@@ -12,14 +11,13 @@ import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
+import java.io.Serial;
 import java.util.Collections;
 import java.util.List;
 
 public class ActionColumn<RowType, CellType> extends AbstractColumn<RowType, CellType> {
 
-    /**
-     *
-     */
+    @Serial
     private static final long serialVersionUID = 1L;
 
     protected WicketThreeConsumer<String, RowType, AjaxRequestTarget> itemClick;

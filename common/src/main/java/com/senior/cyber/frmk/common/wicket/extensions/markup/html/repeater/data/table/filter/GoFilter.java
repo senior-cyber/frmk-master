@@ -5,11 +5,14 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
 
+import java.io.Serial;
+
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.filter.GoFilter
  */
 public class GoFilter extends Panel {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     protected static final IModel<String> DEFAULT_GO_MODEL = new ResourceModel("datatable.go", "filter");
@@ -37,6 +40,8 @@ public class GoFilter extends Panel {
         super(id);
 
         go = new Button("go", goModel) {
+
+            @Serial
             private static final long serialVersionUID = 1L;
 
             @Override

@@ -9,6 +9,7 @@ import org.apache.wicket.markup.repeater.RefreshingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
+import java.io.Serial;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,8 +17,9 @@ import java.util.List;
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.HeadersToolbar
  */
-public class HeadersToolbar<RowType, CellType> extends AbstractToolbar {
+public class HeadersToolbar<RowType, CellType> extends AbstractToolbar<RowType, CellType> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**
@@ -30,6 +32,8 @@ public class HeadersToolbar<RowType, CellType> extends AbstractToolbar {
         super(table);
         setOutputMarkupId(true);
         RefreshingView<IColumn<RowType, CellType>> headers = new RefreshingView<>("headers") {
+
+            @Serial
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -57,6 +61,8 @@ public class HeadersToolbar<RowType, CellType> extends AbstractToolbar {
 
                 if (column instanceof IStyledColumn) {
                     DataTable.CssAttributeBehavior cssAttributeBehavior = new DataTable.CssAttributeBehavior() {
+
+                        @Serial
                         private static final long serialVersionUID = 1L;
 
                         @Override
@@ -99,6 +105,8 @@ public class HeadersToolbar<RowType, CellType> extends AbstractToolbar {
     protected WebMarkupContainer newSortableHeader(final String headerId, final String key,
                                                    final ISortStateLocator locator) {
         return new OrderByBorder(headerId, key, locator) {
+
+            @Serial
             private static final long serialVersionUID = 1L;
 
             @Override

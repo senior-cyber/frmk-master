@@ -1,17 +1,19 @@
 package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table;
 
-import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.export.IExportableColumn;
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.filter.CellPanel;
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.filter.ItemPanel;
 import com.senior.cyber.frmk.common.wicket.functional.CellSerializerFunction;
 import com.senior.cyber.frmk.common.wicket.functional.SerializerFunction;
 import jakarta.persistence.Tuple;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -19,14 +21,20 @@ import java.io.Serializable;
  */
 public class JdbcColumn<CellType extends Serializable> extends AbstractColumn<Tuple, CellType> implements IExportableColumn<Tuple, CellType> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
+    @Getter
     private String keyExpression;
 
+    @Getter
+    @Setter
     private Class<CellType> typeClass;
 
+    @Setter
     protected SerializerFunction<CellType> serializer;
 
+    @Setter
     protected CellSerializerFunction<CellType> cellSerializer;
 
     public JdbcColumn(final IModel<String> displayModel) {
@@ -52,18 +60,6 @@ public class JdbcColumn<CellType extends Serializable> extends AbstractColumn<Tu
         }
     }
 
-    public Class<CellType> getTypeClass() {
-        return typeClass;
-    }
-
-    public void setTypeClass(Class<CellType> typeClass) {
-        this.typeClass = typeClass;
-    }
-
-    public String getKeyExpression() {
-        return keyExpression;
-    }
-
     @Override
     public IModel<CellType> getDataModel(IModel<Tuple> rowModel) {
         Tuple tuple = rowModel.getObject();
@@ -72,14 +68,6 @@ public class JdbcColumn<CellType extends Serializable> extends AbstractColumn<Tu
 
     public void setKeyExpression(String keyExpression) {
         this.keyExpression = keyExpression;
-    }
-
-    public void setSerializer(SerializerFunction<CellType> serializer) {
-        this.serializer = serializer;
-    }
-
-    public void setCellSerializer(CellSerializerFunction<CellType> cellSerializer) {
-        this.cellSerializer = cellSerializer;
     }
 
 }

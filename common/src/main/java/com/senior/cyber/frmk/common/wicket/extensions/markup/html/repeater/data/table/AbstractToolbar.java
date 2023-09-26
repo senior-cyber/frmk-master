@@ -3,11 +3,14 @@ package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 
+import java.io.Serial;
+
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractToolbar
  */
 public abstract class AbstractToolbar<RowType, CellType> extends Panel {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private final DataTable<RowType, CellType> table;

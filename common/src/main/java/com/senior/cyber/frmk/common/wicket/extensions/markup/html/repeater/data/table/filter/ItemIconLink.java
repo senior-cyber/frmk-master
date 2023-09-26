@@ -10,10 +10,12 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 
+import java.io.Serial;
 import java.util.List;
 
 public class ItemIconLink<T> extends Panel {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public ItemIconLink(String id, IModel<T> rowModel, WicketTwoFunction<String, T, ItemCss> itemCss,

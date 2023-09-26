@@ -7,6 +7,7 @@ import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
+import java.io.Serial;
 import java.util.List;
 
 /**
@@ -14,6 +15,7 @@ import java.util.List;
  */
 public class ChoiceFilter extends AbstractFilter {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private final DropDownChoice<String> choice;

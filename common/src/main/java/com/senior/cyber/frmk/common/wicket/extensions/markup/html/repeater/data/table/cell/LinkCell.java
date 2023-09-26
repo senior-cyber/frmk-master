@@ -1,8 +1,8 @@
 package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.cell;
 
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.filter.ItemPanel;
-import com.senior.cyber.frmk.common.wicket.widget.ReadOnlyView;
 import com.senior.cyber.frmk.common.wicket.markup.html.form.select2.Option;
+import com.senior.cyber.frmk.common.wicket.widget.ReadOnlyView;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.basic.Label;
@@ -11,6 +11,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
+import java.io.Serial;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
@@ -18,6 +19,7 @@ import java.util.Date;
 
 public class LinkCell extends ItemPanel {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private Class<? extends Page> page;

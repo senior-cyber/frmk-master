@@ -13,6 +13,7 @@ import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.util.string.Strings;
 
+import java.io.Serial;
 import java.util.Map;
 
 /**
@@ -20,6 +21,7 @@ import java.util.Map;
  */
 public class FilterForm extends Form<Map<String, String>> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private static final ResourceReference JS = new JavaScriptResourceReference(FilterForm.class, "wicket-filterform.js");
@@ -90,6 +92,8 @@ public class FilterForm extends Form<Map<String, String>> {
      */
     public final void enableFocusTracking(final FormComponent<?> fc) {
         fc.add(new Behavior() {
+
+            @Serial
             private static final long serialVersionUID = 1L;
 
             @Override

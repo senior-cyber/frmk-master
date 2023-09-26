@@ -2,21 +2,23 @@ package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data
 
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.filter.ItemPanel;
 import com.senior.cyber.frmk.common.wicket.functional.WicketTwoConsumer;
-import com.senior.cyber.frmk.common.wicket.widget.ReadOnlyView;
 import com.senior.cyber.frmk.common.wicket.markup.html.form.select2.Option;
+import com.senior.cyber.frmk.common.wicket.widget.ReadOnlyView;
+import jakarta.persistence.Tuple;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
-import jakarta.persistence.Tuple;
+import java.io.Serial;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 
 public class ClickableCell extends ItemPanel {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private WicketTwoConsumer<Tuple, Link<Void>> onClick;

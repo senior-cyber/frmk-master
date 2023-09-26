@@ -2,6 +2,7 @@ package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data
 
 import org.apache.wicket.model.IModel;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,6 +10,7 @@ import java.util.List;
 
 public class ActionItem implements Serializable, Comparable<ActionItem> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private final String link;

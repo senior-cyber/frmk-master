@@ -1,7 +1,6 @@
 package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.export;
 
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.IColumn;
-import jakarta.persistence.Tuple;
 import org.apache.wicket.model.IModel;
 
 /**

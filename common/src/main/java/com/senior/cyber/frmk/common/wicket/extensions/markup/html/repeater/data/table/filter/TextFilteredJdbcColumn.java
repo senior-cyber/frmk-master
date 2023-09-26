@@ -4,6 +4,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -11,6 +12,7 @@ import java.io.Serializable;
  */
 public class TextFilteredJdbcColumn<T extends Serializable> extends FilteredJdbcColumn<T> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public TextFilteredJdbcColumn(final IModel<String> displayModel) {

@@ -12,6 +12,7 @@ import java.util.List;
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.export.IDataExporter
  */
 public interface IDataExporter<RowType, CellType> extends IClusterable {
+
     /**
      * Returns a model of the exported data format name. This should be something like "CSV" or "Excel" etc. The
      * value of the model returned is displayed as the export type in the {@link ExportToolbar}.

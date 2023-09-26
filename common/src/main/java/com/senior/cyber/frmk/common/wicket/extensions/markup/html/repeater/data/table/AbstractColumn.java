@@ -5,11 +5,14 @@ import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 
+import java.io.Serial;
+
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn
  */
 public abstract class AbstractColumn<RowType, CellType> implements IStyledColumn<RowType, CellType> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Getter

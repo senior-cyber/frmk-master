@@ -6,11 +6,14 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
 
+import java.io.Serial;
+
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.filter.GoAndClearFilter
  */
 public class GoAndClearFilter extends GoFilter {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private static final IModel<String> DEFAULT_CLEAR_MODEL = new ResourceModel("datatable.clear", "clear");

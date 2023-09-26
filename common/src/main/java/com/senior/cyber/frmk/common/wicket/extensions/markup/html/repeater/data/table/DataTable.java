@@ -23,6 +23,7 @@ import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.visit.IVisit;
 import org.apache.wicket.util.visit.IVisitor;
 
+import java.io.Serial;
 import java.util.List;
 
 /**
@@ -32,6 +33,7 @@ public class DataTable<RowType, CellType> extends Panel implements IPageableItem
 
     static abstract class CssAttributeBehavior extends Behavior {
 
+        @Serial
         private static final long serialVersionUID = 1L;
 
         protected abstract String getCssClass();
@@ -48,9 +50,10 @@ public class DataTable<RowType, CellType> extends Panel implements IPageableItem
         }
     }
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
-    private final DataGridView datagrid;
+    private final DataGridView<RowType, CellType> datagrid;
 
     private final WebMarkupContainer body;
 
@@ -133,11 +136,6 @@ public class DataTable<RowType, CellType> extends Panel implements IPageableItem
         return new WebMarkupContainer(id);
     }
 
-    /**
-     * Set the 'class' attribute for the tbody tag.
-     *
-     * @param cssStyle
-     */
     public final void setTableBodyCss(final String cssStyle) {
         body.add(AttributeModifier.replace("class", cssStyle));
     }
@@ -148,7 +146,7 @@ public class DataTable<RowType, CellType> extends Panel implements IPageableItem
      * @param toolbar toolbar to be added
      * @see AbstractToolbar
      */
-    public void addBottomToolbar(final AbstractToolbar toolbar) {
+    public void addBottomToolbar(final AbstractToolbar<RowType, CellType> toolbar) {
         addToolbar(toolbar, bottomToolbars);
     }
 
@@ -158,7 +156,7 @@ public class DataTable<RowType, CellType> extends Panel implements IPageableItem
      * @param toolbar toolbar to be added
      * @see AbstractToolbar
      */
-    public void addTopToolbar(final AbstractToolbar toolbar) {
+    public void addTopToolbar(final AbstractToolbar<RowType, CellType> toolbar) {
         addToolbar(toolbar, topToolbars);
     }
 
@@ -197,9 +195,6 @@ public class DataTable<RowType, CellType> extends Panel implements IPageableItem
         return datagrid.getDataProvider();
     }
 
-    /**
-     * @return array of column objects this table displays
-     */
     public final List<? extends IColumn<RowType, CellType>> getColumns() {
         return columns;
     }
@@ -253,7 +248,7 @@ public class DataTable<RowType, CellType> extends Panel implements IPageableItem
      * @see RefreshingView#setItemReuseStrategy(IItemReuseStrategy)
      * @see IItemReuseStrategy
      */
-    public final DataTable setItemReuseStrategy(final IItemReuseStrategy strategy) {
+    public final DataTable<RowType, CellType> setItemReuseStrategy(final IItemReuseStrategy strategy) {
         datagrid.setItemReuseStrategy(strategy);
         return this;
     }
@@ -276,7 +271,7 @@ public class DataTable<RowType, CellType> extends Panel implements IPageableItem
         return datagrid.getItemCount();
     }
 
-    private void addToolbar(final AbstractToolbar toolbar, final ToolbarsContainer container) {
+    private void addToolbar(final AbstractToolbar<RowType, CellType> toolbar, final ToolbarsContainer container) {
         Args.notNull(toolbar, "toolbar");
 
         container.getRepeatingView().add(toolbar);
@@ -349,15 +344,12 @@ public class DataTable<RowType, CellType> extends Panel implements IPageableItem
      * @author igor.vaynberg
      */
     private static class ToolbarsContainer extends WebMarkupContainer {
+
+        @Serial
         private static final long serialVersionUID = 1L;
 
         private final RepeatingView toolbars;
 
-        /**
-         * Constructor
-         *
-         * @param id
-         */
         private ToolbarsContainer(final String id) {
             super(id);
             toolbars = new RepeatingView("toolbars");
@@ -397,9 +389,8 @@ public class DataTable<RowType, CellType> extends Panel implements IPageableItem
      * non-empty value.
      */
     public static class Caption extends Label {
-        /**
-         *
-         */
+
+        @Serial
         private static final long serialVersionUID = 1L;
 
         /**
@@ -441,6 +432,8 @@ public class DataTable<RowType, CellType> extends Panel implements IPageableItem
             final IColumn<RowType, CellType> column = DataTable.this.columns.get(index);
             if (column instanceof IStyledColumn) {
                 item.add(new CssAttributeBehavior() {
+
+                    @Serial
                     private static final long serialVersionUID = 1L;
 
                     @Override
