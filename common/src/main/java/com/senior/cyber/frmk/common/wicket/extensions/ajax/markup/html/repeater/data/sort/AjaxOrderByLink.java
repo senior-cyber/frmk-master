@@ -7,10 +7,11 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.ajax.markup.html.IAjaxLink;
 
+import java.io.Serial;
+
 public abstract class AjaxOrderByLink extends OrderByLink implements IAjaxLink {
-    /**
-     *
-     */
+
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**

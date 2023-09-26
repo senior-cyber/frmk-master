@@ -10,8 +10,11 @@ import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.markup.html.basic.Label;
 
+import java.io.Serial;
+
 public abstract class AjaxFallbackOrderByBorder extends OrderByBorder {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**
