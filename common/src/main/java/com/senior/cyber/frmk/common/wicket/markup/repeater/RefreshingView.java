@@ -1,6 +1,7 @@
 package com.senior.cyber.frmk.common.wicket.markup.repeater;
 
-import org.apache.wicket.markup.repeater.*;
+import org.apache.wicket.markup.repeater.Item;
+import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Generics;
 
@@ -21,7 +22,7 @@ public abstract class RefreshingView<RowType> extends RepeatingView {
      *
      * @see IItemReuseStrategy
      */
-    private IItemReuseStrategy itemReuseStrategy;
+    private IItemReuseStrategy<RowType> itemReuseStrategy;
 
     /**
      * Constructor
@@ -60,12 +61,7 @@ public abstract class RefreshingView<RowType> extends RepeatingView {
      * @return An Item factory that delegates to the RefreshingView
      */
     protected IItemFactory<RowType> newItemFactory() {
-        return (index, model) -> {
-            String id = RefreshingView.this.newChildId();
-            Item<RowType> item = RefreshingView.this.newItem(id, index, model);
-            RefreshingView.this.populateItem(item);
-            return item;
-        };
+        return new DefaultItemFactory<>(this);
     }
 
 
@@ -143,9 +139,9 @@ public abstract class RefreshingView<RowType> extends RepeatingView {
      * if none was set.
      * @see DefaultItemReuseStrategy
      */
-    public IItemReuseStrategy getItemReuseStrategy() {
+    public IItemReuseStrategy<RowType> getItemReuseStrategy() {
         if (itemReuseStrategy == null) {
-            return DefaultItemReuseStrategy.getInstance();
+            return new DefaultItemReuseStrategy<>();
         }
         return itemReuseStrategy;
     }
@@ -157,7 +153,7 @@ public abstract class RefreshingView<RowType> extends RepeatingView {
      * @return this for chaining
      * @see IItemReuseStrategy
      */
-    public RefreshingView<RowType> setItemReuseStrategy(IItemReuseStrategy strategy) {
+    public RefreshingView<RowType> setItemReuseStrategy(IItemReuseStrategy<RowType> strategy) {
         if (strategy == null) {
             throw new IllegalArgumentException();
         }
