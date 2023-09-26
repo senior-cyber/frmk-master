@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.HeadersToolbar
  */
-public class HeadersToolbar<RowType, CellType extends Serializable> extends AbstractToolbar<RowType, CellType> {
+public class HeadersToolbar<RowType, CellType> extends AbstractToolbar<RowType, CellType> {
 
     @Serial
     private static final long serialVersionUID = 1L;

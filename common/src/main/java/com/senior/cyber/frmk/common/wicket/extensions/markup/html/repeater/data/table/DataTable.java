@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable
  */
-public class DataTable<RowType, CellType extends Serializable> extends Panel implements IPageableItems {
+public class DataTable<RowType, CellType> extends Panel implements IPageableItems {
 
     static abstract class CssAttributeBehavior extends Behavior {
 

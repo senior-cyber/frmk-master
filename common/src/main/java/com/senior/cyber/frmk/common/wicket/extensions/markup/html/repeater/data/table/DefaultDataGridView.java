@@ -9,7 +9,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
-public class DefaultDataGridView<RowType, CellType extends Serializable> extends DataGridView<RowType, CellType> {
+public class DefaultDataGridView<RowType, CellType> extends DataGridView<RowType, CellType> {
 
     private final DataTable<RowType, CellType> table;
 

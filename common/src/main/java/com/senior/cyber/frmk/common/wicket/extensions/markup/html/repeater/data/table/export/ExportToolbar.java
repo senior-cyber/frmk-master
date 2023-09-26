@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.export.ExportToolbar
  */
-public class ExportToolbar<RowType, CellType extends Serializable> extends AbstractToolbar<RowType, CellType> {
+public class ExportToolbar<RowType, CellType> extends AbstractToolbar<RowType, CellType> {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -243,7 +243,7 @@ public class ExportToolbar<RowType, CellType extends Serializable> extends Abstr
     /**
      * An {@link IResourceStreamWriter} which writes the exportable data from a table to an output stream.
      */
-    public static class DataExportResourceStreamWriter<RowType, CellType extends Serializable> extends AbstractResourceStreamWriter {
+    public static class DataExportResourceStreamWriter<RowType, CellType> extends AbstractResourceStreamWriter {
         private final IDataExporter<RowType, CellType> dataExporter;
 
         private final DataTable<RowType, CellType> dataTable;
