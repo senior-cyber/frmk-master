@@ -24,12 +24,13 @@ import org.apache.wicket.util.visit.IVisit;
 import org.apache.wicket.util.visit.IVisitor;
 
 import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable
  */
-public class DataTable<RowType, CellType> extends Panel implements IPageableItems {
+public class DataTable<RowType, CellType extends Serializable> extends Panel implements IPageableItems {
 
     static abstract class CssAttributeBehavior extends Behavior {
 
@@ -57,7 +58,7 @@ public class DataTable<RowType, CellType> extends Panel implements IPageableItem
 
     private final WebMarkupContainer body;
 
-    protected final List<? extends IColumn<RowType, CellType>> columns;
+    protected final List<? extends IColumn<? extends RowType, ? extends CellType>> columns;
 
     private final ToolbarsContainer topToolbars;
 
@@ -191,11 +192,11 @@ public class DataTable<RowType, CellType> extends Panel implements IPageableItem
     /**
      * @return dataprovider
      */
-    public final IDataProvider<RowType> getDataProvider() {
+    public final IDataProvider<? extends RowType> getDataProvider() {
         return datagrid.getDataProvider();
     }
 
-    public final List<? extends IColumn<RowType, CellType>> getColumns() {
+    public final List<? extends IColumn<? extends RowType, ? extends CellType>> getColumns() {
         return columns;
     }
 
@@ -310,7 +311,7 @@ public class DataTable<RowType, CellType> extends Panel implements IPageableItem
     protected void onDetach() {
         super.onDetach();
 
-        for (IColumn<RowType, CellType> column : columns) {
+        for (IColumn<? extends RowType, ? extends CellType> column : columns) {
             column.detach();
         }
     }
@@ -429,7 +430,7 @@ public class DataTable<RowType, CellType> extends Panel implements IPageableItem
 
             Item<IColumn<RowType, CellType>> item = DataTable.this.newCellItem(id, index, model);
 
-            final IColumn<RowType, CellType> column = DataTable.this.columns.get(index);
+            final IColumn<? extends RowType, ? extends CellType> column = DataTable.this.columns.get(index);
             if (column instanceof IStyledColumn) {
                 item.add(new CssAttributeBehavior() {
 
@@ -438,7 +439,7 @@ public class DataTable<RowType, CellType> extends Panel implements IPageableItem
 
                     @Override
                     protected String getCssClass() {
-                        return ((IStyledColumn<RowType, CellType>) column).getCssClass();
+                        return ((IStyledColumn<? extends RowType, ? extends CellType>) column).getCssClass();
                     }
                 });
             }

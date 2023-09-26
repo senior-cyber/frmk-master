@@ -4,11 +4,12 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 
 import java.io.Serial;
+import java.io.Serializable;
 
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractToolbar
  */
-public abstract class AbstractToolbar<RowType, CellType> extends Panel {
+public abstract class AbstractToolbar<RowType, CellType extends Serializable> extends Panel {
 
     @Serial
     private static final long serialVersionUID = 1L;

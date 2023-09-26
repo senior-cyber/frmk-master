@@ -7,11 +7,12 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.model.IModel;
 
 import java.io.Serial;
+import java.io.Serializable;
 
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.NavigationToolbar
  */
-public class NavigationToolbar<RowType, CellType> extends AbstractToolbar<RowType, CellType> {
+public class NavigationToolbar<RowType, CellType extends Serializable> extends AbstractToolbar<RowType, CellType> {
 
     @Serial
     private static final long serialVersionUID = 1L;

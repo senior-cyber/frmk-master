@@ -7,11 +7,12 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
 
 import java.io.Serial;
+import java.io.Serializable;
 
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.NoRecordsToolbar
  */
-public class NoRecordsToolbar<RowType, CellType> extends AbstractToolbar<RowType, CellType> {
+public class NoRecordsToolbar<RowType, CellType extends Serializable> extends AbstractToolbar<RowType, CellType> {
 
     @Serial
     private static final long serialVersionUID = 1L;

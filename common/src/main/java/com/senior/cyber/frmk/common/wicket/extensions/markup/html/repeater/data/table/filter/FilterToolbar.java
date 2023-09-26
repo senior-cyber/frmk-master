@@ -14,13 +14,14 @@ import org.apache.wicket.util.lang.Args;
 import org.apache.wicket.util.string.Strings;
 
 import java.io.Serial;
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.filter.FilterToolbar
  */
-public class FilterToolbar<RowType, CellType> extends AbstractToolbar<RowType, CellType> {
+public class FilterToolbar<RowType, CellType extends Serializable> extends AbstractToolbar<RowType, CellType> {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -38,30 +39,33 @@ public class FilterToolbar<RowType, CellType> extends AbstractToolbar<RowType, C
         setOutputMarkupId(true);
         Args.notNull(table, "table");
 
-        IModel<List<IColumn<RowType, CellType>>> model = new IModel<>() {
+        IModel<List<IColumn<? extends RowType, ? extends CellType>>> model = new IModel<>() {
 
             private static final long serialVersionUID = 1L;
 
             @Override
-            public List<IColumn<RowType, CellType>> getObject() {
+            public List<IColumn<? extends RowType, ? extends CellType>> getObject() {
                 return new LinkedList<>(table.getColumns());
             }
 
         };
 
         // populate the toolbar with components provided by filtered columns
-        ListView<IColumn<RowType, CellType>> filters = new ListView<>("filters", model) {
+        ListView<IColumn<? extends RowType, ? extends CellType>> filters = new ListView<>("filters", model) {
+
+            @Serial
             private static final long serialVersionUID = 1L;
 
+
             @Override
-            protected void populateItem(ListItem<IColumn<RowType, CellType>> item) {
-                final IColumn<RowType, CellType> col = item.getModelObject();
+            protected void populateItem(ListItem<IColumn<? extends RowType, ? extends CellType>> item) {
+                final IColumn<? extends RowType, ? extends CellType> col = item.getModelObject();
                 item.setRenderBodyOnly(true);
 
                 Component filter = null;
 
                 if (col instanceof IFilteredColumn) {
-                    IFilteredColumn filteredCol = (IFilteredColumn) col;
+                    IFilteredColumn<? extends RowType, ? extends CellType> filteredCol = (IFilteredColumn<? extends RowType, ? extends CellType>) col;
                     filter = filteredCol.getFilter(FILTER_ID, form);
                 }
 
@@ -75,6 +79,7 @@ public class FilterToolbar<RowType, CellType> extends AbstractToolbar<RowType, C
 
                 if (col instanceof IStyledColumn) {
                     filter.add(new Behavior() {
+
                         private static final long serialVersionUID = 1L;
 
                         /**
@@ -82,7 +87,7 @@ public class FilterToolbar<RowType, CellType> extends AbstractToolbar<RowType, C
                          */
                         @Override
                         public void onComponentTag(final Component component, final ComponentTag tag) {
-                            String className = ((IStyledColumn<RowType, CellType>) col).getCssClass();
+                            String className = ((IStyledColumn<? extends RowType, ? extends CellType>) col).getCssClass();
                             if (!Strings.isEmpty(className)) {
                                 tag.append("class", className, " ");
                             }

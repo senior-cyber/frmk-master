@@ -8,9 +8,10 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.OddEvenItem;
 import org.apache.wicket.model.IModel;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class AjaxFallbackDefaultDataTable<RowType, CellType> extends DataTable<RowType, CellType> {
+public class AjaxFallbackDefaultDataTable<RowType, CellType extends Serializable> extends DataTable<RowType, CellType> {
 
     private static final long serialVersionUID = 1L;
 

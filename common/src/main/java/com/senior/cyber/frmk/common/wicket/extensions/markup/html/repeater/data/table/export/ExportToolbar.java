@@ -22,6 +22,7 @@ import org.apache.wicket.util.resource.IResourceStreamWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serial;
+import java.io.Serializable;
 import java.time.Duration;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,7 +30,7 @@ import java.util.List;
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.export.ExportToolbar
  */
-public class ExportToolbar<RowType, CellType> extends AbstractToolbar<RowType, CellType> {
+public class ExportToolbar<RowType, CellType extends Serializable> extends AbstractToolbar<RowType, CellType> {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -173,7 +174,7 @@ public class ExportToolbar<RowType, CellType> extends AbstractToolbar<RowType, C
 
             @Override
             protected IResourceStream getResourceStream(Attributes attributes) {
-                return new DataExportResourceStreamWriter<RowType, CellType>(dataExporter, getTable());
+                return new DataExportResourceStreamWriter<>(dataExporter, getTable());
             }
         };
 
@@ -208,7 +209,7 @@ public class ExportToolbar<RowType, CellType> extends AbstractToolbar<RowType, C
             isVisible = false;
         } else {
             boolean foundExportableColumn = false;
-            for (IColumn<RowType, CellType> col : getTable().getColumns()) {
+            for (IColumn<? extends RowType, ? extends CellType> col : getTable().getColumns()) {
                 if (col instanceof IExportableColumn) {
                     foundExportableColumn = true;
                     break;
@@ -233,7 +234,7 @@ public class ExportToolbar<RowType, CellType> extends AbstractToolbar<RowType, C
      * @param exporter The {@link IDataExporter} to add to the toolbar.
      * @return {@code this}, for chaining.
      */
-    public ExportToolbar addDataExporter(IDataExporter exporter) {
+    public ExportToolbar<RowType, CellType> addDataExporter(IDataExporter<RowType, CellType> exporter) {
         Args.notNull(exporter, "exporter");
         dataExporters.add(exporter);
         return this;
@@ -242,7 +243,7 @@ public class ExportToolbar<RowType, CellType> extends AbstractToolbar<RowType, C
     /**
      * An {@link IResourceStreamWriter} which writes the exportable data from a table to an output stream.
      */
-    public static class DataExportResourceStreamWriter<RowType, CellType> extends AbstractResourceStreamWriter {
+    public static class DataExportResourceStreamWriter<RowType, CellType extends Serializable> extends AbstractResourceStreamWriter {
         private final IDataExporter<RowType, CellType> dataExporter;
 
         private final DataTable<RowType, CellType> dataTable;
@@ -292,12 +293,12 @@ public class ExportToolbar<RowType, CellType> extends AbstractToolbar<RowType, C
          * @param outputStream The {@link OutputStream} to which the data should be exported to.
          * @throws IOException
          */
-        private void exportData(DataTable<RowType, CellType> dataTable, IDataExporter<RowType, CellType> dataExporter, OutputStream outputStream) throws IOException {
-            IDataProvider<RowType> dataProvider = dataTable.getDataProvider();
-            List<IExportableColumn<RowType, CellType>> exportableColumns = new LinkedList<>();
-            for (IColumn<RowType, CellType> col : dataTable.getColumns()) {
+        private void exportData(DataTable<? extends RowType, ? extends CellType> dataTable, IDataExporter<RowType, CellType> dataExporter, OutputStream outputStream) throws IOException {
+            IDataProvider<? extends RowType> dataProvider = dataTable.getDataProvider();
+            List<IExportableColumn<? extends RowType, ? extends CellType>> exportableColumns = new LinkedList<>();
+            for (IColumn<? extends RowType, ? extends CellType> col : dataTable.getColumns()) {
                 if (col instanceof IExportableColumn) {
-                    exportableColumns.add((IExportableColumn<RowType, CellType>) col);
+                    exportableColumns.add((IExportableColumn<? extends RowType, ? extends CellType>) col);
                 }
             }
             dataExporter.exportData(dataProvider, exportableColumns, outputStream);

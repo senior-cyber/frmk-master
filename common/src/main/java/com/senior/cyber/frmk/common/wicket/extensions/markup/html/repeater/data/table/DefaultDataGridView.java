@@ -6,9 +6,10 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 
 import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
-public class DefaultDataGridView<RowType, CellType> extends DataGridView<RowType, CellType> {
+public class DefaultDataGridView<RowType, CellType extends Serializable> extends DataGridView<RowType, CellType> {
 
     private final DataTable<RowType, CellType> table;
 
@@ -20,7 +21,7 @@ public class DefaultDataGridView<RowType, CellType> extends DataGridView<RowType
     @Override
     protected Item<IColumn<RowType, CellType>> newCellItem(String id, int index, IModel<IColumn<RowType, CellType>> model) {
         Item<IColumn<RowType, CellType>> item = table.newCellItem(id, index, model);
-        final IColumn<RowType, CellType> column = table.columns.get(index);
+        final IColumn<? extends RowType, ? extends CellType> column = table.columns.get(index);
         if (column instanceof IStyledColumn) {
             item.add(new DataTable.CssAttributeBehavior() {
 
@@ -29,7 +30,7 @@ public class DefaultDataGridView<RowType, CellType> extends DataGridView<RowType
 
                 @Override
                 protected String getCssClass() {
-                    return ((IStyledColumn<RowType, CellType>) column).getCssClass();
+                    return ((IStyledColumn<? extends RowType, ? extends CellType>) column).getCssClass();
                 }
             });
         }

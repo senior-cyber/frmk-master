@@ -45,6 +45,6 @@ public interface IDataExporter<RowType, CellType> extends IClusterable {
      * @param outputStream The {@link OutputStream} to which to write the exported data.
      * @throws IOException If an error occurs.
      */
-    void exportData(IDataProvider<RowType> dataProvider, List<IExportableColumn<RowType, CellType>> columns, OutputStream outputStream) throws IOException;
+    void exportData(IDataProvider<? extends RowType> dataProvider, List<IExportableColumn<? extends RowType, ? extends CellType>> columns, OutputStream outputStream) throws IOException;
 
 }
