@@ -17,7 +17,7 @@ public interface IExportableColumn<RowType, CellType> extends IColumn<RowType, C
      * @param rowModel An {@link IModel} of the row data.
      * @return an {@link IModel} of the data displayed by this column for the {@code rowModel} provided.
      */
-    IModel<CellType> getDataModel(IModel<RowType> rowModel);
+    IModel<? extends CellType> getDataModel(IModel<RowType> rowModel);
 
     /**
      * Returns a model of the column header. The content of this model is used as a heading for the column
