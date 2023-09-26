@@ -209,7 +209,7 @@ public class ExportToolbar<RowType, CellType> extends AbstractToolbar<RowType, C
             isVisible = false;
         } else {
             boolean foundExportableColumn = false;
-            for (IColumn<? extends RowType, ? extends CellType> col : getTable().getColumns()) {
+            for (IColumn<RowType, ? extends CellType> col : getTable().getColumns()) {
                 if (col instanceof IExportableColumn) {
                     foundExportableColumn = true;
                     break;
@@ -293,12 +293,12 @@ public class ExportToolbar<RowType, CellType> extends AbstractToolbar<RowType, C
          * @param outputStream The {@link OutputStream} to which the data should be exported to.
          * @throws IOException
          */
-        private void exportData(DataTable<? extends RowType, ? extends CellType> dataTable, IDataExporter<RowType, CellType> dataExporter, OutputStream outputStream) throws IOException {
-            IDataProvider<? extends RowType> dataProvider = dataTable.getDataProvider();
-            List<IExportableColumn<? extends RowType, ? extends CellType>> exportableColumns = new LinkedList<>();
-            for (IColumn<? extends RowType, ? extends CellType> col : dataTable.getColumns()) {
+        private void exportData(DataTable<RowType, ? extends CellType> dataTable, IDataExporter<RowType, CellType> dataExporter, OutputStream outputStream) throws IOException {
+            IDataProvider<RowType> dataProvider = dataTable.getDataProvider();
+            List<IExportableColumn<RowType, ? extends CellType>> exportableColumns = new LinkedList<>();
+            for (IColumn<RowType, ? extends CellType> col : dataTable.getColumns()) {
                 if (col instanceof IExportableColumn) {
-                    exportableColumns.add((IExportableColumn<? extends RowType, ? extends CellType>) col);
+                    exportableColumns.add((IExportableColumn<RowType, ? extends CellType>) col);
                 }
             }
             dataExporter.exportData(dataProvider, exportableColumns, outputStream);

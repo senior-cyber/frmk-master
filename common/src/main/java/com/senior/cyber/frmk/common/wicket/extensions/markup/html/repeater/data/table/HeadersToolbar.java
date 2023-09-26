@@ -31,16 +31,16 @@ public class HeadersToolbar<RowType, CellType> extends AbstractToolbar<RowType, 
     public HeadersToolbar(final DataTable<RowType, CellType> table, final ISortStateLocator stateLocator) {
         super(table);
         setOutputMarkupId(true);
-        RefreshingView<IColumn<? extends RowType, ? extends CellType>> headers = new RefreshingView<>("headers") {
+        RefreshingView<IColumn<RowType, ? extends CellType>> headers = new RefreshingView<>("headers") {
 
             @Serial
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected Iterator<IModel<IColumn<? extends RowType, ? extends CellType>>> getItemModels() {
-                List<IModel<IColumn<? extends RowType, ? extends CellType>>> columnsModels = new LinkedList<>();
+            protected Iterator<IModel<IColumn<RowType, ? extends CellType>>> getItemModels() {
+                List<IModel<IColumn<RowType, ? extends CellType>>> columnsModels = new LinkedList<>();
 
-                for (IColumn<? extends RowType, ? extends CellType> column : table.getColumns()) {
+                for (IColumn<RowType, ? extends CellType> column : table.getColumns()) {
                     columnsModels.add(Model.of(column));
                 }
 
@@ -48,8 +48,8 @@ public class HeadersToolbar<RowType, CellType> extends AbstractToolbar<RowType, 
             }
 
             @Override
-            protected void populateItem(Item<IColumn<? extends RowType, ? extends CellType>> item) {
-                final IColumn<? extends RowType, ? extends CellType> column = item.getModelObject();
+            protected void populateItem(Item<IColumn<RowType, ? extends CellType>> item) {
+                final IColumn<RowType, ? extends CellType> column = item.getModelObject();
 
                 WebMarkupContainer header;
 

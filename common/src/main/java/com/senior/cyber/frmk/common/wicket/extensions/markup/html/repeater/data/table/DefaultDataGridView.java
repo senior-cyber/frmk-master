@@ -20,7 +20,7 @@ public class DefaultDataGridView<RowType, CellType> extends DataGridView<RowType
     @Override
     protected Item<IColumn<RowType, CellType>> newCellItem(String id, int index, IModel<IColumn<RowType, CellType>> model) {
         Item<IColumn<RowType, CellType>> item = table.newCellItem(id, index, model);
-        final IColumn<? extends RowType, ? extends CellType> column = table.columns.get(index);
+        final IColumn<RowType, ? extends CellType> column = table.columns.get(index);
         if (column instanceof IStyledColumn) {
             item.add(new CssAttributeBehavior() {
 
@@ -29,7 +29,7 @@ public class DefaultDataGridView<RowType, CellType> extends DataGridView<RowType
 
                 @Override
                 protected String getCssClass() {
-                    return ((IStyledColumn<? extends RowType, ? extends CellType>) column).getCssClass();
+                    return ((IStyledColumn<RowType, ? extends CellType>) column).getCssClass();
                 }
             });
         }

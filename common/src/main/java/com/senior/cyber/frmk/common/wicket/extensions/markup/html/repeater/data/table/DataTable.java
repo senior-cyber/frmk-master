@@ -38,7 +38,7 @@ public class DataTable<RowType, CellType> extends Panel implements IPageableItem
 
     private final WebMarkupContainer body;
 
-    protected final List<? extends IColumn<? extends RowType, ? extends CellType>> columns;
+    protected final List<? extends IColumn<RowType, ? extends CellType>> columns;
 
     private final ToolbarsContainer topToolbars;
 
@@ -172,11 +172,11 @@ public class DataTable<RowType, CellType> extends Panel implements IPageableItem
     /**
      * @return dataprovider
      */
-    public final IDataProvider<? extends RowType> getDataProvider() {
+    public final IDataProvider<RowType> getDataProvider() {
         return datagrid.getDataProvider();
     }
 
-    public final List<? extends IColumn<? extends RowType, ? extends CellType>> getColumns() {
+    public final List<? extends IColumn<RowType, ? extends CellType>> getColumns() {
         return columns;
     }
 
@@ -291,7 +291,7 @@ public class DataTable<RowType, CellType> extends Panel implements IPageableItem
     protected void onDetach() {
         super.onDetach();
 
-        for (IColumn<? extends RowType, ? extends CellType> column : columns) {
+        for (IColumn<RowType, ? extends CellType> column : columns) {
             column.detach();
         }
     }

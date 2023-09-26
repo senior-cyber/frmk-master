@@ -39,33 +39,34 @@ public class FilterToolbar<RowType, CellType> extends AbstractToolbar<RowType, C
         setOutputMarkupId(true);
         Args.notNull(table, "table");
 
-        IModel<List<IColumn<? extends RowType, ? extends CellType>>> model = new IModel<>() {
+        IModel<List<IColumn<RowType, ? extends CellType>>> model = new IModel<>() {
 
+            @Serial
             private static final long serialVersionUID = 1L;
 
             @Override
-            public List<IColumn<? extends RowType, ? extends CellType>> getObject() {
+            public List<IColumn<RowType, ? extends CellType>> getObject() {
                 return new LinkedList<>(table.getColumns());
             }
 
         };
 
         // populate the toolbar with components provided by filtered columns
-        ListView<IColumn<? extends RowType, ? extends CellType>> filters = new ListView<>("filters", model) {
+        ListView<IColumn<RowType, ? extends CellType>> filters = new ListView<>("filters", model) {
 
             @Serial
             private static final long serialVersionUID = 1L;
 
 
             @Override
-            protected void populateItem(ListItem<IColumn<? extends RowType, ? extends CellType>> item) {
-                final IColumn<? extends RowType, ? extends CellType> col = item.getModelObject();
+            protected void populateItem(ListItem<IColumn<RowType, ? extends CellType>> item) {
+                final IColumn<RowType, ? extends CellType> col = item.getModelObject();
                 item.setRenderBodyOnly(true);
 
                 Component filter = null;
 
                 if (col instanceof IFilteredColumn) {
-                    IFilteredColumn<? extends RowType, ? extends CellType> filteredCol = (IFilteredColumn<? extends RowType, ? extends CellType>) col;
+                    IFilteredColumn<RowType, ? extends CellType> filteredCol = (IFilteredColumn<RowType, ? extends CellType>) col;
                     filter = filteredCol.getFilter(FILTER_ID, form);
                 }
 
@@ -87,7 +88,7 @@ public class FilterToolbar<RowType, CellType> extends AbstractToolbar<RowType, C
                          */
                         @Override
                         public void onComponentTag(final Component component, final ComponentTag tag) {
-                            String className = ((IStyledColumn<? extends RowType, ? extends CellType>) col).getCssClass();
+                            String className = ((IStyledColumn<RowType, ? extends CellType>) col).getCssClass();
                             if (!Strings.isEmpty(className)) {
                                 tag.append("class", className, " ");
                             }
