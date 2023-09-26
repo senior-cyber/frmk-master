@@ -24,7 +24,6 @@ import org.apache.wicket.util.visit.IVisit;
 import org.apache.wicket.util.visit.IVisitor;
 
 import java.io.Serial;
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -109,7 +108,7 @@ public class DataTable<RowType, CellType> extends Panel implements IPageableItem
      * @return the data grid view
      */
     protected DataGridView<RowType, CellType> newDataGridView(String id, List<? extends IColumn<RowType, CellType>> columns, IDataProvider<RowType> dataProvider) {
-        return new DefaultDataGridView(id, columns, dataProvider);
+        return new DefaultDataGridView<>(id, this, columns, dataProvider);
     }
 
     /**
@@ -415,40 +414,6 @@ public class DataTable<RowType, CellType> extends Panel implements IPageableItem
         protected IModel<String> initModel() {
             // don't try to find the model in the parent
             return null;
-        }
-    }
-
-    private class DefaultDataGridView extends DataGridView<RowType, CellType> {
-
-        public DefaultDataGridView(String id, List<? extends IColumn<RowType, CellType>> columns, IDataProvider<RowType> dataProvider) {
-            super(id, columns, dataProvider);
-        }
-
-
-        @Override
-        protected Item<IColumn<RowType, CellType>> newCellItem(String id, int index, IModel<IColumn<RowType, CellType>> model) {
-
-            Item<IColumn<RowType, CellType>> item = DataTable.this.newCellItem(id, index, model);
-
-            final IColumn<? extends RowType, ? extends CellType> column = DataTable.this.columns.get(index);
-            if (column instanceof IStyledColumn) {
-                item.add(new CssAttributeBehavior() {
-
-                    @Serial
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    protected String getCssClass() {
-                        return ((IStyledColumn<? extends RowType, ? extends CellType>) column).getCssClass();
-                    }
-                });
-            }
-            return item;
-        }
-
-        @Override
-        protected Item<RowType> newRowItem(final String id, final int index, final IModel<RowType> model) {
-            return DataTable.this.newRowItem(id, index, model);
         }
     }
 
