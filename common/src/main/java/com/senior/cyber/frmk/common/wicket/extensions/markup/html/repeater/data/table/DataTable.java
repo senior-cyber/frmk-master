@@ -31,25 +31,6 @@ import java.util.List;
  */
 public class DataTable<RowType, CellType> extends Panel implements IPageableItems {
 
-    static abstract class CssAttributeBehavior extends Behavior {
-
-        @Serial
-        private static final long serialVersionUID = 1L;
-
-        protected abstract String getCssClass();
-
-        /**
-         * @see Behavior#onComponentTag(Component, ComponentTag)
-         */
-        @Override
-        public void onComponentTag(final Component component, final ComponentTag tag) {
-            String className = getCssClass();
-            if (!Strings.isEmpty(className)) {
-                tag.append("class", className, " ");
-            }
-        }
-    }
-
     @Serial
     private static final long serialVersionUID = 1L;
 

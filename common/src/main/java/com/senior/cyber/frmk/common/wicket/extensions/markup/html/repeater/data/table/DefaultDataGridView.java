@@ -22,7 +22,7 @@ public class DefaultDataGridView<RowType, CellType> extends DataGridView<RowType
         Item<IColumn<RowType, CellType>> item = table.newCellItem(id, index, model);
         final IColumn<? extends RowType, ? extends CellType> column = table.columns.get(index);
         if (column instanceof IStyledColumn) {
-            item.add(new DataTable.CssAttributeBehavior() {
+            item.add(new CssAttributeBehavior() {
 
                 @Serial
                 private static final long serialVersionUID = 1L;

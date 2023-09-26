@@ -10,7 +10,6 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 
 import java.io.Serial;
-import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,7 +31,7 @@ public class HeadersToolbar<RowType, CellType> extends AbstractToolbar<RowType, 
     public HeadersToolbar(final DataTable<RowType, CellType> table, final ISortStateLocator stateLocator) {
         super(table);
         setOutputMarkupId(true);
-        RefreshingView<IColumn<? extends RowType,? extends CellType>> headers = new RefreshingView<>("headers") {
+        RefreshingView<IColumn<? extends RowType, ? extends CellType>> headers = new RefreshingView<>("headers") {
 
             @Serial
             private static final long serialVersionUID = 1L;
@@ -49,8 +48,8 @@ public class HeadersToolbar<RowType, CellType> extends AbstractToolbar<RowType, 
             }
 
             @Override
-            protected void populateItem(Item<IColumn<? extends RowType,? extends CellType>> item) {
-                final IColumn<? extends RowType,? extends CellType> column = item.getModelObject();
+            protected void populateItem(Item<IColumn<? extends RowType, ? extends CellType>> item) {
+                final IColumn<? extends RowType, ? extends CellType> column = item.getModelObject();
 
                 WebMarkupContainer header;
 
@@ -61,7 +60,7 @@ public class HeadersToolbar<RowType, CellType> extends AbstractToolbar<RowType, 
                 }
 
                 if (column instanceof IStyledColumn) {
-                    DataTable.CssAttributeBehavior cssAttributeBehavior = new DataTable.CssAttributeBehavior() {
+                    CssAttributeBehavior cssAttributeBehavior = new CssAttributeBehavior() {
 
                         @Serial
                         private static final long serialVersionUID = 1L;
