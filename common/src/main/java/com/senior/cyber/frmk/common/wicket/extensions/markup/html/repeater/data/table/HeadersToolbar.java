@@ -67,7 +67,7 @@ public class HeadersToolbar<RowType, CellType> extends AbstractToolbar<RowType, 
 
                         @Override
                         protected String getCssClass() {
-                            return ((IStyledColumn<RowType, CellType>) column).getCssClass();
+                            return ((IStyledColumn<RowType, ? extends CellType>) column).getCssClass();
                         }
                     };
 
