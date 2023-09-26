@@ -8,11 +8,12 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.OddEvenItem;
 import org.apache.wicket.model.IModel;
 
-import java.io.Serializable;
+import java.io.Serial;
 import java.util.List;
 
 public class AjaxFallbackDefaultDataTable<RowType, CellType> extends DataTable<RowType, CellType> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**
@@ -37,9 +38,9 @@ public class AjaxFallbackDefaultDataTable<RowType, CellType> extends DataTable<R
      * @param dataProvider {@link org.apache.wicket.extensions.markup.html.repeater.data.table.ISortableDataProvider}
      */
     protected void addToolBars(final ISortableDataProvider<RowType> dataProvider) {
-        addTopToolbar(new AjaxFallbackHeadersToolbar(this, dataProvider));
-        addBottomToolbar(new AjaxNavigationToolbar(this));
-        addBottomToolbar(new NoRecordsToolbar(this));
+        addTopToolbar(new AjaxFallbackHeadersToolbar<>(this, dataProvider));
+        addBottomToolbar(new AjaxNavigationToolbar<>(this));
+        addBottomToolbar(new NoRecordsToolbar<>(this));
     }
 
     @Override

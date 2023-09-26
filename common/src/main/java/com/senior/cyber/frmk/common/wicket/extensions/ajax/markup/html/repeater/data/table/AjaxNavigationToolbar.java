@@ -6,7 +6,11 @@ import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.
 import com.senior.cyber.frmk.common.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
-public class AjaxNavigationToolbar extends NavigationToolbar {
+import java.io.Serial;
+
+public class AjaxNavigationToolbar<RowType, CellType> extends NavigationToolbar<RowType, CellType> {
+
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**
@@ -14,7 +18,7 @@ public class AjaxNavigationToolbar extends NavigationToolbar {
      *
      * @param table data table this toolbar will be attached to
      */
-    public AjaxNavigationToolbar(final DataTable table) {
+    public AjaxNavigationToolbar(final DataTable<RowType, CellType> table) {
         super(table);
     }
 
@@ -26,7 +30,7 @@ public class AjaxNavigationToolbar extends NavigationToolbar {
      * @return paging navigator that will be used to navigate the data table
      */
     @Override
-    protected PagingNavigator newPagingNavigator(final String navigatorId, final DataTable table) {
+    protected PagingNavigator newPagingNavigator(final String navigatorId, final DataTable<RowType, CellType> table) {
         return new AjaxPagingNavigator(navigatorId, table) {
             private static final long serialVersionUID = 1L;
 

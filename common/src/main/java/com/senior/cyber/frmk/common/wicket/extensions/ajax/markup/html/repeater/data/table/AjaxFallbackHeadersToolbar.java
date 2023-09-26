@@ -8,7 +8,11 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 
-public class AjaxFallbackHeadersToolbar extends HeadersToolbar {
+import java.io.Serial;
+
+public class AjaxFallbackHeadersToolbar<RowType, CellType> extends HeadersToolbar<RowType, CellType> {
+
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**
@@ -17,7 +21,7 @@ public class AjaxFallbackHeadersToolbar extends HeadersToolbar {
      * @param table
      * @param stateLocator
      */
-    public AjaxFallbackHeadersToolbar(final DataTable table, final ISortStateLocator stateLocator) {
+    public AjaxFallbackHeadersToolbar(final DataTable<RowType, CellType> table, final ISortStateLocator stateLocator) {
         super(table, stateLocator);
         table.setOutputMarkupId(true);
     }
@@ -27,7 +31,10 @@ public class AjaxFallbackHeadersToolbar extends HeadersToolbar {
      */
     @Override
     protected WebMarkupContainer newSortableHeader(final String borderId, final String property, final ISortStateLocator locator) {
+
         return new AjaxFallbackOrderByBorder(borderId, property, locator) {
+
+            @Serial
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -45,6 +52,7 @@ public class AjaxFallbackHeadersToolbar extends HeadersToolbar {
                 super.onSortChanged();
                 getTable().setCurrentPage(0);
             }
+
         };
     }
 
