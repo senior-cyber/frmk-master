@@ -7,7 +7,6 @@ import com.senior.cyber.frmk.common.wicket.markup.repeater.RefreshingView;
 import com.senior.cyber.frmk.common.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
-import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.ColGroup;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -70,7 +69,7 @@ public class DataTable<RowType, CellType> extends Panel implements IPageableItem
         this.colGroup = new ColGroup("colGroup");
         add(colGroup);
         body = newBodyContainer("body");
-        datagrid = newDataGridView("rows", columns, dataProvider);
+        datagrid = new DefaultDataGridView<>("rows", this, columns, dataProvider);
         datagrid.setItemsPerPage(rowsPerPage);
         body.add(datagrid);
         add(body);
@@ -78,18 +77,6 @@ public class DataTable<RowType, CellType> extends Panel implements IPageableItem
         bottomToolbars = new ToolbarsContainer("bottomToolbars");
         add(topToolbars);
         add(bottomToolbars);
-    }
-
-    /**
-     * Factory method for the DataGridView
-     *
-     * @param id           The component id
-     * @param columns      list of IColumn objects
-     * @param dataProvider imodel for data provider
-     * @return the data grid view
-     */
-    protected DataGridView<RowType, CellType> newDataGridView(String id, List<? extends IColumn<RowType, CellType>> columns, IDataProvider<RowType> dataProvider) {
-        return new DefaultDataGridView<>(id, this, columns, dataProvider);
     }
 
     /**

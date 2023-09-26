@@ -23,8 +23,7 @@ public class DataGridView<RowType, CellType> extends AbstractDataGridView<RowTyp
      * @param populators   list of ICellPopulators used to populate cells
      * @param dataProvider data provider
      */
-    public DataGridView(final String id, final List<? extends IColumn<RowType, CellType>> populators,
-                        final IDataProvider<RowType> dataProvider) {
+    public DataGridView(final String id, final List<? extends IColumn<RowType, CellType>> populators, final IDataProvider<RowType> dataProvider) {
         super(id, populators, dataProvider);
     }
 
@@ -33,7 +32,7 @@ public class DataGridView<RowType, CellType> extends AbstractDataGridView<RowTyp
      *
      * @return the list of cell populators
      */
-    public List<? extends IColumn<RowType, CellType>> getPopulators() {
+    public List<? extends IColumn<RowType, ? extends CellType>> getPopulators() {
         return internalGetPopulators();
     }
 

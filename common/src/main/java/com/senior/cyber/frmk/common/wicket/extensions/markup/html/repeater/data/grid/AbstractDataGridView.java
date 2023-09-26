@@ -35,11 +35,10 @@ public abstract class AbstractDataGridView<RowType, CellType> extends DataViewBa
      */
     public AbstractDataGridView(final String id, final List<? extends IColumn<RowType, CellType>> populators, final IDataProvider<RowType> dataProvider) {
         super(id, dataProvider);
-
         this.populators = populators;
     }
 
-    protected final List<? extends IColumn<RowType, CellType>> internalGetPopulators() {
+    protected final List<? extends IColumn<RowType, ? extends CellType>> internalGetPopulators() {
         return populators;
     }
 
@@ -85,7 +84,7 @@ public abstract class AbstractDataGridView<RowType, CellType> extends DataViewBa
     protected void onDetach() {
         super.onDetach();
         if (populators != null) {
-            for (ICellPopulator<RowType, CellType> populator : populators) {
+            for (ICellPopulator<RowType, ? extends CellType> populator : populators) {
                 populator.detach();
             }
         }
