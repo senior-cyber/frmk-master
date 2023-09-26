@@ -32,6 +32,8 @@ public class AjaxNavigationToolbar<RowType, CellType> extends NavigationToolbar<
     @Override
     protected PagingNavigator newPagingNavigator(final String navigatorId, final DataTable<RowType, CellType> table) {
         return new AjaxPagingNavigator(navigatorId, table) {
+
+            @Serial
             private static final long serialVersionUID = 1L;
 
             /**
