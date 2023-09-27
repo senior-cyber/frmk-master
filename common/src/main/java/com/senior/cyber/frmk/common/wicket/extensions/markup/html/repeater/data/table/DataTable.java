@@ -3,6 +3,7 @@ package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.grid.DataGridView;
 import com.senior.cyber.frmk.common.wicket.markup.html.navigation.paging.IPageable;
 import com.senior.cyber.frmk.common.wicket.markup.html.navigation.paging.IPageableItems;
+import com.senior.cyber.frmk.common.wicket.markup.repeater.IItemReuseStrategy;
 import com.senior.cyber.frmk.common.wicket.markup.repeater.RefreshingView;
 import com.senior.cyber.frmk.common.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.AttributeModifier;
@@ -12,7 +13,6 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.markup.repeater.IItemReuseStrategy;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.OddEvenItem;
 import org.apache.wicket.markup.repeater.RepeatingView;
@@ -23,12 +23,13 @@ import org.apache.wicket.util.visit.IVisit;
 import org.apache.wicket.util.visit.IVisitor;
 
 import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable
  */
-public class DataTable<RowType, CellType> extends Panel implements IPageableItems {
+public class DataTable<RowType, CellType extends Serializable> extends Panel implements IPageableItems {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -216,7 +217,7 @@ public class DataTable<RowType, CellType> extends Panel implements IPageableItem
      * @see RefreshingView#setItemReuseStrategy(IItemReuseStrategy)
      * @see IItemReuseStrategy
      */
-    public final DataTable<RowType, CellType> setItemReuseStrategy(final IItemReuseStrategy strategy) {
+    public final DataTable<RowType, CellType> setItemReuseStrategy(final IItemReuseStrategy<RowType> strategy) {
         datagrid.setItemReuseStrategy(strategy);
         return this;
     }
@@ -302,87 +303,6 @@ public class DataTable<RowType, CellType> extends Panel implements IPageableItem
     protected void onComponentTag(ComponentTag tag) {
         checkComponentTag(tag, "table");
         super.onComponentTag(tag);
-    }
-
-    /**
-     * This class acts as a repeater that will contain the toolbar. It makes sure that the table row
-     * group (e.g. thead) tags are only visible when they contain rows in accordance with the HTML
-     * specification.
-     *
-     * @author igor.vaynberg
-     */
-    private static class ToolbarsContainer extends WebMarkupContainer {
-
-        @Serial
-        private static final long serialVersionUID = 1L;
-
-        private final RepeatingView toolbars;
-
-        private ToolbarsContainer(final String id) {
-            super(id);
-            toolbars = new RepeatingView("toolbars");
-            add(toolbars);
-        }
-
-        public RepeatingView getRepeatingView() {
-            return toolbars;
-        }
-
-        @Override
-        public void onConfigure() {
-            super.onConfigure();
-
-            toolbars.configure();
-
-            Boolean visible = toolbars.visitChildren(new IVisitor<Component, Boolean>() {
-                @Override
-                public void component(Component object, IVisit<Boolean> visit) {
-                    object.configure();
-                    if (object.isVisible()) {
-                        visit.stop(Boolean.TRUE);
-                    } else {
-                        visit.dontGoDeeper();
-                    }
-                }
-            });
-            if (visible == null) {
-                visible = false;
-            }
-            setVisible(visible);
-        }
-    }
-
-    /**
-     * A caption for the table. It renders itself only if {@link DataTable#getCaptionModel()} has
-     * non-empty value.
-     */
-    public static class Caption extends Label {
-
-        @Serial
-        private static final long serialVersionUID = 1L;
-
-        /**
-         * Construct.
-         *
-         * @param id    the component id
-         * @param model the caption model
-         */
-        public Caption(String id, IModel<String> model) {
-            super(id, model);
-        }
-
-        @Override
-        protected void onConfigure() {
-            setRenderBodyOnly(Strings.isEmpty(getDefaultModelObjectAsString()));
-
-            super.onConfigure();
-        }
-
-        @Override
-        protected IModel<String> initModel() {
-            // don't try to find the model in the parent
-            return null;
-        }
     }
 
 }

@@ -9,8 +9,9 @@ import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 
 import java.io.Serial;
+import java.io.Serializable;
 
-public class AjaxFallbackHeadersToolbar<RowType, CellType> extends HeadersToolbar<RowType, CellType> {
+public class AjaxFallbackHeadersToolbar<RowType, CellType extends Serializable> extends HeadersToolbar<RowType, CellType> {
 
     @Serial
     private static final long serialVersionUID = 1L;

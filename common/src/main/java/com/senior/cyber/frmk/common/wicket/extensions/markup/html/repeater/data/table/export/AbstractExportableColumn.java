@@ -12,7 +12,7 @@ import java.io.Serializable;
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.export.AbstractExportableColumn
  */
-public abstract class AbstractExportableColumn<RowType, CellType> extends AbstractColumn<RowType, CellType> implements IExportableColumn<RowType, CellType> {
+public abstract class AbstractExportableColumn<RowType, CellType extends Serializable> extends AbstractColumn<RowType, CellType> implements IExportableColumn<RowType, CellType> {
 
     /**
      * Creates a new {@link AbstractExportableColumn} with the provided display model, and without a sort property.

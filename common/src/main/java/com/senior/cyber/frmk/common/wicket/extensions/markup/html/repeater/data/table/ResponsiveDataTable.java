@@ -11,7 +11,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
-public class ResponsiveDataTable<RowType, CellType> extends DataTable<RowType, CellType> {
+public class ResponsiveDataTable<RowType, CellType extends Serializable> extends DataTable<RowType, CellType> {
 
     protected static final int FLAG_OUTPUT_MARKUP_ID = 0x4000;
 

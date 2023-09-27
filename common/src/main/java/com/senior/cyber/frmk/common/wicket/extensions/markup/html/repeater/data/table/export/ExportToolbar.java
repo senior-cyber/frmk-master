@@ -3,7 +3,6 @@ package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.AbstractToolbar;
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.IColumn;
-import com.senior.cyber.frmk.common.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -15,12 +14,8 @@ import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.request.resource.IResource;
 import org.apache.wicket.request.resource.ResourceStreamResource;
 import org.apache.wicket.util.lang.Args;
-import org.apache.wicket.util.resource.AbstractResourceStreamWriter;
 import org.apache.wicket.util.resource.IResourceStream;
-import org.apache.wicket.util.resource.IResourceStreamWriter;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Duration;
@@ -30,7 +25,7 @@ import java.util.List;
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.export.ExportToolbar
  */
-public class ExportToolbar<RowType, CellType> extends AbstractToolbar<RowType, CellType> {
+public class ExportToolbar<RowType, CellType extends Serializable> extends AbstractToolbar<RowType, CellType> {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -242,68 +237,4 @@ public class ExportToolbar<RowType, CellType> extends AbstractToolbar<RowType, C
         return this;
     }
 
-    /**
-     * An {@link IResourceStreamWriter} which writes the exportable data from a table to an output stream.
-     */
-    public static class DataExportResourceStreamWriter<RowType, CellType> extends AbstractResourceStreamWriter {
-        private final IDataExporter<RowType, CellType> dataExporter;
-
-        private final DataTable<RowType, CellType> dataTable;
-
-        /**
-         * Creates a new instance using the provided {@link IDataExporter} to export data.
-         *
-         * @param dataExporter The {@link IDataExporter} to use to export data.
-         * @param dataTable    The {@link DataTable} from which to export.
-         */
-        public DataExportResourceStreamWriter(IDataExporter<RowType, CellType> dataExporter, DataTable<RowType, CellType> dataTable) {
-            this.dataExporter = dataExporter;
-            this.dataTable = dataTable;
-        }
-
-        /**
-         * Writes the exported data to the output stream. This implementation calls
-         * {@link #exportData(DataTable, IDataExporter, java.io.OutputStream) }.
-         *
-         * @param output The output stream to which to export the data.
-         * @throws IOException if an error occurs.
-         */
-        @Override
-        public void write(OutputStream output) throws IOException {
-            exportData(dataTable, dataExporter, output);
-        }
-
-        /**
-         * {@inheritDoc}
-         * <p>
-         * This method returns the content type returned by {@link IDataExporter#getContentType()}.
-         *
-         * @return the content type returned by {@link IDataExporter#getContentType()}.
-         */
-        @Override
-        public String getContentType() {
-            return dataExporter.getContentType();
-        }
-
-        /**
-         * Exports the data from the provided data table to the provided output stream.
-         * This methods calls {@link IDataExporter#exportData(IDataProvider, java.util.List, java.io.OutputStream) }
-         * passing it the {@link IDataProvider} of the {@link DataTable}, and a list of the {@link IExportableColumn}s in the table.
-         *
-         * @param dataTable    The {@link DataTable} to export.
-         * @param dataExporter The {@link IDataExporter} to use to export the data.
-         * @param outputStream The {@link OutputStream} to which the data should be exported to.
-         * @throws IOException
-         */
-        private void exportData(DataTable<RowType, ? extends CellType> dataTable, IDataExporter<RowType, CellType> dataExporter, OutputStream outputStream) throws IOException {
-            IDataProvider<RowType> dataProvider = dataTable.getDataProvider();
-            List<IExportableColumn<RowType, ? extends CellType>> exportableColumns = new LinkedList<>();
-            for (IColumn<RowType, ? extends CellType> col : dataTable.getColumns()) {
-                if (col instanceof IExportableColumn) {
-                    exportableColumns.add((IExportableColumn<RowType, ? extends CellType>) col);
-                }
-            }
-            dataExporter.exportData(dataProvider, exportableColumns, outputStream);
-        }
-    }
 }

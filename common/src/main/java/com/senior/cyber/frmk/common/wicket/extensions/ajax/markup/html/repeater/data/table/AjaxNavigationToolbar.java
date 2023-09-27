@@ -7,8 +7,9 @@ import com.senior.cyber.frmk.common.wicket.markup.html.navigation.paging.PagingN
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
 import java.io.Serial;
+import java.io.Serializable;
 
-public class AjaxNavigationToolbar<RowType, CellType> extends NavigationToolbar<RowType, CellType> {
+public class AjaxNavigationToolbar<RowType, CellType extends Serializable> extends NavigationToolbar<RowType, CellType> {
 
     @Serial
     private static final long serialVersionUID = 1L;

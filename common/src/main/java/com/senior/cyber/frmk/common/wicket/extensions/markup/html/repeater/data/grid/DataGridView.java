@@ -4,12 +4,13 @@ import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.
 import com.senior.cyber.frmk.common.wicket.markup.repeater.data.IDataProvider;
 
 import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.grid.DataGridView
  */
-public class DataGridView<RowType, CellType> extends AbstractDataGridView<RowType, CellType> {
+public class DataGridView<RowType, CellType extends Serializable> extends AbstractDataGridView<RowType, CellType> {
 
     @Serial
     private static final long serialVersionUID = 1L;

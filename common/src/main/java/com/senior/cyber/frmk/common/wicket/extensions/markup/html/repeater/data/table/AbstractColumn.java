@@ -6,11 +6,12 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 
 import java.io.Serial;
+import java.io.Serializable;
 
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn
  */
-public abstract class AbstractColumn<RowType, CellType> implements IStyledColumn<RowType, CellType> {
+public abstract class AbstractColumn<RowType, CellType extends Serializable> implements IStyledColumn<RowType, CellType> {
 
     @Serial
     private static final long serialVersionUID = 1L;

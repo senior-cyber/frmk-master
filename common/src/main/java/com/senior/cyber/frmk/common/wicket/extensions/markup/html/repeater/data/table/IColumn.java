@@ -2,15 +2,13 @@ package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data
 
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.Component;
-import org.apache.wicket.markup.repeater.Item;
-import org.apache.wicket.model.IModel;
+
+import java.io.Serializable;
 
 /**
  * @see org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn
  */
-public interface IColumn<RowType, CellType> extends ICellPopulator<RowType, CellType> {
-
-    // void populateItem(final Item<IColumn<RowType, ? extends CellType>> cellItem, final String componentId, final IModel<RowType> rowModel);
+public interface IColumn<RowType, CellType extends Serializable> extends ICellPopulator<RowType, CellType> {
 
     /**
      * Returns the component that will be used as the header for the column.
