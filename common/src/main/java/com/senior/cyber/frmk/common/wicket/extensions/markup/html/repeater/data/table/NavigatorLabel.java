@@ -4,7 +4,6 @@ import com.senior.cyber.frmk.common.wicket.markup.html.navigation.paging.IPageab
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
-import org.apache.wicket.util.io.IClusterable;
 
 import java.io.Serial;
 

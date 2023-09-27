@@ -1,7 +1,6 @@
 package com.senior.cyber.frmk.common.wicket;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.wicket.Component;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.parser.XmlTag;
 

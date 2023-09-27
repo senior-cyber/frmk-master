@@ -12,8 +12,6 @@ import org.apache.wicket.protocol.http.WicketFilter;
 import org.apache.wicket.request.resource.*;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
-import org.reflections.scanners.SubTypesScanner;
-import org.reflections.scanners.TypeAnnotationsScanner;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 import org.slf4j.Logger;
@@ -25,7 +23,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.concurrent.Executors;
 
 public abstract class WicketFactory extends org.apache.wicket.protocol.http.WebApplication
         implements IWebApplicationFactory, IResourceReferenceFactory {

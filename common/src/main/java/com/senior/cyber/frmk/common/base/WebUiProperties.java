@@ -1,7 +1,6 @@
 package com.senior.cyber.frmk.common.base;
 
 import com.senior.cyber.frmk.common.simulator.SimulateEnum;
-import com.senior.cyber.frmk.common.simulator.SimulateHttpEntity;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.wicket.RuntimeConfigurationType;

@@ -11,16 +11,11 @@ import org.apache.wicket.Component;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.ColGroup;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.OddEvenItem;
-import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.lang.Args;
-import org.apache.wicket.util.string.Strings;
-import org.apache.wicket.util.visit.IVisit;
-import org.apache.wicket.util.visit.IVisitor;
 
 import java.io.Serial;
 import java.io.Serializable;

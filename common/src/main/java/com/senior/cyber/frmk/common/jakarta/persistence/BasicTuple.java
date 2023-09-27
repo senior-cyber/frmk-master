@@ -2,6 +2,7 @@ package com.senior.cyber.frmk.common.jakarta.persistence;
 
 import jakarta.persistence.Tuple;
 import jakarta.persistence.TupleElement;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;

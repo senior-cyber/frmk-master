@@ -1,8 +1,5 @@
 package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table;
 
-import org.apache.wicket.markup.repeater.Item;
-import org.apache.wicket.model.IModel;
-
 import java.io.Serializable;
 
 /**
