@@ -174,10 +174,10 @@ public abstract class AbstractJdbcDataProvider extends SortableDataProvider<Tupl
         return fields;
     }
 
-    public <T extends Serializable> JdbcColumn<T> column(Class<T> fieldType, IModel<String> displayModel, String key, String sql, SerializerFunction<T> serializer) {
+    public <T extends Serializable> JdbcColumn<T> column(Class<? extends Serializable> fieldType, IModel<String> displayModel, String key, String sql, SerializerFunction<T> serializer) {
         var column = new JdbcColumn<T>(displayModel, key);
         column.setSerializer(serializer);
-        column.setTypeClass(fieldType);
+        column.setTypeClass((Class<T>) fieldType);
         column.setKeyExpression(key);
         this.column.put(key, column);
         this.alias.put(key, sql);
@@ -185,16 +185,17 @@ public abstract class AbstractJdbcDataProvider extends SortableDataProvider<Tupl
         return column;
     }
 
-    public <T extends Serializable> JdbcColumn<T> column(Class<T> fieldType, IModel<String> displayModel, String key, String sql, SerializerFunction<T> serializer, CellSerializerFunction<T> cellSerializer) {
+    public <T extends Serializable> JdbcColumn<T> column(Class<? extends Serializable> fieldType, IModel<String> displayModel, String key, String sql, SerializerFunction<T> serializer, CellSerializerFunction<T> cellSerializer) {
         var column = column(fieldType, displayModel, key, sql, serializer);
         column.setCellSerializer(cellSerializer);
         return column;
     }
 
-    public <T extends Serializable> TextFilteredJdbcColumn<T> filteredColumn(Class<T> fieldType, IModel<String> displayModel, String key, String sql, SerializerFunction<T> serializer, FilterFunction<T> callbackFilter, DeserializerFunction<T> deserializer) {
+    public <T extends Serializable> TextFilteredJdbcColumn<T> filteredColumn(Class<? extends Serializable> fieldType, IModel<String> displayModel, String key, String sql, SerializerFunction<T> serializer, FilterFunction<T> callbackFilter, DeserializerFunction<T> deserializer) {
         var column = new TextFilteredJdbcColumn<T>(displayModel, key);
         column.setSerializer(serializer);
         column.setDeserializer(deserializer);
+        column.setTypeClass((Class<T>) fieldType);
         column.setKeyExpression(key);
         this.column.put(key, column);
         this.callbackFilter.put(key, callbackFilter);
@@ -203,7 +204,7 @@ public abstract class AbstractJdbcDataProvider extends SortableDataProvider<Tupl
         return column;
     }
 
-    public <T extends Serializable> TextFilteredJdbcColumn<T> filteredColumn(Class<T> fieldType, IModel<String> displayModel, String key, String sql, SerializerFunction<T> serializer, FilterFunction<T> callbackFilter, DeserializerFunction<T> deserializer, CellSerializerFunction<T> cellSerializer) {
+    public <T extends Serializable> TextFilteredJdbcColumn<T> filteredColumn(Class<? extends Serializable> fieldType, IModel<String> displayModel, String key, String sql, SerializerFunction<T> serializer, FilterFunction<T> callbackFilter, DeserializerFunction<T> deserializer, CellSerializerFunction<T> cellSerializer) {
         var column = filteredColumn(fieldType, displayModel, key, sql, serializer, callbackFilter, deserializer);
         column.setCellSerializer(cellSerializer);
         return column;

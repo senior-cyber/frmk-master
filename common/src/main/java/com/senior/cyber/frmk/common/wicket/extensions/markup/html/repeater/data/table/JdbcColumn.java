@@ -27,8 +27,8 @@ public class JdbcColumn<CellType extends Serializable> extends AbstractColumn<Tu
     @Getter
     private String keyExpression;
 
-    @Getter
     @Setter
+    @Getter
     private Class<CellType> typeClass;
 
     @Setter
