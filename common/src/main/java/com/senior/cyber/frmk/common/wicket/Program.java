@@ -19,11 +19,11 @@ public class Program {
         List<IColumn<Tuple, ? extends Serializable>> intermediate_browse_column = null;
         AbstractJdbcDataProvider intermediate_browse_provider = null;
 
-        SerializerFunction<Date> serializer = (String s1, Date s2) -> {
+        SerializerFunction<Date> serializer = (Date s2) -> {
             return "";
         };
 
-        HtmlSerializerFunction<Date> call = (String key, Tuple object, Date value) -> {
+        HtmlSerializerFunction<Date> call = (Tuple object, Date value) -> {
             return null;
         };
 

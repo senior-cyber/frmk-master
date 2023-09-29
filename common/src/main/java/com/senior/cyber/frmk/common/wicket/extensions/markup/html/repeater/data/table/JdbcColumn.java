@@ -49,9 +49,9 @@ public class JdbcColumn<CellType extends Serializable> extends AbstractColumn<Tu
     public void populateItem(final Item<IColumn<Tuple, ? extends CellType>> cellItem, final String componentId, final IModel<Tuple> rowModel) {
         IModel<CellType> m = getDataModel(rowModel);
 
-        ItemPanel itemPanel = this.htmlSerializer == null ? null : this.htmlSerializer.apply(this.keyExpression, rowModel.getObject(), m.getObject());
+        ItemPanel itemPanel = this.htmlSerializer == null ? null : this.htmlSerializer.apply(rowModel.getObject(), m.getObject());
         if (itemPanel == null) {
-            String text = this.serializer.apply(this.keyExpression, m.getObject());
+            String text = this.serializer.apply(m.getObject());
             cellItem.add(new Label(componentId, text));
         } else {
             CellPanel cell = new CellPanel(componentId);
