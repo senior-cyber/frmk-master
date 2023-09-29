@@ -5,6 +5,6 @@ import org.apache.wicket.util.io.IClusterable;
 @FunctionalInterface
 public interface DeserializerFunction<T> extends IClusterable {
 
-    T apply(String key, String value);
+    T apply(String value);
 
 }

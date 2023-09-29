@@ -261,7 +261,7 @@ public abstract class AbstractJdbcDataProvider extends SortableDataProvider<Tupl
                 if (entry.getValue() != null && !entry.getValue().isEmpty()) {
                     FilterFunction callback = this.callbackFilter.get(entry.getKey());
                     boolean count = orderBy == null;
-                    List<String> sqls = (List<String>) callback.apply(count, entry.getKey(), this.alias, params, entry.getValue());
+                    List<String> sqls = (List<String>) callback.apply(count, this.alias, params, entry.getValue());
                     for (String sql : sqls) {
                         if (StringUtils.startsWith(sql, WHERE)) {
                             where.add(StringUtils.substring(sql, WHERE.length()));

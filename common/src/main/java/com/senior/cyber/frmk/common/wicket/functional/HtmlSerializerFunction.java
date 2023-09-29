@@ -7,6 +7,6 @@ import org.apache.wicket.util.io.IClusterable;
 @FunctionalInterface
 public interface HtmlSerializerFunction<T> extends IClusterable {
 
-    ItemPanel apply(String key, Tuple object, T value);
+    ItemPanel apply(Tuple object, T value);
 
 }
