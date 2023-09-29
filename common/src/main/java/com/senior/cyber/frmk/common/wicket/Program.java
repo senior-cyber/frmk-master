@@ -3,6 +3,8 @@ package com.senior.cyber.frmk.common.wicket;
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.DefaultDataTable;
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.IColumn;
+import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.filter.FilterForm;
+import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.filter.FilterToolbar;
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.util.AbstractJdbcDataProvider;
 import com.senior.cyber.frmk.common.wicket.functional.HtmlSerializerFunction;
 import com.senior.cyber.frmk.common.wicket.functional.SerializerFunction;
@@ -29,6 +31,9 @@ public class Program {
 
         intermediate_browse_column.add(intermediate_browse_provider.column(Date.class, Model.of(""), "", "", serializer, call));
 
-        DataTable<Tuple, ? extends Serializable> pp = new DefaultDataTable<>("intermediate_browse_table", intermediate_browse_column, intermediate_browse_provider, 20);
+        DataTable<Tuple, Serializable> pp = new DefaultDataTable<>("intermediate_browse_table", intermediate_browse_column, intermediate_browse_provider, 20);
+
+        FilterForm f = new FilterForm("", null);
+        pp.addTopToolbar(new FilterToolbar<>(pp, f));
     }
 }
