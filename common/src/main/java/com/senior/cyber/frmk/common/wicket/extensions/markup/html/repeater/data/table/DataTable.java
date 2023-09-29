@@ -29,7 +29,7 @@ public class DataTable<RowType, CellType extends Serializable> extends Panel imp
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private final DataGridView<RowType, CellType> datagrid;
+    private final DataGridView<RowType, ? extends CellType> datagrid;
 
     private final WebMarkupContainer body;
 
@@ -53,7 +53,7 @@ public class DataTable<RowType, CellType extends Serializable> extends Panel imp
      * @param dataProvider imodel for data provider
      * @param rowsPerPage  number of rows per page
      */
-    public DataTable(final String id, final List<? extends IColumn<RowType, CellType>> columns, final IDataProvider<RowType> dataProvider, final int rowsPerPage) {
+    public DataTable(final String id, final List<? extends IColumn<RowType, ? extends CellType>> columns, final IDataProvider<RowType> dataProvider, final int rowsPerPage) {
         super(id);
         setOutputMarkupId(true);
         add(AttributeModifier.replace("class", "table table-bordered table-hover table-striped table-sm"));
@@ -65,7 +65,7 @@ public class DataTable<RowType, CellType extends Serializable> extends Panel imp
         this.colGroup = new ColGroup("colGroup");
         add(colGroup);
         body = newBodyContainer("body");
-        datagrid = new DefaultDataGridView<>("rows", this, columns, dataProvider);
+        datagrid = new DefaultDataGridView<>("rows", this, (List<? extends IColumn<RowType, CellType>>) columns, dataProvider);
         datagrid.setItemsPerPage(rowsPerPage);
         body.add(datagrid);
         add(body);

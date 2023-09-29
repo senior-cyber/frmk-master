@@ -1,6 +1,7 @@
 package com.senior.cyber.frmk.common.wicket;
 
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.DataTable;
+import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.DefaultDataTable;
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.util.AbstractJdbcDataProvider;
 import com.senior.cyber.frmk.common.wicket.functional.CellSerializerFunction;
@@ -28,6 +29,6 @@ public class Program {
 
         intermediate_browse_column.add(intermediate_browse_provider.column(Date.class, Model.of(""), "", "", serializer, call));
 
-        new DataTable("intermediate_browse_table", intermediate_browse_column, intermediate_browse_provider, 20);
+        DataTable<Tuple, ? extends Serializable> pp = new DefaultDataTable<>("intermediate_browse_table", intermediate_browse_column, intermediate_browse_provider, 20);
     }
 }

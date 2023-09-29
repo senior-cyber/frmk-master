@@ -24,7 +24,7 @@ public class DefaultDataTable<RowType, CellType extends Serializable> extends Da
      * @param dataProvider data provider
      * @param rowsPerPage  number of rows per page
      */
-    public DefaultDataTable(final String id, final List<? extends IColumn<RowType, CellType>> columns, final ISortableDataProvider<RowType> dataProvider, final int rowsPerPage) {
+    public DefaultDataTable(final String id, final List<? extends IColumn<RowType, ? extends CellType>> columns, final ISortableDataProvider<RowType> dataProvider, final int rowsPerPage) {
         super(id, columns, dataProvider, rowsPerPage);
 
         addTopToolbar(new HeadersToolbar<>(this, dataProvider));

@@ -25,8 +25,7 @@ public class AjaxFallbackDefaultDataTable<RowType, CellType extends Serializable
      * @param dataProvider data provider
      * @param rowsPerPage  number of rows per page
      */
-    public AjaxFallbackDefaultDataTable(final String id, final List<? extends IColumn<RowType, CellType>> columns,
-                                        final ISortableDataProvider<RowType> dataProvider, final int rowsPerPage) {
+    public AjaxFallbackDefaultDataTable(final String id, final List<? extends IColumn<RowType, ? extends CellType>> columns, final ISortableDataProvider<RowType> dataProvider, final int rowsPerPage) {
         super(id, columns, dataProvider, rowsPerPage);
         setOutputMarkupId(true);
         setVersioned(false);
