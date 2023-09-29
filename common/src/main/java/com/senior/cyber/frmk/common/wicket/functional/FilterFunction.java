@@ -8,6 +8,6 @@ import java.util.Map;
 @FunctionalInterface
 public interface FilterFunction<T> extends IClusterable {
 
-    List<String> apply(Boolean count, String key, Map<String, String> alias, Map<String, Object> param, String filterText, DeserializerFunction<T> deserializer);
+    List<String> apply(Boolean count, String key, Map<String, String> alias, Map<String, Object> params, String filterText);
 
 }

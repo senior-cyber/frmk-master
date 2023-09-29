@@ -6,9 +6,9 @@ import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.filter.FilteredJdbcColumn;
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.filter.IFilterStateLocator;
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.filter.TextFilteredJdbcColumn;
-import com.senior.cyber.frmk.common.wicket.functional.CellSerializerFunction;
 import com.senior.cyber.frmk.common.wicket.functional.DeserializerFunction;
 import com.senior.cyber.frmk.common.wicket.functional.FilterFunction;
+import com.senior.cyber.frmk.common.wicket.functional.HtmlSerializerFunction;
 import com.senior.cyber.frmk.common.wicket.functional.SerializerFunction;
 import com.senior.cyber.frmk.common.wicket.model.util.TupleModel;
 import com.senior.cyber.frmk.jdbc.query.Param;
@@ -185,9 +185,9 @@ public abstract class AbstractJdbcDataProvider extends SortableDataProvider<Tupl
         return column;
     }
 
-    public <T extends Serializable> JdbcColumn<T> column(Class<? extends Serializable> fieldType, IModel<String> displayModel, String key, String sql, SerializerFunction<T> serializer, CellSerializerFunction<T> cellSerializer) {
+    public <T extends Serializable> JdbcColumn<T> column(Class<? extends Serializable> fieldType, IModel<String> displayModel, String key, String sql, SerializerFunction<T> serializer, HtmlSerializerFunction<T> htmlSerializer) {
         var column = column(fieldType, displayModel, key, sql, serializer);
-        column.setCellSerializer(cellSerializer);
+        column.setHtmlSerializer(htmlSerializer);
         return column;
     }
 
@@ -204,9 +204,9 @@ public abstract class AbstractJdbcDataProvider extends SortableDataProvider<Tupl
         return column;
     }
 
-    public <T extends Serializable> TextFilteredJdbcColumn<T> filteredColumn(Class<? extends Serializable> fieldType, IModel<String> displayModel, String key, String sql, SerializerFunction<T> serializer, FilterFunction<T> callbackFilter, DeserializerFunction<T> deserializer, CellSerializerFunction<T> cellSerializer) {
+    public <T extends Serializable> TextFilteredJdbcColumn<T> filteredColumn(Class<? extends Serializable> fieldType, IModel<String> displayModel, String key, String sql, SerializerFunction<T> serializer, FilterFunction<T> callbackFilter, DeserializerFunction<T> deserializer, HtmlSerializerFunction<T> htmlSerializer) {
         var column = filteredColumn(fieldType, displayModel, key, sql, serializer, callbackFilter, deserializer);
-        column.setCellSerializer(cellSerializer);
+        column.setHtmlSerializer(htmlSerializer);
         return column;
     }
 
@@ -261,7 +261,7 @@ public abstract class AbstractJdbcDataProvider extends SortableDataProvider<Tupl
                 if (entry.getValue() != null && !entry.getValue().isEmpty()) {
                     FilterFunction callback = this.callbackFilter.get(entry.getKey());
                     boolean count = orderBy == null;
-                    List<String> sqls = (List<String>) callback.apply(count, entry.getKey(), this.alias, params, entry.getValue(), column.getDeserializer());
+                    List<String> sqls = (List<String>) callback.apply(count, entry.getKey(), this.alias, params, entry.getValue());
                     for (String sql : sqls) {
                         if (StringUtils.startsWith(sql, WHERE)) {
                             where.add(StringUtils.substring(sql, WHERE.length()));

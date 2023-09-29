@@ -3,7 +3,7 @@ package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.export.IExportableColumn;
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.filter.CellPanel;
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.filter.ItemPanel;
-import com.senior.cyber.frmk.common.wicket.functional.CellSerializerFunction;
+import com.senior.cyber.frmk.common.wicket.functional.HtmlSerializerFunction;
 import com.senior.cyber.frmk.common.wicket.functional.SerializerFunction;
 import jakarta.persistence.Tuple;
 import lombok.Getter;
@@ -35,7 +35,7 @@ public class JdbcColumn<CellType extends Serializable> extends AbstractColumn<Tu
     protected SerializerFunction<CellType> serializer;
 
     @Setter
-    protected CellSerializerFunction<CellType> cellSerializer;
+    protected HtmlSerializerFunction<CellType> htmlSerializer;
 
     public JdbcColumn(final IModel<String> displayModel) {
         super(displayModel);
@@ -49,7 +49,7 @@ public class JdbcColumn<CellType extends Serializable> extends AbstractColumn<Tu
     public void populateItem(final Item<IColumn<Tuple, ? extends CellType>> cellItem, final String componentId, final IModel<Tuple> rowModel) {
         IModel<CellType> m = getDataModel(rowModel);
 
-        ItemPanel itemPanel = this.cellSerializer == null ? null : this.cellSerializer.apply(this.keyExpression, rowModel.getObject(), m.getObject());
+        ItemPanel itemPanel = this.htmlSerializer == null ? null : this.htmlSerializer.apply(this.keyExpression, rowModel.getObject(), m.getObject());
         if (itemPanel == null) {
             String text = this.serializer.apply(this.keyExpression, m.getObject());
             cellItem.add(new Label(componentId, text));

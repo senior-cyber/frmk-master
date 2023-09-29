@@ -4,7 +4,7 @@ import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.DefaultDataTable;
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.util.AbstractJdbcDataProvider;
-import com.senior.cyber.frmk.common.wicket.functional.CellSerializerFunction;
+import com.senior.cyber.frmk.common.wicket.functional.HtmlSerializerFunction;
 import com.senior.cyber.frmk.common.wicket.functional.SerializerFunction;
 import jakarta.persistence.Tuple;
 import org.apache.wicket.model.Model;
@@ -23,7 +23,7 @@ public class Program {
             return "";
         };
 
-        CellSerializerFunction<Date> call = (String key, Tuple object, Date value) -> {
+        HtmlSerializerFunction<Date> call = (String key, Tuple object, Date value) -> {
             return null;
         };
 
