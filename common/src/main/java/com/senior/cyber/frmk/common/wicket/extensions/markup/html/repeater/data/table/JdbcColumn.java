@@ -29,7 +29,7 @@ public class JdbcColumn<CellType extends Serializable> extends AbstractColumn<Tu
 
     @Setter
     @Getter
-    private Class<CellType> typeClass;
+    private Class<? extends CellType> typeClass;
 
     @Setter
     protected SerializerFunction<CellType> serializer;
