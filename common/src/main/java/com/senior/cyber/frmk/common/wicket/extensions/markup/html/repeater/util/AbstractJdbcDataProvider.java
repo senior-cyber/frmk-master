@@ -342,12 +342,12 @@ public abstract class AbstractJdbcDataProvider extends SortableDataProvider<Tupl
         return querySize(countQuery, params);
     }
 
-    public void applyCount(String field) {
-        this.count = field;
+    public void applyCount(String sqlColumn) {
+        this.count = sqlColumn;
     }
 
-    public void applyGroupBy(String field) {
-        this.groupBy = field;
+    public void applyGroupBy(String sqlColumn) {
+        this.groupBy = sqlColumn;
     }
 
     protected abstract NamedParameterJdbcTemplate getNamedParameterJdbcTemplate();
