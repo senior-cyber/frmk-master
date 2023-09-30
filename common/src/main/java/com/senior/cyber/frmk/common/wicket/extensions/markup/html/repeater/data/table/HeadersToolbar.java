@@ -29,8 +29,8 @@ public class HeadersToolbar<RowType, CellType extends Serializable> extends Abst
      * @param table        data table this toolbar will be attached to
      * @param stateLocator locator for the ISortState implementation used by sortable headers
      */
-    public HeadersToolbar(final DataTable<RowType, ? extends CellType> table, final ISortStateLocator stateLocator) {
-        super((DataTable<RowType, CellType>) table);
+    public HeadersToolbar(final DataTable<RowType, CellType> table, final ISortStateLocator stateLocator) {
+        super(table);
         setOutputMarkupId(true);
         RefreshingView<IColumn<RowType, ? extends CellType>> headers = new RefreshingView<>("headers") {
 

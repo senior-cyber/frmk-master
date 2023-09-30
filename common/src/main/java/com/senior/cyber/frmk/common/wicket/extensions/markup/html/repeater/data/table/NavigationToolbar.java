@@ -22,8 +22,8 @@ public class NavigationToolbar<RowType, CellType extends Serializable> extends A
      *
      * @param table data table this toolbar will be attached to
      */
-    public NavigationToolbar(final DataTable<RowType, ? extends CellType> table) {
-        super((DataTable<RowType, CellType>) table);
+    public NavigationToolbar(final DataTable<RowType, CellType> table) {
+        super(table);
         setOutputMarkupId(true);
         WebMarkupContainer span = new WebMarkupContainer("span");
         add(span);

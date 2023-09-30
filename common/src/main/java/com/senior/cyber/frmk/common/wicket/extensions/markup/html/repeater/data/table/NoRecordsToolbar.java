@@ -24,8 +24,8 @@ public class NoRecordsToolbar<RowType, CellType extends Serializable> extends Ab
      *
      * @param table data table this toolbar will be attached to
      */
-    public NoRecordsToolbar(final DataTable<RowType, ? extends CellType> table) {
-        this((DataTable<RowType, CellType>) table, DEFAULT_MESSAGE_MODEL);
+    public NoRecordsToolbar(final DataTable<RowType, CellType> table) {
+        this(table, DEFAULT_MESSAGE_MODEL);
         setOutputMarkupId(true);
     }
 
@@ -33,8 +33,8 @@ public class NoRecordsToolbar<RowType, CellType extends Serializable> extends Ab
      * @param table        data table this toolbar will be attached to
      * @param messageModel model that will be used to display the "no records found" message
      */
-    public NoRecordsToolbar(final DataTable<RowType, ? extends CellType> table, final IModel<String> messageModel) {
-        super((DataTable<RowType, CellType>) table);
+    public NoRecordsToolbar(final DataTable<RowType, CellType> table, final IModel<String> messageModel) {
+        super(table);
         setOutputMarkupId(true);
         WebMarkupContainer td = new WebMarkupContainer("td");
         add(td);

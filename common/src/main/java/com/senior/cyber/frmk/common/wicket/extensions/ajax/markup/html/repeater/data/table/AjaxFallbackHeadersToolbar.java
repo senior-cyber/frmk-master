@@ -22,7 +22,7 @@ public class AjaxFallbackHeadersToolbar<RowType, CellType extends Serializable> 
      * @param table
      * @param stateLocator
      */
-    public AjaxFallbackHeadersToolbar(final DataTable<RowType, ? extends CellType> table, final ISortStateLocator stateLocator) {
+    public AjaxFallbackHeadersToolbar(final DataTable<RowType, CellType> table, final ISortStateLocator stateLocator) {
         super(table, stateLocator);
         table.setOutputMarkupId(true);
     }

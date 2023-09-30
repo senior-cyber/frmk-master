@@ -19,7 +19,7 @@ public class AjaxNavigationToolbar<RowType, CellType extends Serializable> exten
      *
      * @param table data table this toolbar will be attached to
      */
-    public AjaxNavigationToolbar(final DataTable<RowType, ? extends CellType> table) {
+    public AjaxNavigationToolbar(final DataTable<RowType, CellType> table) {
         super(table);
     }
 
