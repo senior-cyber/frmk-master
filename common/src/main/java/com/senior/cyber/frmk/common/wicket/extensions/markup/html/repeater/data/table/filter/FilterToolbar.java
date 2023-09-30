@@ -34,8 +34,8 @@ public class FilterToolbar<RowType, CellType extends Serializable> extends Abstr
      * @param table data table this toolbar will be added to
      * @param form  the filter form
      */
-    public FilterToolbar(final DataTable<RowType, CellType> table, final FilterForm form) {
-        super(table);
+    public FilterToolbar(final DataTable<RowType, ? extends CellType> table, final FilterForm form) {
+        super((DataTable<RowType, CellType>) table);
         setOutputMarkupId(true);
         Args.notNull(table, "table");
 

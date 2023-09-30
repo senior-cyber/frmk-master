@@ -19,7 +19,7 @@ public class AjaxNavigationToolbar<RowType, CellType extends Serializable> exten
      *
      * @param table data table this toolbar will be attached to
      */
-    public AjaxNavigationToolbar(final DataTable<RowType, CellType> table) {
+    public AjaxNavigationToolbar(final DataTable<RowType, ? extends CellType> table) {
         super(table);
     }
 
@@ -31,7 +31,7 @@ public class AjaxNavigationToolbar<RowType, CellType extends Serializable> exten
      * @return paging navigator that will be used to navigate the data table
      */
     @Override
-    protected PagingNavigator newPagingNavigator(final String navigatorId, final DataTable<RowType, CellType> table) {
+    protected PagingNavigator newPagingNavigator(final String navigatorId, final DataTable<RowType, ? extends CellType> table) {
         return new AjaxPagingNavigator(navigatorId, table) {
 
             @Serial

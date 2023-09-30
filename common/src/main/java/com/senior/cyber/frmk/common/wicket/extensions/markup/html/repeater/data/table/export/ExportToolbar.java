@@ -46,8 +46,8 @@ public class ExportToolbar<RowType, CellType extends Serializable> extends Abstr
      *
      * @param table The data table this toolbar belongs to.
      */
-    public ExportToolbar(final DataTable<RowType, CellType> table) {
-        this(table, DEFAULT_MESSAGE_MODEL, DEFAULT_FILE_NAME_MODEL);
+    public ExportToolbar(final DataTable<RowType, ? extends CellType> table) {
+        this((DataTable<RowType, CellType>) table, DEFAULT_MESSAGE_MODEL, DEFAULT_FILE_NAME_MODEL);
         setOutputMarkupId(true);
     }
 
@@ -57,8 +57,8 @@ public class ExportToolbar<RowType, CellType extends Serializable> extends Abstr
      * @param table         The table to which this toolbar belongs.
      * @param fileNameModel The model of the file name. This should exclude the file extensions.
      */
-    public ExportToolbar(DataTable<RowType, CellType> table, IModel<String> fileNameModel) {
-        this(table, DEFAULT_MESSAGE_MODEL, fileNameModel);
+    public ExportToolbar(DataTable<RowType, ? extends CellType> table, IModel<String> fileNameModel) {
+        this((DataTable<RowType, CellType>) table, DEFAULT_MESSAGE_MODEL, fileNameModel);
         setOutputMarkupId(true);
     }
 
@@ -69,8 +69,8 @@ public class ExportToolbar<RowType, CellType extends Serializable> extends Abstr
      * @param messageModel  The model of the export message.
      * @param fileNameModel The model of the file name. This should exclude the file extensions.
      */
-    public ExportToolbar(DataTable<RowType, CellType> table, IModel<String> messageModel, IModel<String> fileNameModel) {
-        super(table);
+    public ExportToolbar(DataTable<RowType, ? extends CellType> table, IModel<String> messageModel, IModel<String> fileNameModel) {
+        super((DataTable<RowType, CellType>)table);
         setOutputMarkupId(true);
         setMessageModel(messageModel);
         setFileNameModel(fileNameModel);

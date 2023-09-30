@@ -22,8 +22,8 @@ public class NavigationToolbar<RowType, CellType extends Serializable> extends A
      *
      * @param table data table this toolbar will be attached to
      */
-    public NavigationToolbar(final DataTable<RowType, CellType> table) {
-        super(table);
+    public NavigationToolbar(final DataTable<RowType, ? extends CellType> table) {
+        super((DataTable<RowType, CellType>) table);
         setOutputMarkupId(true);
         WebMarkupContainer span = new WebMarkupContainer("span");
         add(span);
@@ -41,7 +41,7 @@ public class NavigationToolbar<RowType, CellType extends Serializable> extends A
      * @return paging navigator that will be used to navigate the data table
      */
     protected PagingNavigator newPagingNavigator(final String navigatorId,
-                                                 final DataTable<RowType, CellType> table) {
+                                                 final DataTable<RowType, ? extends CellType> table) {
         return new PagingNavigator(navigatorId, table);
     }
 
@@ -52,7 +52,7 @@ public class NavigationToolbar<RowType, CellType extends Serializable> extends A
      * @param table       DataTable used by datatable
      * @return navigator label that will be used to navigate the data table
      */
-    protected Component newNavigatorLabel(final String navigatorId, final DataTable<RowType, CellType> table) {
+    protected Component newNavigatorLabel(final String navigatorId, final DataTable<RowType, ? extends CellType> table) {
         return new NavigatorLabel(navigatorId, table);
     }
 
