@@ -2,14 +2,16 @@ package com.senior.cyber.frmk.jdbc.query;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 public class UpdateQuery extends WhereQuery {
 
     /**
      *
      */
-    private static final long serialVersionUID = 1950223463620867110L;
+    private static final long serialVersionUID = 1L;
 
     protected final String tableName;
 
@@ -19,12 +21,15 @@ public class UpdateQuery extends WhereQuery {
         this.tableName = tableName;
     }
 
-    public void addSet(String expression, Param... params) {
+    public void addSet(String expression) {
+        this.set.add(expression);
+        this.dirty = true;
+    }
+
+    public void addSet(String expression, Map<String, Object> params) {
         this.set.add(expression);
         if (params != null) {
-            for (Param param : params) {
-                this.param.put(param.getName(), param.getValue());
-            }
+            this.param.putAll(params);
         }
         this.dirty = true;
     }

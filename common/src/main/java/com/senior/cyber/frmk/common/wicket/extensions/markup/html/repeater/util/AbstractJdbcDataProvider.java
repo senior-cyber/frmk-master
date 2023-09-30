@@ -11,7 +11,6 @@ import com.senior.cyber.frmk.common.wicket.functional.FilterFunction;
 import com.senior.cyber.frmk.common.wicket.functional.HtmlSerializerFunction;
 import com.senior.cyber.frmk.common.wicket.functional.SerializerFunction;
 import com.senior.cyber.frmk.common.wicket.model.util.TupleModel;
-import com.senior.cyber.frmk.jdbc.query.Param;
 import jakarta.persistence.Tuple;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.wicket.model.IModel;
@@ -36,10 +35,10 @@ public abstract class AbstractJdbcDataProvider extends SortableDataProvider<Tupl
 
     protected final Map<String, String> join;
     protected final Map<String, String> userWhere;
-    protected final Map<String, List<Param>> userWhereParam;
+    protected final Map<String, Map<String, Object>> userWhereParam;
 
     protected final Map<String, String> userHaving;
-    protected final Map<String, List<Param>> userHavingParam;
+    protected final Map<String, Map<String, Object>> userHavingParam;
     protected Map<String, String> filterState;
     protected Map<String, String> alias;
     protected Map<String, Class<?>> fieldTypes;
@@ -85,9 +84,9 @@ public abstract class AbstractJdbcDataProvider extends SortableDataProvider<Tupl
         return where;
     }
 
-    public void applyWhere(String key, String sql, List<Param> params) {
+    public void applyWhere(String key, String sql, Map<String, Object> param) {
         this.userWhere.put(key, sql);
-        this.userWhereParam.put(key, params);
+        this.userWhereParam.put(key, param);
     }
 
     public void removeWhere(String key) {
@@ -95,9 +94,9 @@ public abstract class AbstractJdbcDataProvider extends SortableDataProvider<Tupl
         this.userWhereParam.remove(key);
     }
 
-    public void applyHaving(String key, String sql, List<Param> params) {
+    public void applyHaving(String key, String sql, Map<String, Object> param) {
         this.userHaving.put(key, sql);
-        this.userHavingParam.put(key, params);
+        this.userHavingParam.put(key, param);
     }
 
     public void removeHaving(String key) {
@@ -229,9 +228,7 @@ public abstract class AbstractJdbcDataProvider extends SortableDataProvider<Tupl
         List<String> p = new ArrayList<>(this.userWhere.size());
         for (var i : this.userWhere.entrySet()) {
             p.add(i.getValue());
-            for (var pa : this.userWhereParam.get(i.getKey())) {
-                params.put(pa.getName(), pa.getValue());
-            }
+            params.putAll(this.userWhereParam.get(i.getKey()));
         }
         return p;
     }
@@ -240,9 +237,7 @@ public abstract class AbstractJdbcDataProvider extends SortableDataProvider<Tupl
         List<String> p = new ArrayList<>(this.userHaving.size());
         for (var i : this.userHaving.entrySet()) {
             p.add(i.getValue());
-            for (var pa : this.userHavingParam.get(i.getKey())) {
-                params.put(pa.getName(), pa.getValue());
-            }
+            params.putAll(this.userHavingParam.get(i.getKey()));
         }
         return p;
     }

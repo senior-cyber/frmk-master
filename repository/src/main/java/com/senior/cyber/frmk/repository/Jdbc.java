@@ -48,7 +48,7 @@ public class Jdbc {
 
     public String insert(String table, Map<String, Object> values, Map<String, Object> systems) throws SQLException {
         SelectQuery selectQuery = new MySqlSelectQuery(INSTALL);
-        selectQuery.addWhere("`table` = :table", new Param("table", table));
+        selectQuery.addWhere("`table` = :table", Map.of("table", table));
         Install install = this.named.queryForObject(selectQuery.toSQL(), selectQuery.toParam(), Install.class);
         if (install == null) {
             throw new SQLException(table + " is not configured");
@@ -72,22 +72,22 @@ public class Jdbc {
 //                }
                 InsertQuery insertQuery = new InsertQuery(historyTable);
                 for (Map.Entry<String, Object> attr : values.entrySet()) {
-                    insertQuery.addValue(AFTER + "_" + attr.getKey(), ":" + AFTER + "_" + attr.getKey(), new Param(AFTER + "_" + attr.getKey(), attr.getValue()));
+                    insertQuery.addValue(AFTER + "_" + attr.getKey(), ":" + AFTER + "_" + attr.getKey(), Map.of(AFTER + "_" + attr.getKey(), attr.getValue()));
                 }
-                insertQuery.addValue(this.userPk, ":" + this.userPk, new Param(this.userPk, systems.get(this.userPk)));
-                insertQuery.addValue("dt_when", ":dt_when", new Param("dt_when", new Date()));
+                insertQuery.addValue(this.userPk, ":" + this.userPk, Map.of(this.userPk, systems.get(this.userPk)));
+                insertQuery.addValue("dt_when", ":dt_when", Map.of("dt_when", new Date()));
                 insertQuery.addValue("op = :op", "INSERT");
-                insertQuery.addValue(pk, ":" + pk, new Param(pk, id));
-                insertQuery.addValue("level", ":level", new Param("level", install.getLevel()));
+                insertQuery.addValue(pk, ":" + pk, Map.of(pk, id));
+                insertQuery.addValue("level", ":level", Map.of("level", install.getLevel()));
                 insertQuery.addValue(historyPk, "uuid()");
                 // insertQuery.addValue(SYSTEM_TRANSACTION_ID + " = :" + SYSTEM_TRANSACTION_ID, systems.get(SYSTEM_TRANSACTION_ID));
                 this.named.update(insertQuery.toSQL(), insertQuery.toParam());
             }
             InsertQuery insertQuery = new InsertQuery(table);
             for (Map.Entry<String, Object> attr : values.entrySet()) {
-                insertQuery.addValue(attr.getKey(), ":" + attr.getKey(), new Param(attr.getKey(), attr.getValue()));
+                insertQuery.addValue(attr.getKey(), ":" + attr.getKey(), Map.of(attr.getKey(), attr.getValue()));
             }
-            insertQuery.addValue(pk, ":" + pk, new Param(pk, id));
+            insertQuery.addValue(pk, ":" + pk, Map.of(pk, id));
             this.named.update(insertQuery.toSQL(), insertQuery.toParam());
             return null;
         } else if (install.getLevel() == LEVEL_DRAFT) {
@@ -104,24 +104,24 @@ public class Jdbc {
             insertQuery.addValue("`table` = :table", table);
             insertQuery.addValue("action = :action", "REVIEW");
             insertQuery.addValue("op = :op", "INSERT");
-            insertQuery.addValue("draft_yes", ":draft_yes", new Param("draft_yes", 0));
-            insertQuery.addValue("draft_no", ":draft_no", new Param("draft_no", 0));
-            insertQuery.addValue("review_yes", ":review_yes", new Param("review_yes", 0));
-            insertQuery.addValue("review_no", ":review_no", new Param("review_no", 0));
-            insertQuery.addValue("dt_when", ":dt_when", new Param("dt_when", new Date()));
+            insertQuery.addValue("draft_yes", ":draft_yes", Map.of("draft_yes", 0));
+            insertQuery.addValue("draft_no", ":draft_no", Map.of("draft_no", 0));
+            insertQuery.addValue("review_yes", ":review_yes", Map.of("review_yes", 0));
+            insertQuery.addValue("review_no", ":review_no", Map.of("review_no", 0));
+            insertQuery.addValue("dt_when", ":dt_when", Map.of("dt_when", new Date()));
             this.named.update(insertQuery.toSQL(), insertQuery.toParam());
 
             insertQuery = new InsertQuery(draftTable);
             for (Map.Entry<String, Object> attr : values.entrySet()) {
-                insertQuery.addValue(AFTER + "_" + attr.getKey(), ":" + AFTER + "_" + attr.getKey(), new Param(AFTER + "_" + attr.getKey(), attr.getValue()));
+                insertQuery.addValue(AFTER + "_" + attr.getKey(), ":" + AFTER + "_" + attr.getKey(), Map.of(AFTER + "_" + attr.getKey(), attr.getValue()));
             }
-            insertQuery.addValue(this.userPk, ":" + this.userPk, new Param(this.userPk, systems.get(this.userPk)));
-            insertQuery.addValue("dt_when", ":dt_when", new Param("dt_when", new Date()));
-            insertQuery.addValue("yes", ":yes", new Param("yes", install.getDraftYes()));
-            insertQuery.addValue("no", ":no", new Param("no", install.getDraftNo()));
-            insertQuery.addValue("op", ":op", new Param("op", "INSERT"));
-            insertQuery.addValue(pk, ":" + pk, new Param(pk, id));
-            insertQuery.addValue(draftPk, ":" + draftPk, new Param(draftPk, taskId));
+            insertQuery.addValue(this.userPk, ":" + this.userPk, Map.of(this.userPk, systems.get(this.userPk)));
+            insertQuery.addValue("dt_when", ":dt_when", Map.of("dt_when", new Date()));
+            insertQuery.addValue("yes", ":yes", Map.of("yes", install.getDraftYes()));
+            insertQuery.addValue("no", ":no", Map.of("no", install.getDraftNo()));
+            insertQuery.addValue("op", ":op", Map.of("op", "INSERT"));
+            insertQuery.addValue(pk, ":" + pk, Map.of(pk, id));
+            insertQuery.addValue(draftPk, ":" + draftPk, Map.of(draftPk, taskId));
 //            insertQuery.addValue(SYSTEM_TRANSACTION_ID + " = :" + SYSTEM_TRANSACTION_ID, systems.get(SYSTEM_TRANSACTION_ID));
             this.named.update(insertQuery.toSQL(), insertQuery.toParam());
             return taskId;
@@ -135,28 +135,28 @@ public class Jdbc {
 
             String taskId = this.jdbcTemplate.queryForObject("SELECT uuid() FROM DUAL", String.class);
             InsertQuery insertQuery = new InsertQuery(Jdbc.TASK);
-            insertQuery.addValue("task_id", ":task_id", new Param("task_id", taskId));
-            insertQuery.addValue("`table`", ":table", new Param("table", table));
-            insertQuery.addValue("action", ":action", new Param("action", "APPROVE"));
-            insertQuery.addValue("op", ":op", new Param("op", "INSERT"));
-            insertQuery.addValue("draft_yes", ":draft_yes", new Param("draft_yes", 0));
-            insertQuery.addValue("draft_no", ":draft_no", new Param("draft_no", 0));
-            insertQuery.addValue("review_yes", ":review_yes", new Param("review_yes", 0));
-            insertQuery.addValue("review_no", ":review_no", new Param("review_no", 0));
-            insertQuery.addValue("dt_when", ":dt_when", new Param("dt_when", new Date()));
+            insertQuery.addValue("task_id", ":task_id", Map.of("task_id", taskId));
+            insertQuery.addValue("`table`", ":table", Map.of("table", table));
+            insertQuery.addValue("action", ":action", Map.of("action", "APPROVE"));
+            insertQuery.addValue("op", ":op", Map.of("op", "INSERT"));
+            insertQuery.addValue("draft_yes", ":draft_yes", Map.of("draft_yes", 0));
+            insertQuery.addValue("draft_no", ":draft_no", Map.of("draft_no", 0));
+            insertQuery.addValue("review_yes", ":review_yes", Map.of("review_yes", 0));
+            insertQuery.addValue("review_no", ":review_no", Map.of("review_no", 0));
+            insertQuery.addValue("dt_when", ":dt_when", Map.of("dt_when", new Date()));
             this.named.update(insertQuery.toSQL(), insertQuery.toParam());
 
             insertQuery = new InsertQuery(reviewTable);
             for (Map.Entry<String, Object> attr : values.entrySet()) {
-                insertQuery.addValue(AFTER + "_" + attr.getKey(), ":" + AFTER + "_" + attr.getKey(), new Param(AFTER + "_" + attr.getKey(), attr.getValue()));
+                insertQuery.addValue(AFTER + "_" + attr.getKey(), ":" + AFTER + "_" + attr.getKey(), Map.of(AFTER + "_" + attr.getKey(), attr.getValue()));
             }
-            insertQuery.addValue(this.userPk, ":" + this.userPk, new Param(this.userPk, systems.get(this.userPk)));
-            insertQuery.addValue("dt_when", ":dt_when", new Param("dt_when", new Date()));
-            insertQuery.addValue("yes", ":yes", new Param("yes", install.getReviewYes()));
-            insertQuery.addValue("no", ":no", new Param("no", install.getReviewNo()));
-            insertQuery.addValue("op", ":op", new Param("op", "INSERT"));
-            insertQuery.addValue(pk, ":" + pk, new Param(pk, id));
-            insertQuery.addValue(reviewPk, ":" + reviewPk, new Param(reviewPk, taskId));
+            insertQuery.addValue(this.userPk, ":" + this.userPk, Map.of(this.userPk, systems.get(this.userPk)));
+            insertQuery.addValue("dt_when", ":dt_when", Map.of("dt_when", new Date()));
+            insertQuery.addValue("yes", ":yes", Map.of("yes", install.getReviewYes()));
+            insertQuery.addValue("no", ":no", Map.of("no", install.getReviewNo()));
+            insertQuery.addValue("op", ":op", Map.of("op", "INSERT"));
+            insertQuery.addValue(pk, ":" + pk, Map.of(pk, id));
+            insertQuery.addValue(reviewPk, ":" + reviewPk, Map.of(reviewPk, taskId));
             // insertQuery.addValue(SYSTEM_TRANSACTION_ID + " = :" + SYSTEM_TRANSACTION_ID, systems.get(SYSTEM_TRANSACTION_ID));
             this.named.update(insertQuery.toSQL(), insertQuery.toParam());
             return taskId;
@@ -171,7 +171,7 @@ public class Jdbc {
 
     public String delete(String table, Map<String, Object> wheres, Map<String, Object> systems) throws SQLException {
         SelectQuery selectQuery = new MySqlSelectQuery(INSTALL);
-        selectQuery.addWhere("`table` = :table", new Param("table", table));
+        selectQuery.addWhere("`table` = :table", Map.of("table", table));
         Install install = this.named.queryForObject(selectQuery.toSQL(), selectQuery.toParam(), Install.class);
         if (install == null) {
             throw new SQLException(table + " is not configured");
@@ -234,7 +234,7 @@ public class Jdbc {
             }
             DeleteQuery deleteQuery = new DeleteQuery(table);
             for (Map.Entry<String, Object> attr : wheres.entrySet()) {
-                deleteQuery.addWhere(attr.getKey() + " = :" + attr.getKey(), new Param(attr.getKey(), attr.getValue()));
+                deleteQuery.addWhere(attr.getKey() + " = :" + attr.getKey(), Map.of(attr.getKey(), attr.getValue()));
             }
             this.named.update(deleteQuery.toSQL(), deleteQuery.toParam());
             return null;
@@ -248,15 +248,15 @@ public class Jdbc {
 
             String taskId = this.jdbcTemplate.queryForObject("SELECT uuid() FROM DUAL", String.class);
             InsertQuery insertQuery = new InsertQuery(Jdbc.TASK);
-            insertQuery.addValue("task_id", ":task_id", new Param("task_id", taskId));
-            insertQuery.addValue("`table`", ":table", new Param("table", table));
-            insertQuery.addValue("action", ":action", new Param("action", "REVIEW"));
-            insertQuery.addValue("op", ":op", new Param("op", "DELETE"));
-            insertQuery.addValue("draft_yes", ":draft_yes", new Param("draft_yes", 0));
-            insertQuery.addValue("draft_no", ":draft_no", new Param("draft_no", 0));
-            insertQuery.addValue("review_yes", ":review_yes", new Param("review_yes", 0));
-            insertQuery.addValue("review_no", ":review_no", new Param("review_no", 0));
-            insertQuery.addValue("dt_when", ":dt_when", new Param("dt_when", new Date()));
+            insertQuery.addValue("task_id", ":task_id", Map.of("task_id", taskId));
+            insertQuery.addValue("`table`", ":table", Map.of("table", table));
+            insertQuery.addValue("action", ":action", Map.of("action", "REVIEW"));
+            insertQuery.addValue("op", ":op", Map.of("op", "DELETE"));
+            insertQuery.addValue("draft_yes", ":draft_yes", Map.of("draft_yes", 0));
+            insertQuery.addValue("draft_no", ":draft_no", Map.of("draft_no", 0));
+            insertQuery.addValue("review_yes", ":review_yes", Map.of("review_yes", 0));
+            insertQuery.addValue("review_no", ":review_no", Map.of("review_no", 0));
+            insertQuery.addValue("dt_when", ":dt_when", Map.of("dt_when", new Date()));
             this.named.update(insertQuery.toSQL(), insertQuery.toParam());
 
             List<String> where = new ArrayList<>();
@@ -317,15 +317,15 @@ public class Jdbc {
 
             String taskId = this.jdbcTemplate.queryForObject("SELECT uuid() FROM DUAL", String.class);
             InsertQuery insertQuery = new InsertQuery(Jdbc.TASK);
-            insertQuery.addValue("task_id", ":task_id", new Param("task_id", taskId));
-            insertQuery.addValue("`table`", ":table", new Param("table", table));
-            insertQuery.addValue("action", ":action", new Param("action", "APPROVE"));
-            insertQuery.addValue("op", ":op", new Param("op", "DELETE"));
-            insertQuery.addValue("draft_yes", ":draft_yes", new Param("draft_yes", 0));
-            insertQuery.addValue("draft_no", ":draft_no", new Param("draft_no", 0));
-            insertQuery.addValue("review_yes", ":review_yes", new Param("review_yes", 0));
-            insertQuery.addValue("review_no", ":review_no", new Param("review_no", 0));
-            insertQuery.addValue("dt_when", ":dt_when", new Param("dt_when", new Date()));
+            insertQuery.addValue("task_id", ":task_id", Map.of("task_id", taskId));
+            insertQuery.addValue("`table`", ":table", Map.of("table", table));
+            insertQuery.addValue("action", ":action", Map.of("action", "APPROVE"));
+            insertQuery.addValue("op", ":op", Map.of("op", "DELETE"));
+            insertQuery.addValue("draft_yes", ":draft_yes", Map.of("draft_yes", 0));
+            insertQuery.addValue("draft_no", ":draft_no", Map.of("draft_no", 0));
+            insertQuery.addValue("review_yes", ":review_yes", Map.of("review_yes", 0));
+            insertQuery.addValue("review_no", ":review_no", Map.of("review_no", 0));
+            insertQuery.addValue("dt_when", ":dt_when", Map.of("dt_when", new Date()));
             this.named.update(insertQuery.toSQL(), insertQuery.toParam());
 
             List<String> where = new ArrayList<>();
@@ -386,7 +386,7 @@ public class Jdbc {
 
     public String update(String table, Map<String, Object> values, Map<String, Object> wheres, Map<String, Object> systems) throws SQLException {
         SelectQuery selectQuery = new MySqlSelectQuery(INSTALL);
-        selectQuery.addWhere("`table` = :table", new Param("table", table));
+        selectQuery.addWhere("`table` = :table", Map.of("table", table));
         Install install = this.named.queryForObject(selectQuery.toSQL(), selectQuery.toParam(), Install.class);
         if (install == null) {
             throw new SQLException(table + " is not configured");
@@ -466,10 +466,10 @@ public class Jdbc {
             }
             UpdateQuery updateQuery = new UpdateQuery(table);
             for (Map.Entry<String, Object> attr : values.entrySet()) {
-                updateQuery.addSet(attr.getKey() + " = :" + attr.getKey(), new Param(attr.getKey(), attr.getValue()));
+                updateQuery.addSet(attr.getKey() + " = :" + attr.getKey(), Map.of(attr.getKey(), attr.getValue()));
             }
             for (Map.Entry<String, Object> attr : wheres.entrySet()) {
-                updateQuery.addSet(attr.getKey() + " = :" + attr.getKey(), new Param(attr.getKey(), attr.getValue()));
+                updateQuery.addSet(attr.getKey() + " = :" + attr.getKey(), Map.of(attr.getKey(), attr.getValue()));
             }
             this.named.update(updateQuery.toSQL(), updateQuery.toParam());
 
@@ -484,15 +484,15 @@ public class Jdbc {
 
             String taskId = this.jdbcTemplate.queryForObject("SELECT uuid() FROM DUAL", String.class);
             InsertQuery insertQuery = new InsertQuery(Jdbc.TASK);
-            insertQuery.addValue("task_id", ":task_id", new Param("task_id", taskId));
-            insertQuery.addValue("`table`", ":table", new Param("table", table));
-            insertQuery.addValue("action", ":action", new Param("action", "REVIEW"));
-            insertQuery.addValue("op", ":op", new Param("op", "UPDATE"));
-            insertQuery.addValue("draft_yes", ":draft_yes", new Param("draft_yes", 0));
-            insertQuery.addValue("draft_no", ":draft_no", new Param("draft_no", 0));
-            insertQuery.addValue("review_yes", ":review_yes", new Param("review_yes", 0));
-            insertQuery.addValue("review_no", ":review_no", new Param("review_no", 0));
-            insertQuery.addValue("dt_when", ":dt_when", new Param("dt_when", new Date()));
+            insertQuery.addValue("task_id", ":task_id", Map.of("task_id", taskId));
+            insertQuery.addValue("`table`", ":table", Map.of("table", table));
+            insertQuery.addValue("action", ":action", Map.of("action", "REVIEW"));
+            insertQuery.addValue("op", ":op", Map.of("op", "UPDATE"));
+            insertQuery.addValue("draft_yes", ":draft_yes", Map.of("draft_yes", 0));
+            insertQuery.addValue("draft_no", ":draft_no", Map.of("draft_no", 0));
+            insertQuery.addValue("review_yes", ":review_yes", Map.of("review_yes", 0));
+            insertQuery.addValue("review_no", ":review_no", Map.of("review_no", 0));
+            insertQuery.addValue("dt_when", ":dt_when", Map.of("dt_when", new Date()));
             this.named.update(insertQuery.toSQL(), insertQuery.toParam());
 
             List<String> where = new ArrayList<>();
@@ -566,15 +566,15 @@ public class Jdbc {
 
             String taskId = this.jdbcTemplate.queryForObject("SELECT uuid() FROM DUAL", String.class);
             InsertQuery insertQuery = new InsertQuery(Jdbc.TASK);
-            insertQuery.addValue("task_id", ":task_id", new Param("task_id", taskId));
-            insertQuery.addValue("`table`", ":table", new Param("table", table));
-            insertQuery.addValue("action", ":action", new Param("action", "APPROVE"));
-            insertQuery.addValue("op", ":op", new Param("op", "UPDATE"));
-            insertQuery.addValue("draft_yes", ":draft_yes", new Param("draft_yes", 0));
-            insertQuery.addValue("draft_no", ":draft_no", new Param("draft_no", 0));
-            insertQuery.addValue("review_yes", ":review_yes", new Param("review_yes", 0));
-            insertQuery.addValue("review_no", ":review_no", new Param("review_no", 0));
-            insertQuery.addValue("dt_when", ":dt_when", new Param("dt_when", new Date()));
+            insertQuery.addValue("task_id", ":task_id", Map.of("task_id", taskId));
+            insertQuery.addValue("`table`", ":table", Map.of("table", table));
+            insertQuery.addValue("action", ":action", Map.of("action", "APPROVE"));
+            insertQuery.addValue("op", ":op", Map.of("op", "UPDATE"));
+            insertQuery.addValue("draft_yes", ":draft_yes", Map.of("draft_yes", 0));
+            insertQuery.addValue("draft_no", ":draft_no", Map.of("draft_no", 0));
+            insertQuery.addValue("review_yes", ":review_yes", Map.of("review_yes", 0));
+            insertQuery.addValue("review_no", ":review_no", Map.of("review_no", 0));
+            insertQuery.addValue("dt_when", ":dt_when", Map.of("dt_when", new Date()));
             this.named.update(insertQuery.toSQL(), insertQuery.toParam());
 
             List<String> where = new ArrayList<>();
@@ -645,13 +645,13 @@ public class Jdbc {
 
     public void draftReject(String taskId, String reason, Map<String, Object> systems) throws SQLException {
         SelectQuery selectQuery = new MySqlSelectQuery(TASK);
-        selectQuery.addWhere("task_id = :task_id", new Param("task_id", taskId));
+        selectQuery.addWhere("task_id = :task_id", Map.of("task_id", taskId));
         Task task = this.named.queryForObject(selectQuery.toSQL(), selectQuery.toParam(), Task.class);
         if (task == null) {
             throw new SQLException("task " + taskId + " is not found");
         }
         selectQuery = new MySqlSelectQuery(INSTALL);
-        selectQuery.addWhere("`table` = :table", new Param("table", task.getTable()));
+        selectQuery.addWhere("`table` = :table", Map.of("table", task.getTable()));
         Install install = this.named.queryForObject(selectQuery.toSQL(), selectQuery.toParam(), Install.class);
 
         if (systems.get(this.userPk) == null || "".equals(systems.get(this.userPk))) {
@@ -663,7 +663,7 @@ public class Jdbc {
         String draftSummaryTable = draftTable + "_" + SUMMARY_TABLE;
         String draftSummaryPk = draftSummaryTable + "_id";
         selectQuery = new MySqlSelectQuery(draftTable);
-        selectQuery.addWhere(draftPk + " = :" + draftPk, new Param(draftPk, task.getTaskId()));
+        selectQuery.addWhere(draftPk + " = :" + draftPk, Map.of(draftPk, task.getTaskId()));
         Map<String, Object> record = null;
         try {
             record = this.named.queryForMap(selectQuery.toSQL(), selectQuery.toParam());
@@ -676,21 +676,21 @@ public class Jdbc {
 
         InsertQuery insertQuery = new InsertQuery(draftSummaryTable);
         insertQuery.addValue(draftSummaryPk, "uuid()");
-        insertQuery.addValue(draftPk, ":" + draftPk, new Param(draftPk, task.getTaskId()));
-        insertQuery.addValue(this.userPk, ":" + this.userPk, new Param(this.userPk, systems.get(this.userPk)));
-        insertQuery.addValue("reason", ":reason", new Param("reason", reason));
-        insertQuery.addValue("action", ":action", new Param("action", "NO"));
+        insertQuery.addValue(draftPk, ":" + draftPk, Map.of(draftPk, task.getTaskId()));
+        insertQuery.addValue(this.userPk, ":" + this.userPk, Map.of(this.userPk, systems.get(this.userPk)));
+        insertQuery.addValue("reason", ":reason", Map.of("reason", reason));
+        insertQuery.addValue("action", ":action", Map.of("action", "NO"));
         this.named.update(insertQuery.toSQL(), insertQuery.toParam());
 
         selectQuery = new MySqlSelectQuery(draftSummaryTable);
         selectQuery.addField("COUNT(*)");
-        selectQuery.addWhere("action = :action", new Param("action", "NO"));
-        selectQuery.addWhere(draftPk + " = :" + draftPk, new Param(draftPk, task.getTaskId()));
+        selectQuery.addWhere("action = :action", Map.of("action", "NO"));
+        selectQuery.addWhere(draftPk + " = :" + draftPk, Map.of(draftPk, task.getTaskId()));
         Integer runDraftNo = this.named.queryForObject(selectQuery.toSQL(), selectQuery.toParam(), int.class);
 
         UpdateQuery updateQuery = new UpdateQuery(TASK);
-        updateQuery.addSet("draft_no = :draft_no", new Param("draft_no", runDraftNo));
-        updateQuery.addWhere("task_id = :task_id", new Param("task_id", taskId));
+        updateQuery.addSet("draft_no = :draft_no", Map.of("draft_no", runDraftNo));
+        updateQuery.addWhere("task_id = :task_id", Map.of("task_id", taskId));
         this.named.update(updateQuery.toSQL(), updateQuery.toParam());
 
         if (runDraftNo != null && runDraftNo >= draftNo) {
@@ -700,19 +700,19 @@ public class Jdbc {
 
     private void taskClean(String table, String pk, String summaryTable, String id) {
         DeleteQuery deleteQuery = new DeleteQuery(table);
-        deleteQuery.addWhere(pk + " = :" + pk, new Param(pk, id));
+        deleteQuery.addWhere(pk + " = :" + pk, Map.of(pk, id));
         this.named.update(deleteQuery.toSQL(), deleteQuery.toParam());
         deleteQuery = new DeleteQuery(summaryTable);
-        deleteQuery.addWhere(pk + " = :" + pk, new Param(pk, id));
+        deleteQuery.addWhere(pk + " = :" + pk, Map.of(pk, id));
         this.named.update(deleteQuery.toSQL(), deleteQuery.toParam());
         deleteQuery = new DeleteQuery(TASK);
-        deleteQuery.addWhere("task_id = :task_id", new Param("task_id", id));
+        deleteQuery.addWhere("task_id = :task_id", Map.of("task_id", id));
         this.named.update(deleteQuery.toSQL(), deleteQuery.toParam());
     }
 
     public void draftApprove(String taskId, Map<String, Object> systems) throws SQLException {
         SelectQuery selectQuery = new MySqlSelectQuery(TASK);
-        selectQuery.addWhere("task_id = :task_id", new Param("task_id", taskId));
+        selectQuery.addWhere("task_id = :task_id", Map.of("task_id", taskId));
         Task task = this.named.queryForObject(selectQuery.toSQL(), selectQuery.toParam(), Task.class);
         if (task == null) {
             throw new SQLException("task " + taskId + " is not found");
@@ -729,7 +729,7 @@ public class Jdbc {
         String draftSummaryTable = draftTable + "_" + SUMMARY_TABLE;
         String draftSummaryPk = draftSummaryTable + "_id";
         selectQuery = new MySqlSelectQuery(draftTable);
-        selectQuery.addWhere(draftPk + " = :" + draftPk, new Param(draftPk, task.getTaskId()));
+        selectQuery.addWhere(draftPk + " = :" + draftPk, Map.of(draftPk, task.getTaskId()));
         Map<String, Object> record = null;
         try {
             record = this.named.queryForMap(selectQuery.toSQL(), selectQuery.toParam());
@@ -742,20 +742,20 @@ public class Jdbc {
 
         InsertQuery insertQuery = new InsertQuery(draftSummaryTable);
         insertQuery.addValue(draftSummaryPk, "uuid()");
-        insertQuery.addValue(draftPk, ":" + draftPk, new Param(draftPk, task.getTaskId()));
-        insertQuery.addValue(this.userPk, ":" + this.userPk, new Param(this.userPk, systems.get(this.userPk)));
-        insertQuery.addValue("action", ":action", new Param("action", "YES"));
+        insertQuery.addValue(draftPk, ":" + draftPk, Map.of(draftPk, task.getTaskId()));
+        insertQuery.addValue(this.userPk, ":" + this.userPk, Map.of(this.userPk, systems.get(this.userPk)));
+        insertQuery.addValue("action", ":action", Map.of("action", "YES"));
         this.named.update(insertQuery.toSQL(), insertQuery.toParam());
 
         selectQuery = new MySqlSelectQuery(draftSummaryTable);
         selectQuery.addField("COUNT(*)");
-        selectQuery.addWhere("action = :action", new Param("action", "YES"));
-        selectQuery.addWhere(draftPk + " = :" + draftPk, new Param(draftPk, task.getTaskId()));
+        selectQuery.addWhere("action = :action", Map.of("action", "YES"));
+        selectQuery.addWhere(draftPk + " = :" + draftPk, Map.of(draftPk, task.getTaskId()));
         Integer runDraftYes = this.named.queryForObject(selectQuery.toSQL(), selectQuery.toParam(), int.class);
 
         UpdateQuery updateQuery = new UpdateQuery(TASK);
-        updateQuery.addSet("draft_yes = :draft_yes", new Param("draft_yes", runDraftYes));
-        updateQuery.addWhere("task_id = :task_id", new Param("task_id", taskId));
+        updateQuery.addSet("draft_yes = :draft_yes", Map.of("draft_yes", runDraftYes));
+        updateQuery.addWhere("task_id = :task_id", Map.of("task_id", taskId));
         this.named.update(updateQuery.toSQL(), updateQuery.toParam());
 
         if (runDraftYes != null && runDraftYes >= draftYes) {
@@ -773,15 +773,15 @@ public class Jdbc {
             this.named.update(query, params);
 
             updateQuery = new UpdateQuery(TASK);
-            updateQuery.addSet("action = :action", new Param("action", "APPROVE"));
-            updateQuery.addWhere("task_id = :task_id", new Param("task_id", taskId));
+            updateQuery.addSet("action = :action", Map.of("action", "APPROVE"));
+            updateQuery.addWhere("task_id = :task_id", Map.of("task_id", taskId));
             this.named.update(updateQuery.toSQL(), updateQuery.toParam());
         }
     }
 
     public void reviewReject(String taskId, String reason, Map<String, Object> systems) throws SQLException {
         SelectQuery selectQuery = new MySqlSelectQuery(TASK);
-        selectQuery.addWhere("task_id = :task_id", new Param("task_id", taskId));
+        selectQuery.addWhere("task_id = :task_id", Map.of("task_id", taskId));
         Task task = this.named.queryForObject(selectQuery.toSQL(), selectQuery.toParam(), Task.class);
         if (task == null) {
             throw new SQLException("task " + taskId + " is not found");
@@ -800,7 +800,7 @@ public class Jdbc {
         String reviewSummaryTable = reviewTable + "_" + SUMMARY_TABLE;
         String reviewSummaryPk = reviewSummaryTable + "_id";
         selectQuery = new MySqlSelectQuery(reviewTable);
-        selectQuery.addWhere(reviewPk + " = :" + reviewPk, new Param(reviewPk, task.getTaskId()));
+        selectQuery.addWhere(reviewPk + " = :" + reviewPk, Map.of(reviewPk, task.getTaskId()));
         Map<String, Object> record = null;
         try {
             record = this.named.queryForMap(selectQuery.toSQL(), selectQuery.toParam());
@@ -813,21 +813,21 @@ public class Jdbc {
 
         InsertQuery insertQuery = new InsertQuery(reviewSummaryTable);
         insertQuery.addValue(reviewSummaryPk, "uuid()");
-        insertQuery.addValue(reviewPk, ":" + reviewPk, new Param(reviewPk, task.getTaskId()));
-        insertQuery.addValue(this.userPk, ":" + this.userPk, new Param(this.userPk, systems.get(this.userPk)));
-        insertQuery.addValue("reason", ":reason", new Param("reason", reason));
-        insertQuery.addValue("action", ":action", new Param("action", "NO"));
+        insertQuery.addValue(reviewPk, ":" + reviewPk, Map.of(reviewPk, task.getTaskId()));
+        insertQuery.addValue(this.userPk, ":" + this.userPk, Map.of(this.userPk, systems.get(this.userPk)));
+        insertQuery.addValue("reason", ":reason", Map.of("reason", reason));
+        insertQuery.addValue("action", ":action", Map.of("action", "NO"));
         this.named.update(insertQuery.toSQL(), insertQuery.toParam());
 
         selectQuery = new MySqlSelectQuery(reviewSummaryTable);
         selectQuery.addField("COUNT(*)");
-        selectQuery.addWhere("action = :action", new Param("action", "NO"));
-        selectQuery.addWhere(reviewPk + " = :" + reviewPk, new Param(reviewPk, task.getTaskId()));
+        selectQuery.addWhere("action = :action", Map.of("action", "NO"));
+        selectQuery.addWhere(reviewPk + " = :" + reviewPk, Map.of(reviewPk, task.getTaskId()));
         Integer runReviewNo = this.named.queryForObject(selectQuery.toSQL(), selectQuery.toParam(), int.class);
 
         UpdateQuery updateQuery = new UpdateQuery(TASK);
-        updateQuery.addSet("review_no = :review_no", new Param("review_no", runReviewNo));
-        updateQuery.addWhere("task_id = :task_id", new Param("task_id", taskId));
+        updateQuery.addSet("review_no = :review_no", Map.of("review_no", runReviewNo));
+        updateQuery.addWhere("task_id = :task_id", Map.of("task_id", taskId));
         this.named.update(updateQuery.toSQL(), updateQuery.toParam());
 
         if (runReviewNo != null && runReviewNo >= reviewNo) {
@@ -835,24 +835,24 @@ public class Jdbc {
             taskClean(reviewTable, reviewPk, reviewSummaryTable, task.getTaskId());
 
             DeleteQuery deleteQuery = new DeleteQuery(draftTable);
-            deleteQuery.addWhere(draftPk + " = :" + draftPk, new Param(draftPk, task.getTaskId()));
+            deleteQuery.addWhere(draftPk + " = :" + draftPk, Map.of(draftPk, task.getTaskId()));
             this.named.update(deleteQuery.toSQL(), deleteQuery.toParam());
             deleteQuery = new DeleteQuery(draftSummaryTable);
-            deleteQuery.addWhere(draftPk + " = :" + draftPk, new Param(draftPk, task.getTaskId()));
+            deleteQuery.addWhere(draftPk + " = :" + draftPk, Map.of(draftPk, task.getTaskId()));
             this.named.update(deleteQuery.toSQL(), deleteQuery.toParam());
         }
     }
 
     public void reviewApprove(String taskId, Map<String, Object> systems) throws SQLException {
         SelectQuery selectQuery = new MySqlSelectQuery(TASK);
-        selectQuery.addWhere("task_id = :task_id", new Param("task_id", taskId));
+        selectQuery.addWhere("task_id = :task_id", Map.of("task_id", taskId));
         Task task = this.named.queryForObject(selectQuery.toSQL(), selectQuery.toParam(), Task.class);
         if (task == null) {
             throw new SQLException("task " + taskId + " is not found");
         }
 
         selectQuery = new MySqlSelectQuery(INSTALL);
-        selectQuery.addWhere("`table` = :table", new Param("table", task.getTable()));
+        selectQuery.addWhere("`table` = :table", Map.of("table", task.getTable()));
         Install install = this.named.queryForObject(selectQuery.toSQL(), selectQuery.toParam(), Install.class);
 
         if (systems.get(this.userPk) == null || "".equals(systems.get(this.userPk))) {
@@ -873,7 +873,7 @@ public class Jdbc {
         String reviewSummaryTable = reviewTable + "_" + SUMMARY_TABLE;
         String reviewSummaryPk = reviewSummaryTable + "_id";
         selectQuery = new MySqlSelectQuery(reviewTable);
-        selectQuery.addWhere(reviewPk + " = :" + reviewPk, new Param(reviewPk, task.getTaskId()));
+        selectQuery.addWhere(reviewPk + " = :" + reviewPk, Map.of(reviewPk, task.getTaskId()));
         Map<String, Object> record = null;
         try {
             record = this.named.queryForMap(selectQuery.toSQL(), selectQuery.toParam());
@@ -887,20 +887,20 @@ public class Jdbc {
 
         InsertQuery insertQuery = new InsertQuery(reviewSummaryTable);
         insertQuery.addValue(reviewSummaryPk, "uuid()");
-        insertQuery.addValue(reviewPk, ":" + reviewPk, new Param(reviewPk, task.getTaskId()));
-        insertQuery.addValue(this.userPk, ":" + this.userPk, new Param(this.userPk, systems.get(this.userPk)));
-        insertQuery.addValue("action", ":action", new Param("action", "YES"));
+        insertQuery.addValue(reviewPk, ":" + reviewPk, Map.of(reviewPk, task.getTaskId()));
+        insertQuery.addValue(this.userPk, ":" + this.userPk, Map.of(this.userPk, systems.get(this.userPk)));
+        insertQuery.addValue("action", ":action", Map.of("action", "YES"));
         this.named.update(insertQuery.toSQL(), insertQuery.toParam());
 
         selectQuery = new MySqlSelectQuery(reviewSummaryTable);
         selectQuery.addField("COUNT(*)");
-        selectQuery.addWhere("action = :action", new Param("action", "YES"));
-        selectQuery.addWhere(reviewPk + " = :" + reviewPk, new Param(reviewPk, task.getTaskId()));
+        selectQuery.addWhere("action = :action", Map.of("action", "YES"));
+        selectQuery.addWhere(reviewPk + " = :" + reviewPk, Map.of(reviewPk, task.getTaskId()));
         Integer runReviewYes = this.named.queryForObject(selectQuery.toSQL(), selectQuery.toParam(), int.class);
 
         UpdateQuery updateQuery = new UpdateQuery(TASK);
-        updateQuery.addSet("review_yes = :review_yes", new Param("review_yes", runReviewYes));
-        updateQuery.addWhere("task_id = :task_id", new Param("task_id", taskId));
+        updateQuery.addSet("review_yes = :review_yes", Map.of("review_yes", runReviewYes));
+        updateQuery.addWhere("task_id = :task_id", Map.of("task_id", taskId));
         this.named.update(updateQuery.toSQL(), updateQuery.toParam());
 
         if (runReviewYes != null && runReviewYes >= reviewYes) {
@@ -997,39 +997,39 @@ public class Jdbc {
                 List<String> intoFields = Repository.lookupField(this.jdbcTemplate, table);
 
                 selectQuery = new MySqlSelectQuery(reviewTable);
-                selectQuery.addWhere(reviewPk + " = :" + reviewPk, new Param(reviewPk, task.getTaskId()));
+                selectQuery.addWhere(reviewPk + " = :" + reviewPk, Map.of(reviewPk, task.getTaskId()));
                 Map<String, Object> from = this.named.queryForMap(selectQuery.toSQL(), selectQuery.toParam());
 
                 updateQuery = new UpdateQuery(table);
-                updateQuery.addWhere(pk + " = :" + pk, new Param(pk, record.get(pk)));
+                updateQuery.addWhere(pk + " = :" + pk, Map.of(pk, record.get(pk)));
                 for (String intoField : intoFields) {
-                    updateQuery.addSet(intoField + " = :" + intoField, new Param(intoField, from.get(AFTER + "_" + intoField)));
+                    updateQuery.addSet(intoField + " = :" + intoField, Map.of(intoField, from.get(AFTER + "_" + intoField)));
                 }
                 this.named.update(updateQuery.toSQL(), updateQuery.toParam());
             } else if ("DELETE".equals(op)) {
                 DeleteQuery deleteQuery = new DeleteQuery(table);
-                deleteQuery.addWhere(pk + " = :" + pk, new Param(pk, record.get(pk)));
+                deleteQuery.addWhere(pk + " = :" + pk, Map.of(pk, record.get(pk)));
                 this.named.update(deleteQuery.toSQL(), deleteQuery.toParam());
             }
 
             DeleteQuery deleteQuery = new DeleteQuery(draftTable);
-            deleteQuery.addWhere(draftPk + " = :" + draftPk, new Param(draftPk, task.getTaskId()));
+            deleteQuery.addWhere(draftPk + " = :" + draftPk, Map.of(draftPk, task.getTaskId()));
             this.named.update(deleteQuery.toSQL(), deleteQuery.toParam());
 
             deleteQuery = new DeleteQuery(draftSummaryTable);
-            deleteQuery.addWhere(draftPk + " = :" + draftPk, new Param(draftPk, task.getTaskId()));
+            deleteQuery.addWhere(draftPk + " = :" + draftPk, Map.of(draftPk, task.getTaskId()));
             this.named.update(deleteQuery.toSQL(), deleteQuery.toParam());
 
             deleteQuery = new DeleteQuery(reviewTable);
-            deleteQuery.addWhere(reviewPk + " = :" + reviewPk, new Param(reviewPk, task.getTaskId()));
+            deleteQuery.addWhere(reviewPk + " = :" + reviewPk, Map.of(reviewPk, task.getTaskId()));
             this.named.update(deleteQuery.toSQL(), deleteQuery.toParam());
 
             deleteQuery = new DeleteQuery(reviewSummaryTable);
-            deleteQuery.addWhere(reviewPk + " = :" + reviewPk, new Param(reviewPk, task.getTaskId()));
+            deleteQuery.addWhere(reviewPk + " = :" + reviewPk, Map.of(reviewPk, task.getTaskId()));
             this.named.update(deleteQuery.toSQL(), deleteQuery.toParam());
 
             deleteQuery = new DeleteQuery(TASK);
-            deleteQuery.addWhere("task_id = :task_id", new Param("task_id", task.getTaskId()));
+            deleteQuery.addWhere("task_id = :task_id", Map.of("task_id", task.getTaskId()));
             this.named.update(deleteQuery.toSQL(), deleteQuery.toParam());
         }
     }

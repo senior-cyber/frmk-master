@@ -1,7 +1,6 @@
 package com.senior.cyber.frmk.common.wicket.markup.html.form.select2;
 
 import com.senior.cyber.frmk.jdbc.query.GenericSelectQuery;
-import com.senior.cyber.frmk.jdbc.query.Param;
 import com.senior.cyber.frmk.jdbc.query.SelectQuery;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -23,6 +22,7 @@ public abstract class AbstractJdbcChoiceProvider implements Serializable {
     private final Map<String, String> join;
 
     private final Map<String, String> where;
+    private final Map<String, Map<String, Object>> whereParam;
     private final String orderBy;
     private boolean disabled = false;
     private String groupBy;
@@ -47,14 +47,17 @@ public abstract class AbstractJdbcChoiceProvider implements Serializable {
         this.queryField = queryField;
         this.join = new HashMap<>();
         this.where = new HashMap<>();
+        this.whereParam = new HashMap<>();
     }
 
-    public void applyWhere(String key, String filter) {
-        this.where.put(key, filter);
+    public void applyWhere(String key, String sql, Map<String, Object> params) {
+        this.where.put(key, sql);
+        this.whereParam.put(key, params);
     }
 
     public void removeWhere(String key) {
         this.where.remove(key);
+        this.whereParam.remove(key);
     }
 
     public void applyJoin(String key, String join) {
@@ -83,7 +86,7 @@ public abstract class AbstractJdbcChoiceProvider implements Serializable {
             selectQuery.addField(this.idField + " AS id");
             selectQuery.addField(this.labelField + " AS text");
         }
-        selectQuery.addWhere(this.idField + " IN (:id)", new Param("id", ids));
+        selectQuery.addWhere(this.idField + " IN (:id)", Map.of("id", ids));
 
         NamedParameterJdbcTemplate named = getNamedParameterJdbcTemplate();
 
@@ -115,15 +118,15 @@ public abstract class AbstractJdbcChoiceProvider implements Serializable {
             selectQuery.addOrderBy(this.orderBy);
         }
         if (this.where != null && !this.where.isEmpty()) {
-            for (String where : this.where.values()) {
-                if (where != null && !where.isEmpty()) {
-                    selectQuery.addWhere(where);
+            for (var where : this.where.entrySet()) {
+                if (where.getValue() != null && !where.getValue().isEmpty()) {
+                    selectQuery.addWhere(where.getValue(), whereParam.get(where.getKey()));
                 }
             }
         }
         term = StringUtils.trimToEmpty(term);
         if (!"".equals(term)) {
-            selectQuery.addWhere("LOWER(" + this.queryField + ") LIKE LOWER(:term)", new Param("term", term + "%"));
+            selectQuery.addWhere("LOWER(" + this.queryField + ") LIKE LOWER(:term)", Map.of("term", term + "%"));
         }
 
         NamedParameterJdbcTemplate named = getNamedParameterJdbcTemplate();

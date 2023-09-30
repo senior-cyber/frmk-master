@@ -2,16 +2,12 @@ package com.senior.cyber.frmk.jdbc.query;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class InsertQuery extends ParamQuery {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8830389077520597417L;
+    private static final long serialVersionUID = 1L;
 
     protected final String tableName;
 
@@ -21,12 +17,15 @@ public class InsertQuery extends ParamQuery {
         this.tableName = tableName;
     }
 
-    public void addValue(String field, String valueExpression, Param... params) {
+    public void addValue(String field, String valueExpression) {
+        this.fields.put(field, valueExpression);
+        this.dirty = true;
+    }
+
+    public void addValue(String field, String valueExpression, Map<String, Object> params) {
         this.fields.put(field, valueExpression);
         if (params != null) {
-            for (Param param : params) {
-                this.param.put(param.getName(), param.getValue());
-            }
+            this.param.putAll(params);
         }
         this.dirty = true;
     }

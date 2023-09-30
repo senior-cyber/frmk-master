@@ -9,10 +9,7 @@ import java.util.Map;
 
 public class DeleteQuery extends WhereQuery {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7027321930702898882L;
+    private static final long serialVersionUID = 1L;
 
     protected final String tableName;
 

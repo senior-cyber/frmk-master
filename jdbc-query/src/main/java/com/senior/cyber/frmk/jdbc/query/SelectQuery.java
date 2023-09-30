@@ -2,13 +2,11 @@ package com.senior.cyber.frmk.jdbc.query;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public abstract class SelectQuery extends WhereQuery {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7467608881443340145L;
+    private static final long serialVersionUID = 1L;
 
     protected final String tableName;
 
@@ -69,16 +67,18 @@ public abstract class SelectQuery extends WhereQuery {
         return this;
     }
 
-    public void addHaving(String criteria, Param... params) {
+    public void addHaving(String criteria) {
         this.having.add(criteria);
-        if (params != null) {
-            for (Param param : params) {
-                this.param.put(param.getName(), param.getValue());
-            }
-        }
         this.dirty = true;
     }
 
+    public void addHaving(String criteria, Map<String, Object> params) {
+        this.having.add(criteria);
+        if (params != null) {
+            this.param.putAll(params);
+        }
+        this.dirty = true;
+    }
 
     public SelectQuery addOrderBy(String orderBy) {
         this.orderBy.add(orderBy);
