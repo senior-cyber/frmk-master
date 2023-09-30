@@ -50,6 +50,10 @@ public abstract class AbstractJdbcChoiceProvider implements Serializable {
         this.whereParam = new HashMap<>();
     }
 
+    public void applyWhere(String key, String sql) {
+        this.where.put(key, sql);
+    }
+
     public void applyWhere(String key, String sql, Map<String, Object> params) {
         this.where.put(key, sql);
         this.whereParam.put(key, params);
@@ -120,7 +124,11 @@ public abstract class AbstractJdbcChoiceProvider implements Serializable {
         if (this.where != null && !this.where.isEmpty()) {
             for (var where : this.where.entrySet()) {
                 if (where.getValue() != null && !where.getValue().isEmpty()) {
-                    selectQuery.addWhere(where.getValue(), whereParam.get(where.getKey()));
+                    if (whereParam.get(where.getKey()) == null) {
+                        selectQuery.addWhere(where.getValue());
+                    } else {
+                        selectQuery.addWhere(where.getValue(), whereParam.get(where.getKey()));
+                    }
                 }
             }
         }

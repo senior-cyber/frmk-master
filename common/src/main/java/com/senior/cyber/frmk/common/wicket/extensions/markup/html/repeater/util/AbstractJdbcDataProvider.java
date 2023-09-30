@@ -84,9 +84,13 @@ public abstract class AbstractJdbcDataProvider extends SortableDataProvider<Tupl
         return where;
     }
 
-    public void applyWhere(String key, String sql, Map<String, Object> param) {
+    public void applyWhere(String key, String sql, Map<String, Object> params) {
         this.userWhere.put(key, sql);
-        this.userWhereParam.put(key, param);
+        this.userWhereParam.put(key, params);
+    }
+
+    public void applyWhere(String key, String sql) {
+        this.userWhere.put(key, sql);
     }
 
     public void removeWhere(String key) {
@@ -94,9 +98,13 @@ public abstract class AbstractJdbcDataProvider extends SortableDataProvider<Tupl
         this.userWhereParam.remove(key);
     }
 
-    public void applyHaving(String key, String sql, Map<String, Object> param) {
+    public void applyHaving(String key, String sql) {
         this.userHaving.put(key, sql);
-        this.userHavingParam.put(key, param);
+    }
+
+    public void applyHaving(String key, String sql, Map<String, Object> params) {
+        this.userHaving.put(key, sql);
+        this.userHavingParam.put(key, params);
     }
 
     public void removeHaving(String key) {
@@ -228,7 +236,9 @@ public abstract class AbstractJdbcDataProvider extends SortableDataProvider<Tupl
         List<String> p = new ArrayList<>(this.userWhere.size());
         for (var i : this.userWhere.entrySet()) {
             p.add(i.getValue());
-            params.putAll(this.userWhereParam.get(i.getKey()));
+            if (this.userWhereParam.get(i.getKey()) != null) {
+                params.putAll(this.userWhereParam.get(i.getKey()));
+            }
         }
         return p;
     }
@@ -237,7 +247,9 @@ public abstract class AbstractJdbcDataProvider extends SortableDataProvider<Tupl
         List<String> p = new ArrayList<>(this.userHaving.size());
         for (var i : this.userHaving.entrySet()) {
             p.add(i.getValue());
-            params.putAll(this.userHavingParam.get(i.getKey()));
+            if (this.userHavingParam.get(i.getKey()) != null) {
+                params.putAll(this.userHavingParam.get(i.getKey()));
+            }
         }
         return p;
     }
