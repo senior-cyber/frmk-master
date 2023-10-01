@@ -17,7 +17,9 @@ public class OracleQueryBuilder extends QueryBuilder {
         segment.add(StringUtils.join(this.select, ", "));
         segment.add("FROM");
         segment.add(this.from);
-        segment.add(StringUtils.join(this.join, " "));
+        if (this.join != null && !this.join.isEmpty()){
+            segment.add(StringUtils.join(this.join, " "));
+        }
         if (!this.where.isEmpty()) {
             segment.add("WHERE");
             segment.add(StringUtils.join(this.where, " AND "));
@@ -48,7 +50,9 @@ public class OracleQueryBuilder extends QueryBuilder {
             segment.add("COUNT(" + id + ")");
             segment.add("FROM");
             segment.add(this.from);
-            segment.add(StringUtils.join(this.join, " "));
+            if (this.join != null && !this.join.isEmpty()){
+                segment.add(StringUtils.join(this.join, " "));
+            }
             if (!this.where.isEmpty()) {
                 segment.add("WHERE");
                 segment.add(StringUtils.join(this.where, " AND "));
@@ -58,7 +62,9 @@ public class OracleQueryBuilder extends QueryBuilder {
             segment.add("COUNT(" + id + ") OVER()");
             segment.add("FROM");
             segment.add(this.from);
-            segment.add(StringUtils.join(this.join, " "));
+            if (this.join != null && !this.join.isEmpty()){
+                segment.add(StringUtils.join(this.join, " "));
+            }
             if (!this.where.isEmpty()) {
                 segment.add("WHERE");
                 segment.add(StringUtils.join(this.where, " AND "));
