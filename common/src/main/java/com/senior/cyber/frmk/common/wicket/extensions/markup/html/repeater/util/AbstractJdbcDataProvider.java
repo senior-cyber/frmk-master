@@ -192,8 +192,13 @@ public abstract class AbstractJdbcDataProvider extends SortableDataProvider<Tupl
         return column;
     }
 
-    public <T extends Serializable> JdbcColumn<T> column(Class<? extends T> fieldType, IModel<String> displayModel, String key, String sql, SerializerFunction<T> serializer, HtmlSerializerFunction<T> htmlSerializer) {
-        var column = column(fieldType, displayModel, key, sql, serializer);
+    public <T extends Serializable> JdbcColumn<T> column(Class<? extends T> fieldType, IModel<String> displayModel, String key, String sql, HtmlSerializerFunction<T> htmlSerializer) {
+        var column = new JdbcColumn<T>(displayModel, key);
+        column.setTypeClass(fieldType);
+        column.setKeyExpression(key);
+        this.column.put(key, column);
+        this.alias.put(key, sql);
+        this.fieldTypes.put(key, fieldType);
         column.setHtmlSerializer(htmlSerializer);
         return column;
     }
