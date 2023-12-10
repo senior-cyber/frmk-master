@@ -269,17 +269,22 @@ public abstract class AbstractJdbcDataProvider extends SortableDataProvider<Tupl
 
         if (this.filterState != null && !this.filterState.isEmpty()) {
             for (Map.Entry<String, String> entry : this.filterState.entrySet()) {
-                FilteredJdbcColumn column = (FilteredJdbcColumn) this.column.get(entry.getKey());
                 if (entry.getValue() != null && !entry.getValue().isEmpty()) {
                     FilterFunction callback = this.callbackFilter.get(entry.getKey());
                     boolean count = orderBy == null;
-                    List<String> sqls = (List<String>) callback.apply(count, this.alias, params, entry.getValue());
-                    for (String sql : sqls) {
-                        if (StringUtils.startsWith(sql, WHERE)) {
-                            where.add(StringUtils.substring(sql, WHERE.length()));
-                        } else if (StringUtils.startsWith(sql, HAVING)) {
-                            having.add(StringUtils.substring(sql, HAVING.length()));
+                    try {
+                        List<String> sqls = (List<String>) callback.apply(count, this.alias, params, entry.getValue());
+                        if (sqls != null) {
+                            for (String sql : sqls) {
+                                if (StringUtils.startsWith(sql, WHERE)) {
+                                    where.add(StringUtils.substring(sql, WHERE.length()));
+                                } else if (StringUtils.startsWith(sql, HAVING)) {
+                                    having.add(StringUtils.substring(sql, HAVING.length()));
+                                }
+                            }
                         }
+                    } catch (NumberFormatException e) {
+                        LOGGER.warn(e.getMessage());
                     }
                 }
             }
