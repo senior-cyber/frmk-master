@@ -31,4 +31,8 @@ public abstract class AbstractWicketFactory implements IWebApplicationFactory {
         return applicationContext;
     }
 
+    public static void setApplicationContext(ApplicationContext context) {
+        applicationContext = context;
+    }
+
 }
