@@ -286,7 +286,7 @@ public class AdminLTEResourceReference extends ResourceReference {
      */
     @Override
     public IResource getResource() {
-        ApplicationContext context = WicketFactory.getApplicationContext();
+        ApplicationContext context = AbstractWicketFactory.getApplicationContext();
         WebUiProperties properties = context.getBean(WebUiProperties.class);
 
         final String name = getName();

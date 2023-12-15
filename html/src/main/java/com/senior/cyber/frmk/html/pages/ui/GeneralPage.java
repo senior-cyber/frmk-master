@@ -4,6 +4,7 @@ import com.senior.cyber.frmk.common.base.AdminLTEResourceReference;
 import com.senior.cyber.frmk.common.base.WebUiProperties;
 import com.senior.cyber.frmk.html.*;
 import com.senior.cyber.frmk.html.factory.WicketFactory;
+import com.senior.cyber.frmk.html.factory.WicketFactory;
 import com.senior.cyber.frmk.html.pages.chart.FlotPage;
 import com.senior.cyber.frmk.html.pages.chart.InlinePage;
 import com.senior.cyber.frmk.html.pages.chart.UPlotPage;

@@ -25,7 +25,7 @@ public class WebUiAutoConfiguration {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WebUiAutoConfiguration.class);
 
-    @ConditionalOnClass(WicketFactory.class)
+    @ConditionalOnClass(AbstractWicketFactory.class)
     @EnableConfigurationProperties({WebUiProperties.class, WebMvcProperties.class})
     static class WebUi {
 

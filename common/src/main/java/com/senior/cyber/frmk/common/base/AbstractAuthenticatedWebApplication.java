@@ -4,36 +4,25 @@ import com.senior.cyber.frmk.common.wicket.resource.JQueryMinJS;
 import org.apache.wicket.Page;
 import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.WicketRuntimeException;
+import org.apache.wicket.authroles.authentication.AuthenticatedWebApplication;
 import org.apache.wicket.core.request.mapper.CryptoMapper;
-import org.apache.wicket.core.request.mapper.MountedMapper;
 import org.apache.wicket.core.util.crypt.KeyInSessionSunJceCryptFactory;
-import org.apache.wicket.protocol.http.IWebApplicationFactory;
-import org.apache.wicket.protocol.http.WicketFilter;
 import org.apache.wicket.request.resource.*;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 import java.util.TreeSet;
 
-public abstract class WicketFactory extends org.apache.wicket.protocol.http.WebApplication
-        implements IWebApplicationFactory, IResourceReferenceFactory {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(WicketFactory.class);
-
-    transient static ApplicationContext applicationContext;
+public abstract class AbstractAuthenticatedWebApplication extends AuthenticatedWebApplication
+        implements IResourceReferenceFactory {
 
     private WebUiProperties webUiProperties;
 
-    public WicketFactory() {
+    protected AbstractAuthenticatedWebApplication(WebUiProperties webUiProperties) {
+        this.webUiProperties = webUiProperties;
     }
 
     @Override
@@ -46,12 +35,12 @@ public abstract class WicketFactory extends org.apache.wicket.protocol.http.WebA
         } else {
             var pages = this.webUiProperties.getPages();
             if (pages != null && !"".equals(pages)) {
-                Reflections reflections = new Reflections(new ConfigurationBuilder()
+                var reflections = new Reflections(new ConfigurationBuilder()
                         .setUrls(ClasspathHelper.forPackage(pages))
                         .setScanners(Scanners.SubTypes, Scanners.TypesAnnotated));
-                Set<Class<?>> clazzes = reflections.getTypesAnnotatedWith(Bookmark.class);
-                Set<String> bookmarks = new TreeSet<>();
-                Map<String, Class<?>> existedPages = new HashMap<>();
+                var clazzes = reflections.getTypesAnnotatedWith(Bookmark.class);
+                var bookmarks = new TreeSet<String>();
+                var existedPages = new HashMap<String, Class<?>>();
                 if (clazzes != null && !clazzes.isEmpty()) {
                     for (Class<?> clazz : clazzes) {
                         Bookmark bookmark = clazz.getAnnotation(Bookmark.class);
@@ -73,34 +62,12 @@ public abstract class WicketFactory extends org.apache.wicket.protocol.http.WebA
     }
 
     @Override
-    public <T extends Page> MountedMapper mountPage(String path, Class<T> pageClass) {
-        return super.mountPage(path, pageClass);
-    }
-
-    @Override
     public RuntimeConfigurationType getConfigurationType() {
-        return getWebUiProperties().getConfigurationType();
+        return this.webUiProperties.getConfigurationType();
     }
 
     protected WebUiProperties getWebUiProperties() {
         return this.webUiProperties;
-    }
-
-    @Override
-    public org.apache.wicket.protocol.http.WebApplication createApplication(WicketFilter filter) {
-        applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(filter.getFilterConfig().getServletContext());
-        this.webUiProperties = getApplicationContext().getBean(WebUiProperties.class);
-        return this;
-    }
-
-    public static ApplicationContext getApplicationContext() {
-        if (WicketFactory.applicationContext == null && AuthenticatedWicketFactory.applicationContext == null) {
-            throw new WicketRuntimeException("NPE");
-        }
-        if (WicketFactory.applicationContext != null) {
-            return WicketFactory.applicationContext;
-        }
-        return AuthenticatedWicketFactory.applicationContext;
     }
 
     @Override
@@ -119,10 +86,6 @@ public abstract class WicketFactory extends org.apache.wicket.protocol.http.WebA
             }
             return result;
         }
-    }
-
-    @Override
-    public void destroy(WicketFilter filter) {
     }
 
 }

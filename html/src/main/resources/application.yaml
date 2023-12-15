@@ -11,5 +11,5 @@ webui:
     path: ${override.webui.servlet.path:/*}
   configuration-type: ${override.webui.configuration-type:DEVELOPMENT}
   csrf: ${override.webui.csrf:false}
-  wicket-factory: com.senior.cyber.frmk.html.factory.WicketFactory
+  wicket-factory: com.senior.cyber.frmk.html.factory.WicketApplication
   admin-lte: /Users/socheatkhauv/github/ColorlibHQ/AdminLTE

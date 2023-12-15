@@ -18,7 +18,6 @@ import com.senior.cyber.frmk.html.pages.mailbox.ComposePage;
 import com.senior.cyber.frmk.html.pages.mailbox.MailboxPage;
 import com.senior.cyber.frmk.html.pages.mailbox.ReadMailPage;
 import com.senior.cyber.frmk.html.pages.search.EnhancedPage;
-import com.senior.cyber.frmk.html.pages.search.SimplePage;
 import com.senior.cyber.frmk.html.pages.tables.DataPage;
 import com.senior.cyber.frmk.html.pages.tables.JSGridPage;
 import com.senior.cyber.frmk.html.pages.ui.*;

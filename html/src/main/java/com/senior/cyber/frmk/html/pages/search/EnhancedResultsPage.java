@@ -18,7 +18,6 @@ import com.senior.cyber.frmk.html.pages.chart.FlotPage;
 import com.senior.cyber.frmk.html.pages.chart.InlinePage;
 import com.senior.cyber.frmk.html.pages.forms.AdvancedPage;
 import com.senior.cyber.frmk.html.pages.forms.EditorsPage;
-import com.senior.cyber.frmk.html.pages.forms.GeneralPage;
 import com.senior.cyber.frmk.html.pages.forms.ValidationPage;
 import com.senior.cyber.frmk.html.pages.mailbox.ComposePage;
 import com.senior.cyber.frmk.html.pages.mailbox.MailboxPage;

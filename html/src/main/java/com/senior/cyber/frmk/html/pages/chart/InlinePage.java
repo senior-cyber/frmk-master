@@ -13,7 +13,6 @@ import com.senior.cyber.frmk.html.pages.KanbanPage;
 import com.senior.cyber.frmk.html.pages.WidgetsPage;
 import com.senior.cyber.frmk.html.pages.forms.AdvancedPage;
 import com.senior.cyber.frmk.html.pages.forms.EditorsPage;
-import com.senior.cyber.frmk.html.pages.forms.GeneralPage;
 import com.senior.cyber.frmk.html.pages.forms.ValidationPage;
 import com.senior.cyber.frmk.html.pages.mailbox.ComposePage;
 import com.senior.cyber.frmk.html.pages.mailbox.MailboxPage;

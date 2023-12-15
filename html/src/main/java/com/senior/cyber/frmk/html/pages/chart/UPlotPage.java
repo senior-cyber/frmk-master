@@ -2,10 +2,9 @@ package com.senior.cyber.frmk.html.pages.chart;
 
 import com.senior.cyber.frmk.common.base.AdminLTEResourceReference;
 import com.senior.cyber.frmk.common.base.WebUiProperties;
-import com.senior.cyber.frmk.common.base.WicketFactory;
 import com.senior.cyber.frmk.html.*;
+import com.senior.cyber.frmk.html.factory.WicketFactory;
 import com.senior.cyber.frmk.html.pages.examples.*;
-import com.senior.cyber.frmk.html.pages.forms.GeneralPage;
 import com.senior.cyber.frmk.html.pages.layout.*;
 import com.senior.cyber.frmk.html.pages.ui.*;
 import com.senior.cyber.frmk.html.pages.CalendarPage;
