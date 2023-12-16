@@ -9,9 +9,12 @@ include(
         ":repository",
         ":admin-lte",
         ":html",
+        ":transport",
         ":x509"
 )
+
 project(":common").projectDir = file("./common")
+project(":transport").projectDir = file("./transport")
 project(":jdbc-query").projectDir = file("./jdbc-query")
 project(":dao-generator").projectDir = file("./dao-generator")
 project(":metamodel").projectDir = file("./metamodel")

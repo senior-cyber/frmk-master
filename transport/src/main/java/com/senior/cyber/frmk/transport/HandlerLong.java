@@ -1,0 +1,181 @@
+package com.senior.cyber.frmk.transport;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class HandlerLong extends Handler {
+
+    public HandlerLong() {
+        super(Transport.TYPE_LONG);
+    }
+
+    public byte[] serialize(Long value) throws IOException {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        try (DataOutputStream stream = new DataOutputStream(bytes)) {
+            stream.writeByte(getDataType());
+            if (value == null) {
+                stream.writeBoolean(false);
+            } else {
+                stream.writeBoolean(true);
+
+                ByteArrayOutputStream dataBytes = new ByteArrayOutputStream();
+                DataOutputStream dataStream = new DataOutputStream(dataBytes);
+
+                dataStream.writeLong(value);
+
+                byte[] dataTemp = dataBytes.toByteArray();
+                stream.writeInt(dataTemp.length);
+                stream.write(dataTemp);
+            }
+        }
+        return bytes.toByteArray();
+    }
+
+    public byte[] serialize(long value) throws IOException {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        try (DataOutputStream stream = new DataOutputStream(bytes)) {
+            stream.writeByte(getDataType());
+            stream.writeBoolean(true);
+
+            ByteArrayOutputStream dataBytes = new ByteArrayOutputStream();
+            DataOutputStream dataStream = new DataOutputStream(dataBytes);
+
+            dataStream.writeLong(value);
+
+            byte[] dataTemp = dataBytes.toByteArray();
+            stream.writeInt(dataTemp.length);
+            stream.write(dataTemp);
+        }
+        return bytes.toByteArray();
+    }
+
+    public byte[] serialize(long[] values) throws IOException {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        try (DataOutputStream stream = new DataOutputStream(bytes)) {
+            stream.writeByte(getDataType() + 1);
+            if (values == null) {
+                stream.writeBoolean(false);
+            } else {
+                stream.writeBoolean(true);
+
+                ByteArrayOutputStream dataBytes = new ByteArrayOutputStream();
+                DataOutputStream dataStream = new DataOutputStream(dataBytes);
+
+                int length = values.length;
+                dataStream.writeInt(length);
+                for (long value : values) {
+                    dataStream.writeLong(value);
+                }
+
+                byte[] dataTemp = dataBytes.toByteArray();
+                stream.writeInt(dataTemp.length);
+                stream.write(dataTemp);
+            }
+        }
+        return bytes.toByteArray();
+    }
+
+    public byte[] serialize(List<Long> values) throws IOException {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        try (DataOutputStream stream = new DataOutputStream(bytes)) {
+            stream.writeByte(getDataType() + 1);
+            if (values == null) {
+                stream.writeBoolean(false);
+            } else {
+                stream.writeBoolean(true);
+
+                ByteArrayOutputStream dataBytes = new ByteArrayOutputStream();
+                DataOutputStream dataStream = new DataOutputStream(dataBytes);
+
+                int size = 0;
+                for (Long value : values) {
+                    if (value != null) {
+                        size++;
+                    }
+                }
+                dataStream.writeInt(size);
+                for (Long value : values) {
+                    if (value != null) {
+                        dataStream.writeLong(value);
+                    }
+                }
+
+                byte[] dataTemp = dataBytes.toByteArray();
+                stream.writeInt(dataTemp.length);
+                stream.write(dataTemp);
+            }
+        }
+        return bytes.toByteArray();
+    }
+
+    public Long deserialize(byte[] serializeData) throws IOException {
+        return deserialize(new DataInputStream(new ByteArrayInputStream(serializeData)));
+    }
+
+    public List<Long> deserializeList(byte[] serializeData) throws IOException {
+        return deserializeList(new DataInputStream(new ByteArrayInputStream(serializeData)));
+    }
+
+    public long[] deserializeArray(byte[] serializeData) throws IOException {
+        return deserializeArray(new DataInputStream(new ByteArrayInputStream(serializeData)));
+    }
+
+    protected Long deserialize(DataInputStream stream) throws IOException {
+        int dataType = stream.readByte();
+        if (dataType == getDataType()) {
+            boolean notNull = stream.readBoolean();
+            if (notNull) {
+                int dataSize = stream.readInt();
+                return stream.readLong();
+            } else {
+                return null;
+            }
+        } else {
+            throw new IllegalArgumentException(dataType + " is not support");
+        }
+    }
+
+    protected long[] deserializeArray(DataInputStream stream) throws IOException {
+        int dataType = stream.readByte();
+        if (dataType == getDataType() + 1) {
+            boolean notNull = stream.readBoolean();
+            if (notNull) {
+                int dataSize = stream.readInt();
+                int size = stream.readInt();
+                long[] values = new long[size];
+                for (int i = 0; i < size; i++) {
+                    long value = stream.readLong();
+                    values[i] = value;
+                }
+                return values;
+            } else {
+                return null;
+            }
+        } else {
+            throw new IllegalArgumentException(dataType + " is not support");
+        }
+    }
+
+    protected List<Long> deserializeList(DataInputStream stream) throws IOException {
+        int dataType = stream.readByte();
+        if (dataType == getDataType() + 1) {
+            boolean notNull = stream.readBoolean();
+            if (notNull) {
+                int dataSize = stream.readInt();
+                int size = stream.readInt();
+                List<Long> values = new ArrayList<>(size);
+                for (int i = 0; i < size; i++) {
+                    Long value = stream.readLong();
+                    values.add(value);
+                }
+                return values;
+            } else {
+                return null;
+            }
+        } else {
+            throw new IllegalArgumentException(dataType + " is not support");
+        }
+    }
+
+}
