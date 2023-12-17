@@ -174,7 +174,9 @@ public class HandlerCharacter extends CharsetHandler {
                 } else {
                     Charset charset = getCharset(stream.readByte());
                     int length = stream.readInt();
-                    String data = new String(stream.readNBytes(length), charset);
+                    byte[] raw = new byte[length];
+                    stream.read(raw);
+                    String data = new String(raw, charset);
                     return data.charAt(0);
                 }
             } else {
@@ -202,7 +204,9 @@ public class HandlerCharacter extends CharsetHandler {
                     Charset charset = getCharset(stream.readByte());
                     for (int i = 0; i < size; i++) {
                         int length = stream.readInt();
-                        String data = new String(stream.readNBytes(length), charset);
+                        byte[] raw = new byte[length];
+                        stream.read(raw);
+                        String data = new String(raw, charset);
                         char value = data.charAt(0);
                         values[i] = value;
                     }
@@ -233,7 +237,9 @@ public class HandlerCharacter extends CharsetHandler {
                     Charset charset = getCharset(stream.readByte());
                     for (int i = 0; i < size; i++) {
                         int length = stream.readInt();
-                        String data = new String(stream.readNBytes(length), charset);
+                        byte[] raw = new byte[length];
+                        stream.read(raw);
+                        String data = new String(raw, charset);
                         Character value = data.charAt(0);
                         values.add(value);
                     }
