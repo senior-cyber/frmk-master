@@ -30,7 +30,7 @@ public class MessageConverter implements HttpMessageConverter<Message> {
         if (mediaType == null) {
             return Message.class.isAssignableFrom(clazz);
         } else {
-            boolean canRead = Message.class.isAssignableFrom(clazz) || mediaType.toString().startsWith(support.toString());
+            boolean canRead = Message.class.isAssignableFrom(clazz) && mediaType.toString().startsWith(support.toString());
             LOGGER.info("canRead [{}] class [{}] mediaType [{}] support [{}]", canRead, clazz, mediaType, support);
             return canRead;
         }
@@ -41,7 +41,7 @@ public class MessageConverter implements HttpMessageConverter<Message> {
         if (mediaType == null) {
             return Message.class.isAssignableFrom(clazz);
         } else {
-            boolean canWrite = Message.class.isAssignableFrom(clazz) || mediaType.toString().startsWith(support.toString());
+            boolean canWrite = Message.class.isAssignableFrom(clazz) && mediaType.toString().startsWith(support.toString());
             LOGGER.info("canWrite [{}] class [{}] mediaType [{}] support [{}]", canWrite, clazz, mediaType, support);
             return canWrite;
         }
