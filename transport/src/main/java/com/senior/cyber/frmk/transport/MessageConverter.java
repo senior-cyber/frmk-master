@@ -23,7 +23,11 @@ public class MessageConverter implements HttpMessageConverter<Message> {
 
     @Override
     public boolean canRead(Class<?> clazz, MediaType mediaType) {
-        return Message.class.isAssignableFrom(clazz) && mediaType.equals(support);
+        if (mediaType == null) {
+            return Message.class.isAssignableFrom(clazz);
+        } else {
+            return Message.class.isAssignableFrom(clazz) && mediaType.equals(support);
+        }
     }
 
     @Override
