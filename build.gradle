@@ -24,7 +24,7 @@ buildscript {
         spring_cloud = '2023.0.0' // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies
         guava = '33.0.0-jre' // https://mvnreposito ry.com/artifact/com.google.guava/guava
         lombok = '1.18.30' // https://mvnrepository.com/artifact/org.projectlombok/lombok
-
+        retrofit = '2.9.0' // https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit
     }
     repositories {
         mavenLocal()

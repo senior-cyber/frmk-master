@@ -30,7 +30,7 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-json:${spring_boot}"
     implementation "org.apache.commons:commons-lang3:${commons_lang3}"
     implementation "commons-io:commons-io:${commons_io}"
-    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.retrofit2:retrofit:${retrofit}"
 
     compileOnly "org.projectlombok:lombok:${lombok}"
     annotationProcessor "org.projectlombok:lombok:${lombok}"
