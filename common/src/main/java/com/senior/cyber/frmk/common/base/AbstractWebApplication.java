@@ -7,6 +7,7 @@ import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.authroles.authentication.AuthenticatedWebApplication;
 import org.apache.wicket.core.request.mapper.CryptoMapper;
 import org.apache.wicket.core.util.crypt.KeyInSessionSunJceCryptFactory;
+import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.resource.*;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
@@ -16,11 +17,11 @@ import org.reflections.util.ConfigurationBuilder;
 import java.util.HashMap;
 import java.util.TreeSet;
 
-public abstract class AbstractAuthenticatedWebApplication extends AuthenticatedWebApplication implements IResourceReferenceFactory {
+public abstract class AbstractWebApplication extends WebApplication implements IResourceReferenceFactory {
 
     private WebUiProperties webUiProperties;
 
-    protected AbstractAuthenticatedWebApplication(WebUiProperties webUiProperties) {
+    protected AbstractWebApplication(WebUiProperties webUiProperties) {
         this.webUiProperties = webUiProperties;
     }
 

@@ -1,6 +1,5 @@
 package com.senior.cyber.frmk.common.base;
 
-import com.senior.cyber.frmk.common.simulator.SimulateEnum;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.wicket.RuntimeConfigurationType;
@@ -10,7 +9,6 @@ import org.springframework.util.Assert;
 import java.io.File;
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Map;
 
 @Getter
 @Setter
@@ -21,8 +19,6 @@ public class WebUiProperties implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private RuntimeConfigurationType configurationType = RuntimeConfigurationType.DEPLOYMENT;
-
-    private Map<String, SimulateEnum> simulation;
 
     private String pages;
 
