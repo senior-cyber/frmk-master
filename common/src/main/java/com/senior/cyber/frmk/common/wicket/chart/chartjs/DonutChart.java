@@ -69,7 +69,7 @@ public class DonutChart extends WebComponent {
             }
             return "{" +
                     "'data':[" + StringUtils.join(this.data, ", ") + "]" +
-                    ", 'backgroundColor'=[" + StringUtils.join(temp, ", ") + "]" +
+                    ", 'backgroundColor':[" + StringUtils.join(temp, ", ") + "]" +
                     '}';
         }
 
