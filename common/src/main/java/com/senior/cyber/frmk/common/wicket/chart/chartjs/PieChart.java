@@ -1,6 +1,6 @@
 package com.senior.cyber.frmk.common.wicket.chart.chartjs;
 
-import com.senior.cyber.frmk.common.wicket.resource.ChartMinJS;
+import com.senior.cyber.frmk.common.Pkg;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -9,6 +9,7 @@ import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.markup.parser.XmlTag.TagType;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.resource.PackageResourceReference;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -22,6 +23,8 @@ public class PieChart extends WebComponent {
     private static final long serialVersionUID = 1L;
 
     private IModel<PieData> dataset;
+
+    private String option = "{'maintainAspectRatio':false,'responsive':true}";
 
     public PieChart(String id, IModel<PieData> model) {
         super(id);
@@ -38,17 +41,21 @@ public class PieChart extends WebComponent {
         }
     }
 
+    public String getOption() {
+        return option;
+    }
+
+    public void setOption(String option) {
+        this.option = option;
+    }
+
     @Override
     public void renderHead(IHeaderResponse response) {
         super.renderHead(response);
-        response.render(JavaScriptHeaderItem.forReference(ChartMinJS.INSTANCE));
-
-        String option = "{'maintainAspectRatio':false,'responsive':true}";
-
-        String json = "{'type':'pie','data':" + this.dataset.getObject().toString() + ",'options':" + option + "}";
-
+        response.render(JavaScriptHeaderItem.forReference(new PackageResourceReference(Pkg.class, "chart.js")));
+        String json = "{'type':'pie','data':" + this.dataset.getObject().toString() + ",'options':" + this.option + "}";
         String markupId = getMarkupId();
-        String chart = String.format("new Chart(document.getElementById('%s').getContext('2d'), %s)", markupId, json);
+        String chart = String.format("new Chart(document.getElementById('%s'), %s)", markupId, json);
         response.render(OnDomReadyHeaderItem.forScript(chart));
     }
 
