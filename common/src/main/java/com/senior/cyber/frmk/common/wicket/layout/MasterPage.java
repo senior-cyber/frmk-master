@@ -834,7 +834,7 @@ public abstract class MasterPage extends WebPage {
         String[] messages = (String[]) getSession().getAttribute(MESSAGE_KEY);
         if (messages != null && messages.length != 0) {
             StringBuilder buffer = new StringBuilder();
-            buffer.append("<ul class=\"alert alert-danger\">");
+            buffer.append("<ul style=\"padding:10px 0px 10px 30px\" class=\"alert alert-danger\">");
             for (String message : messages) {
                 if (message != null && !"".equals(message)) {
                     buffer.append("<li>").append(StringEscapeUtils.escapeHtml4(message)).append("</li>");
