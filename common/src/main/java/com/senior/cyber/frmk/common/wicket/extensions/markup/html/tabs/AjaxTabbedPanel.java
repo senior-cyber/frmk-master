@@ -63,13 +63,13 @@ public class AjaxTabbedPanel extends org.apache.wicket.extensions.ajax.markup.ht
         } else {
             link = new WebMarkupContainer(linkId);
             link.add(AttributeModifier.replace("href", "#"));
-            link.add(AttributeModifier.replace("class", "nav-link disabled"));
+            link.add(AttributeModifier.replace("class", "nav-link disabled btn"));
         }
         if (getSelectedTab() == index) {
             if (this.tabs.get(index).isEnabled()) {
                 link.add(AttributeModifier.replace("class", "nav-link active tab" + index));
             } else {
-                link.add(AttributeModifier.replace("class", "nav-link disabled active tab" + index));
+                link.add(AttributeModifier.replace("class", "nav-link disabled btn active tab" + index));
             }
         }
         return link;
