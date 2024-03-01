@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Serial;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,11 +26,25 @@ public class FullCalendar extends WebComponent implements IRequestListener {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    public static String MONTH = "dayGridMonth";
+    public static String WEEK = "timeGridWeek";
+    public static String DAY = "timeGridDay";
+
     private FullCalendarProvider provider;
+
+    private List<String> views = new ArrayList<>(3);
 
     public FullCalendar(String id, FullCalendarProvider provider) {
         super(id);
         this.provider = provider;
+        setOutputMarkupId(true);
+        this.views = List.of(MONTH, WEEK, DAY);
+    }
+
+    public FullCalendar(String id, FullCalendarProvider provider, List<String> views) {
+        super(id);
+        this.provider = provider;
+        this.views = views;
         setOutputMarkupId(true);
     }
 
@@ -39,7 +54,7 @@ public class FullCalendar extends WebComponent implements IRequestListener {
         String url = this.urlForListener(new PageParameters()).toString();
         String markupId = getMarkupId(true);
         String javascript = "var calendar_el_" + markupId + " = document.getElementById('" + markupId + "');" + "\n";
-        javascript = javascript + "var calendar_" + markupId + " = new FullCalendar.Calendar(calendar_el_" + markupId + ",{navLinks: true, initialView: 'timeGridWeek', headerToolbar: { left  : 'prev,next today', center: 'title', right : 'dayGridMonth,timeGridWeek,timeGridDay' }, themeSystem: 'bootstrap', eventSources:['" + url + "']});" + "\n";
+        javascript = javascript + "var calendar_" + markupId + " = new FullCalendar.Calendar(calendar_el_" + markupId + ",{navLinks: true, initialView: '" + this.views.getFirst() + "', headerToolbar: { left  : 'prev,next today', center: 'title', right : '" + StringUtils.join(views, ",") + "' }, themeSystem: 'bootstrap', eventSources:['" + url + "']});" + "\n";
         javascript = javascript + "calendar_" + markupId + ".render();" + "\n";
         response.render(new CalendarOnDomReady(javascript));
     }
