@@ -188,6 +188,9 @@ public class PagingNavigation extends Loop {
             label = String.valueOf(pageIndex + 1).intern();
         }
         link.add(new Label("pageNumber", label));
+        if (this.pageable.getCurrentPage() == pageIndex) {
+            link.add(AttributeModifier.append("class", "bg-warning"));
+        }
     }
 
     /**
