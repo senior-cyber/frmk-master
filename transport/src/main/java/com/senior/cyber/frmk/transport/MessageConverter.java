@@ -31,7 +31,7 @@ public class MessageConverter implements HttpMessageConverter<Message> {
             return Message.class.isAssignableFrom(clazz);
         } else {
             boolean canRead = Message.class.isAssignableFrom(clazz) && mediaType.toString().startsWith(support.toString());
-            LOGGER.info("canRead [{}] class [{}] mediaType [{}] support [{}]", canRead, clazz, mediaType, support);
+            LOGGER.debug("canRead [{}] class [{}] mediaType [{}] support [{}]", canRead, clazz, mediaType, support);
             return canRead;
         }
     }
@@ -42,7 +42,7 @@ public class MessageConverter implements HttpMessageConverter<Message> {
             return Message.class.isAssignableFrom(clazz);
         } else {
             boolean canWrite = Message.class.isAssignableFrom(clazz) && mediaType.toString().startsWith(support.toString());
-            LOGGER.info("canWrite [{}] class [{}] mediaType [{}] support [{}]", canWrite, clazz, mediaType, support);
+            LOGGER.debug("canWrite [{}] class [{}] mediaType [{}] support [{}]", canWrite, clazz, mediaType, support);
             return canWrite;
         }
     }
@@ -54,7 +54,7 @@ public class MessageConverter implements HttpMessageConverter<Message> {
 
     @Override
     public Message read(Class<? extends Message> clazz, HttpInputMessage inputMessage) throws IOException, HttpMessageNotReadableException {
-        LOGGER.info("Read [{}]", clazz.getName());
+        LOGGER.debug("Read [{}]", clazz.getName());
         byte[] data = IOUtils.toByteArray(inputMessage.getBody());
         return this.transport.messageHandler().deserialize(data, clazz);
     }
