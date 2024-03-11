@@ -32,6 +32,8 @@ public abstract class AjaxFallbackOrderByBorder extends OrderByBorder {
     @Override
     protected OrderByLink newOrderByLink(String id, String key, ISortStateLocator stateLocator) {
         OrderByLink link = new AjaxOrderByLink("orderByLink", key, stateLocator) {
+
+            @Serial
             private static final long serialVersionUID = 1L;
 
             @Override
