@@ -47,6 +47,7 @@ buildscript {
         selenium = '4.20.0' // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
         picocli = '4.7.5' // https://mvnrepository.com/artifact/info.picocli/picocli-spring-boot-starter
         commons_exec = '1.4.0' // https://mvnrepository.com/artifact/org.apache.commons/commons-exec
+        appium = '9.2.2' // https://mvnrepository.com/artifact/io.appium/java-client
     }
     repositories {
         mavenLocal()
