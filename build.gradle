@@ -48,6 +48,9 @@ buildscript {
         picocli = '4.7.5' // https://mvnrepository.com/artifact/info.picocli/picocli-spring-boot-starter
         commons_exec = '1.4.0' // https://mvnrepository.com/artifact/org.apache.commons/commons-exec
         appium = '9.2.2' // https://mvnrepository.com/artifact/io.appium/java-client
+        zxing = '3.5.3' // https://mvnrepository.com/artifact/com.google.zxing/javase
+        elastic_apm_agent = '1.49.0' // https://mvnrepository.com/artifact/co.elastic.apm/apm-agent-api
+        logstash = '7.4' // https://mvnrepository.com/artifact/net.logstash.logback/logstash-logback-encoder
     }
     repositories {
         mavenLocal()
