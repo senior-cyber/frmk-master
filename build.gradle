@@ -4,34 +4,34 @@ buildscript {
 
         // Dependency Management
         poi = '5.2.5' // https://mvnrepository.com/artifact/org.apache.poi/poi
-        wicket = '10.0.0' // https://mvnrepository.com/artifact/org.apache.wicket/wicket
-        spring_boot = '3.2.5' // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot
+        wicket = '10.1.0' // https://mvnrepository.com/artifact/org.apache.wicket/wicket
+        spring_boot = '3.3.0' // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot
         reflections = '0.10.2' // https://mvnrepository.com/artifact/org.reflections/reflections
         servlet = '6.0.0' // https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api
         commons_lang3 = '3.14.0' // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
         commons_text = '1.12.0' // https://mvnrepository.com/artifact/org.apache.commons/commons-text
-        spring = '6.1.6' // https://mvnrepository.com/artifact/org.springframework/spring-context
-        jooq = '3.19.7' // https://mvnrepository.com/artifact/org.jooq/jooq
-        spring_dependency_management = '1.1.4' // https://mvnrepository.com/artifact/io.spring.dependency-management/io.spring.dependency-management.gradle.plugin
+        spring = '6.1.8' // https://mvnrepository.com/artifact/org.springframework/spring-context
+        jooq = '3.19.9' // https://mvnrepository.com/artifact/org.jooq/jooq
+        spring_dependency_management = '1.1.5' // https://mvnrepository.com/artifact/io.spring.dependency-management/io.spring.dependency-management.gradle.plugin
         joda_time = '2.12.7' // https://mvnrepository.com/artifact/joda-time/joda-time
         commons_io = '2.16.1' // https://mvnrepository.com/artifact/commons-io/commons-io
         metamodel = '5.3.3' // https://mvnrepository.com/artifact/org.apache.metamodel/MetaModel-core
-        liquibase = '4.27.0' // https://mvnrepository.com/artifact/org.liquibase/liquibase-core
+        liquibase = '4.28.0' // https://mvnrepository.com/artifact/org.liquibase/liquibase-core
         commons_dbcp2 = '2.12.0' // https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2
-        // flyway = '10.12.0' // https://mvnrepository.com/artifact/org.flywaydb/flyway-core
+        // flyway = '10.14.0' // https://mvnrepository.com/artifact/org.flywaydb/flyway-core
         flyway = '9.22.3' // https://mvnrepository.com/artifact/org.flywaydb/flyway-core
-        gson = '2.10.1' // https://mvnrepository.com/artifact/com.google.code.gson/gson
+        gson = '2.11.0' // https://mvnrepository.com/artifact/com.google.code.gson/gson
         bouncycastle = '1.78.1' // https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15to18
-        spring_cloud = '2023.0.1' // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies
-        guava = '33.1.0-jre' // https://mvnrepository.com/artifact/com.google.guava/guava
+        spring_cloud = '2023.0.2' // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies
+        guava = '33.2.1-jre' // https://mvnrepository.com/artifact/com.google.guava/guava
         lombok = '1.18.32' // https://mvnrepository.com/artifact/org.projectlombok/lombok
         retrofit = '2.11.0' // https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit
         auth0_jwt = '4.4.0' // https://mvnrepository.com/artifact/com.auth0/java-jwt
 
-        commons_validator = '1.8.0' // https://mvnrepository.com/artifact/commons-validator/commons-validator
+        commons_validator = '1.9.0' // https://mvnrepository.com/artifact/commons-validator/commons-validator
         jasypt = '1.9.3' // https://mvnrepository.com/artifact/org.jasypt/jasypt
-        commons_csv = '1.10.0' // https://mvnrepository.com/artifact/org.apache.commons/commons-csv
-        commons_compress = '1.26.1' // https://mvnrepository.com/artifact/org.apache.commons/commons-compress
+        commons_csv = '1.11.0' // https://mvnrepository.com/artifact/org.apache.commons/commons-csv
+        commons_compress = '1.26.2' // https://mvnrepository.com/artifact/org.apache.commons/commons-compress
         google_tink = '1.13.0' // https://mvnrepository.com/artifact/com.google.crypto.tink/tink
         mysql = '8.0.33' // https://mvnrepository.com/artifact/mysql/mysql-connector-java
         yubikit = '2.5.0' // https://mvnrepository.com/artifact/com.yubico.yubikit/piv
@@ -40,16 +40,16 @@ buildscript {
         jsch = '0.1.55' // https://mvnrepository.com/artifact/com.jcraft/jsch
         sshd = '2.12.1' // https://mvnrepository.com/artifact/org.apache.sshd/sshd-core
         ftpserver = '1.2.0' // https://mvnrepository.com/artifact/org.apache.ftpserver/ftpserver-core
-        dropbox = '6.1.0' // https://mvnrepository.com/artifact/com.dropbox.core/dropbox-core-sdk
+        dropbox = '7.0.0' // https://mvnrepository.com/artifact/com.dropbox.core/dropbox-core-sdk
         okhttp = '4.12.0' // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp/
-        opensearch = '2.13.0' // https://mvnrepository.com/artifact/org.opensearch/opensearch
-        opensearch_java = '2.10.1' // https://mvnrepository.com/artifact/org.opensearch.client/opensearch-java
-        selenium = '4.20.0' // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
-        picocli = '4.7.5' // https://mvnrepository.com/artifact/info.picocli/picocli-spring-boot-starter
+        opensearch = '2.14.0' // https://mvnrepository.com/artifact/org.opensearch/opensearch
+        opensearch_java = '2.10.4' // https://mvnrepository.com/artifact/org.opensearch.client/opensearch-java
+        selenium = '4.21.0' // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
+        picocli = '4.7.6' // https://mvnrepository.com/artifact/info.picocli/picocli-spring-boot-starter
         commons_exec = '1.4.0' // https://mvnrepository.com/artifact/org.apache.commons/commons-exec
-        appium = '9.2.2' // https://mvnrepository.com/artifact/io.appium/java-client
+        appium = '9.2.3' // https://mvnrepository.com/artifact/io.appium/java-client
         zxing = '3.5.3' // https://mvnrepository.com/artifact/com.google.zxing/javase
-        elastic_apm_agent = '1.49.0' // https://mvnrepository.com/artifact/co.elastic.apm/apm-agent-api
+        elastic_apm_agent = '1.50.0' // https://mvnrepository.com/artifact/co.elastic.apm/apm-agent-api
         logstash = '7.4' // https://mvnrepository.com/artifact/net.logstash.logback/logstash-logback-encoder
     }
     repositories {
