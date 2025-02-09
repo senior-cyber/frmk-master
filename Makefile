@@ -1,2 +1,2 @@
 build:
-	gradle assemble publishToMavenLocal
+	./gradlew assemble publishToMavenLocal
