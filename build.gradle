@@ -18,8 +18,8 @@ buildscript {
         metamodel = '5.3.3' // https://mvnrepository.com/artifact/org.apache.metamodel/MetaModel-core
         liquibase = '4.31.0' // https://mvnrepository.com/artifact/org.liquibase/liquibase-core
         commons_dbcp2 = '2.13.0' // https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2
-        // flyway = '11.3.1' // https://mvnrepository.com/artifact/org.flywaydb/flyway-core
-        flyway = '9.22.3' // https://mvnrepository.com/artifact/org.flywaydb/flyway-core
+        flyway = '11.3.1' // https://mvnrepository.com/artifact/org.flywaydb/flyway-core
+//        flyway = '9.22.3' // https://mvnrepository.com/artifact/org.flywaydb/flyway-core
         gson = '2.12.1' // https://mvnrepository.com/artifact/com.google.code.gson/gson
         bouncycastle = '1.80' // https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15to18
         spring_cloud = '2024.0.0' // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies
