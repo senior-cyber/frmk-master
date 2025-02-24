@@ -1,6 +1,5 @@
 package com.senior.cyber.frmk.common.wicket.widget;
 
-import com.senior.cyber.frmk.common.wicket.markup.html.form.select2.Option;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.wicket.WicketRuntimeException;
@@ -321,10 +320,6 @@ public class ReadOnlyView extends Label {
         super(id, value);
     }
 
-    public ReadOnlyView(String id, Option value) {
-        super(id, value);
-    }
-
     public ReadOnlyView(String id, char value) {
         super(id, value);
     }
@@ -336,10 +331,6 @@ public class ReadOnlyView extends Label {
     public ReadOnlyView(String id, Date value, String format) {
         super(id, value);
         this.format = format;
-    }
-
-    public ReadOnlyView(String id, Option[] value) {
-        super(id, value);
     }
 
     public ReadOnlyView(String id, char[] value) {
@@ -544,12 +535,6 @@ public class ReadOnlyView extends Label {
                             objects.add(v);
                         }
                     }
-                } else if (objectClass == Option[].class) {
-                    for (Option v : (Option[]) object) {
-                        if (v != null) {
-                            objects.add(v.getText());
-                        }
-                    }
                 } else {
                     parceObject(objects, objectClass, object);
                 }
@@ -591,8 +576,6 @@ public class ReadOnlyView extends Label {
         } else if (clazz == Date.class || clazz == Time.class || clazz == java.sql.Date.class
                 || clazz == Timestamp.class) {
             objects.add(DateFormatUtils.format((Date) value, this.format));
-        } else if (clazz == Option.class) {
-            objects.add(((Option) value).getText());
         } else if (clazz == String.class) {
             if (!"".equals(value)) {
                 objects.add((String) value);

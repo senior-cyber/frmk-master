@@ -1,7 +1,6 @@
 package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.cell;
 
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.filter.ItemPanel;
-import com.senior.cyber.frmk.common.wicket.markup.html.form.select2.Option;
 import com.senior.cyber.frmk.common.wicket.widget.ReadOnlyView;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.wicket.Page;
@@ -170,10 +169,6 @@ public class LinkCell extends ItemPanel {
 
     public LinkCell(Class<? extends Page> page, PageParameters parameters, char v) {
         this(page, parameters, Model.of(String.valueOf(v)));
-    }
-
-    public LinkCell(Class<? extends Page> page, PageParameters parameters, Option v) {
-        this(page, parameters, v != null && v.getText() != null && !"".equals(v.getText()) ? Model.of(String.valueOf(v.getText())) : Model.of(""));
     }
 
     public LinkCell(Class<? extends Page> page, PageParameters parameters, IModel<?> model) {

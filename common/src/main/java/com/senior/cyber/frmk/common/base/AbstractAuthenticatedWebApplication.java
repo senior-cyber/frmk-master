@@ -6,13 +6,11 @@ import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.authroles.authentication.AuthenticatedWebApplication;
 import org.apache.wicket.core.request.mapper.CryptoMapper;
 import org.apache.wicket.core.util.crypt.KeyInSessionSunJceCryptFactory;
-import org.apache.wicket.resource.FileSystemResourceReference;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.TreeSet;
 
@@ -57,9 +55,6 @@ public abstract class AbstractAuthenticatedWebApplication extends AuthenticatedW
                 }
             }
         }
-        File adminLte = webUiProperties.getAdminLte();
-        FileSystemResourceReference reference = new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.JS_JQUERY).getPath());
-        getJavaScriptLibrarySettings().setJQueryReference(reference);
     }
 
     @Override

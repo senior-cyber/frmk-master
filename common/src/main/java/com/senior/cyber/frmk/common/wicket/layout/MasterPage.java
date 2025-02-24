@@ -1,13 +1,11 @@
 package com.senior.cyber.frmk.common.wicket.layout;
 
-import com.senior.cyber.frmk.common.base.AdminLTEResourceReference;
 import com.senior.cyber.frmk.common.base.LTEAdminProperties;
 import com.senior.cyber.frmk.common.model.*;
 import com.senior.cyber.frmk.common.model.menu.left.*;
 import com.senior.cyber.frmk.common.model.menu.right.*;
 import com.senior.cyber.frmk.common.model.menu.sidebar.*;
 import com.senior.cyber.frmk.common.provider.*;
-import com.senior.cyber.frmk.common.wicket.resource.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.StringEscapeUtils;
 import org.apache.wicket.AttributeModifier;
@@ -29,16 +27,11 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.resource.FileSystemResourceReference;
-import org.apache.wicket.settings.JavaScriptLibrarySettings;
 
 import java.io.File;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public abstract class MasterPage extends WebPage {
 
@@ -799,33 +792,45 @@ public abstract class MasterPage extends WebPage {
     @Override
     public void renderHead(IHeaderResponse response) {
         File adminLte = ((LTEAdminProperties) WebApplication.get()).getWebUiProperties().getAdminLte();
-
-        // <!-- Font Awesome -->
-//        response.render(CssHeaderItem.forReference(FontAwesomeCSS.INSTANCE));
-        //  <!-- Ionicons -->
-        response.render(IOnIconsMinCSS.INSTANCE);
-        // <!-- Theme style -->
-        response.render(CssHeaderItem.forReference(AdminLteMinCSS.INSTANCE));
-        // <!-- overlayScrollbars -->
-        response.render(CssHeaderItem.forReference(OverlayScrollbarsMinCSS.INSTANCE));
-        // <!-- Google Font: Source Sans Pro -->
-        response.render(GoogleFontCSS.INSTANCE);
-
-        response.render(CssHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.CSS_ICHECK_BOOTSTRAP).getPath())));
-
-        response.render(JavaScriptHeaderItem.forReference(getApplication().getJavaScriptLibrarySettings().getJQueryReference()));
-
-        // <!-- Bootstrap 4 -->
-        response.render(JavaScriptHeaderItem.forReference(BootstrapBundleMinJS.INSTANCE));
-        // <!-- overlayScrollbars -->
-        response.render(JavaScriptHeaderItem.forReference(JQueryOverlayScrollbarsMinJS.INSTANCE));
-        // <!-- AdminLTE App -->
-        response.render(JavaScriptHeaderItem.forReference(AdminLteMinJS.INSTANCE));
-
-        JavaScriptLibrarySettings jsLibrarySettings = getApplication().getJavaScriptLibrarySettings();
-
-        ResourceReference wicketAjaxReference = jsLibrarySettings.getWicketAjaxReference();
-        response.render(JavaScriptHeaderItem.forReference(wicketAjaxReference));
+        response.render(CssHeaderItem.forUrl("https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css"));
+        response.render(CssHeaderItem.forUrl("https://cdn.jsdelivr.net/npm/overlayscrollbars@2.10.1/styles/overlayscrollbars.min.css"));
+        response.render(CssHeaderItem.forUrl("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"));
+        response.render(CssHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, "/css/adminlte.css").getPath())));
+        response.render(CssHeaderItem.forUrl("https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css"));
+        response.render(CssHeaderItem.forUrl("https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css"));
+        response.render(JavaScriptHeaderItem.forUrl("https://cdn.jsdelivr.net/npm/overlayscrollbars@2.10.1/browser/overlayscrollbars.browser.es6.min.js"));
+        response.render(JavaScriptHeaderItem.forUrl("https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"));
+        response.render(JavaScriptHeaderItem.forUrl("https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"));
+        response.render(JavaScriptHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, "/js/adminlte.js").getPath())));
+        StringBuilder js = new StringBuilder();
+        js.append("<script>").append("\n");
+        js.append("    const SELECTOR_SIDEBAR_WRAPPER = \".sidebar-wrapper\";").append("\n");
+        js.append("    const Default = {").append("\n");
+        js.append("        scrollbarTheme: \"os-theme-light\",").append("\n");
+        js.append("        scrollbarAutoHide: \"leave\",").append("\n");
+        js.append("        scrollbarClickScroll: true,").append("\n");
+        js.append("    };").append("\n");
+        js.append("    document.addEventListener(\"DOMContentLoaded\", function () {").append("\n");
+        js.append("        const sidebarWrapper = document.querySelector(SELECTOR_SIDEBAR_WRAPPER);").append("\n");
+        js.append("        if (").append("\n");
+        js.append("            sidebarWrapper &&").append("\n");
+        js.append("            typeof OverlayScrollbarsGlobal?.OverlayScrollbars !== \"undefined\"").append("\n");
+        js.append("        ) {").append("\n");
+        js.append("            OverlayScrollbarsGlobal.OverlayScrollbars(sidebarWrapper, {").append("\n");
+        js.append("                scrollbars: {").append("\n");
+        js.append("                    theme: Default.scrollbarTheme,").append("\n");
+        js.append("                    autoHide: Default.scrollbarAutoHide,").append("\n");
+        js.append("                    clickScroll: Default.scrollbarClickScroll,").append("\n");
+        js.append("                },").append("\n");
+        js.append("            });").append("\n");
+        js.append("        }").append("\n");
+        js.append("    });").append("\n");
+        js.append("</script>").append("\n");
+        response.render(JavaScriptHeaderItem.forScript(js.toString(), UUID.randomUUID().toString()));
+        response.render(JavaScriptHeaderItem.forUrl("https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"));
+        response.render(JavaScriptHeaderItem.forUrl("https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js"));
+        response.render(JavaScriptHeaderItem.forUrl("https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/js/jsvectormap.min.js"));
+        response.render(JavaScriptHeaderItem.forUrl("https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/maps/world.js"));
     }
 
     public String getNavbarSearchText() {

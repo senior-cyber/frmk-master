@@ -1,7 +1,6 @@
 package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.cell;
 
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.filter.ItemPanel;
-import com.senior.cyber.frmk.common.wicket.markup.html.form.select2.Option;
 import com.senior.cyber.frmk.common.wicket.widget.ReadOnlyView;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.wicket.markup.html.basic.Label;
@@ -155,10 +154,6 @@ public class TextCell extends ItemPanel {
 
     public TextCell(char v) {
         this(Model.of(String.valueOf(v)));
-    }
-
-    public TextCell(Option v) {
-        this(v != null && v.getText() != null && !"".equals(v.getText()) ? Model.of(String.valueOf(v.getText())) : Model.of(""));
     }
 
     public TextCell(Number v) {

@@ -2,7 +2,6 @@ package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data
 
 import com.senior.cyber.frmk.common.BadgeType;
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.filter.ItemPanel;
-import com.senior.cyber.frmk.common.wicket.markup.html.form.select2.Option;
 import com.senior.cyber.frmk.common.wicket.widget.ReadOnlyView;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.wicket.AttributeModifier;
@@ -167,10 +166,6 @@ public class BadgeCell extends ItemPanel {
 
     public BadgeCell(BadgeType type, char v) {
         this(type, Model.of(String.valueOf(v)));
-    }
-
-    public BadgeCell(BadgeType type, Option v) {
-        this(type, v != null && v.getText() != null && !"".equals(v.getText()) ? Model.of(String.valueOf(v.getText())) : Model.of(""));
     }
 
     public BadgeCell(BadgeType type, IModel<?> model) {

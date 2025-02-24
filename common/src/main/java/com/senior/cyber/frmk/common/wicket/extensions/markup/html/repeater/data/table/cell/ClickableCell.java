@@ -2,7 +2,6 @@ package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data
 
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.filter.ItemPanel;
 import com.senior.cyber.frmk.common.wicket.functional.WicketTwoConsumer;
-import com.senior.cyber.frmk.common.wicket.markup.html.form.select2.Option;
 import com.senior.cyber.frmk.common.wicket.widget.ReadOnlyView;
 import jakarta.persistence.Tuple;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -169,10 +168,6 @@ public class ClickableCell extends ItemPanel {
 
     public ClickableCell(WicketTwoConsumer<Tuple, Link<Void>> click, Tuple model, char v) {
         this(click, model, Model.of(String.valueOf(v)));
-    }
-
-    public ClickableCell(WicketTwoConsumer<Tuple, Link<Void>> click, Tuple model, Option v) {
-        this(click, model, v != null && v.getText() != null && !"".equals(v.getText()) ? Model.of(String.valueOf(v.getText())) : Model.of(""));
     }
 
     public ClickableCell(WicketTwoConsumer<Tuple, Link<Void>> click, Tuple model, IModel<?> v) {
