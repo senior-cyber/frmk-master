@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-./gradlew assemble publishToMavenLocal
+./gradlew clean  assemble publishToMavenLocal
