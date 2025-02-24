@@ -1,15 +1,11 @@
 package com.senior.cyber.frmk.transport;
 
-import java.io.Closeable;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.EOFException;
-import java.io.IOException;
+import org.apache.commons.lang3.ArrayUtils;
+
+import java.io.*;
 import java.nio.ByteBuffer;
 import java.util.zip.CRC32;
 import java.util.zip.Checksum;
-
-import org.apache.commons.lang3.ArrayUtils;
 
 public class Packet implements Closeable {
 

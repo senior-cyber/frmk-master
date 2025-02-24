@@ -1,14 +1,5 @@
 package com.senior.cyber.frmk.common.base;
 
-import org.apache.commons.io.FilenameUtils;
-import org.apache.wicket.request.resource.IResource;
-import org.apache.wicket.request.resource.ResourceReference;
-import org.apache.wicket.resource.FileSystemResource;
-import org.apache.wicket.resource.FileSystemResourceReference;
-import org.springframework.context.ApplicationContext;
-
-import java.io.File;
-
 public class AdminLTEResourceReference {
 
     public static final String CSS_FONT_AWESOME = "/plugins/fontawesome-free/css/all.min.css";

@@ -2,10 +2,8 @@ package com.senior.cyber.frmk.jdbc.query;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 public class DeleteQuery extends WhereQuery {
 

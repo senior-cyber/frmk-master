@@ -7,7 +7,6 @@ import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.resource.FileSystemResourceReference;
 
 import java.io.File;

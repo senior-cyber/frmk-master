@@ -1,6 +1,5 @@
 package com.senior.cyber.frmk.common.wicket.resource;
 
-import com.senior.cyber.frmk.common.base.AdminLTEResourceReference;
 import com.senior.cyber.frmk.common.base.LTEAdminProperties;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.HeaderItem;

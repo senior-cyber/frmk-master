@@ -3,7 +3,6 @@ package com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.util
 import com.senior.cyber.frmk.common.jakarta.persistence.BasicTuple;
 import com.senior.cyber.frmk.common.jakarta.persistence.BasicTupleElement;
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.JdbcColumn;
-import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.filter.FilteredJdbcColumn;
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.filter.IFilterStateLocator;
 import com.senior.cyber.frmk.common.wicket.extensions.markup.html.repeater.data.table.filter.TextFilteredJdbcColumn;
 import com.senior.cyber.frmk.common.wicket.functional.DeserializerFunction;

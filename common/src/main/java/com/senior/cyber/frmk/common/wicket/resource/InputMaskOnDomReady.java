@@ -1,12 +1,9 @@
 package com.senior.cyber.frmk.common.wicket.resource;
 
-import com.senior.cyber.frmk.common.base.LTEAdminProperties;
 import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
-import org.apache.wicket.protocol.http.WebApplication;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 

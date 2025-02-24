@@ -1,14 +1,11 @@
 package com.senior.cyber.frmk.common.base;
 
-import com.senior.cyber.frmk.common.wicket.resource.JQueryMinJS;
 import org.apache.wicket.Page;
 import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.authroles.authentication.AuthenticatedWebApplication;
 import org.apache.wicket.core.request.mapper.CryptoMapper;
 import org.apache.wicket.core.util.crypt.KeyInSessionSunJceCryptFactory;
-import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.request.resource.*;
 import org.apache.wicket.resource.FileSystemResourceReference;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
@@ -19,7 +16,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.TreeSet;
 
-public abstract class AbstractAuthenticatedWebApplication extends AuthenticatedWebApplication {
+public abstract class AbstractAuthenticatedWebApplication extends AuthenticatedWebApplication implements LTEAdminProperties {
 
     private WebUiProperties webUiProperties;
 

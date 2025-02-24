@@ -5,7 +5,6 @@ import com.senior.cyber.frmk.common.base.LTEAdminProperties;
 import com.senior.cyber.frmk.common.base.WebUiProperties;
 import com.senior.cyber.frmk.html.*;
 import com.senior.cyber.frmk.html.factory.WicketFactory;
-import com.senior.cyber.frmk.html.factory.WicketFactory;
 import com.senior.cyber.frmk.html.pages.CalendarPage;
 import com.senior.cyber.frmk.html.pages.GalleryPage;
 import com.senior.cyber.frmk.html.pages.KanbanPage;
