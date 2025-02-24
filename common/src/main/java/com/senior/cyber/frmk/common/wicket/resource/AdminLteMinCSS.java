@@ -23,7 +23,7 @@ public class AdminLteMinCSS extends FileSystemResourceReference {
     public List<HeaderItem> getDependencies() {
         List<HeaderItem> dependencies = new ArrayList<>(0);
         // <!-- Font Awesome -->
-        dependencies.add(CssHeaderItem.forReference(FontAwesomeCSS.INSTANCE));
+//        dependencies.add(CssHeaderItem.forReference(FontAwesomeCSS.INSTANCE));
         // <!-- Ionicons -->
         dependencies.add(IOnIconsMinCSS.INSTANCE);
         // <!-- Google Font: Source Sans Pro -->

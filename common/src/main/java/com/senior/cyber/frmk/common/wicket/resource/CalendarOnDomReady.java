@@ -23,7 +23,7 @@ public class CalendarOnDomReady extends OnDomReadyHeaderItem {
     public List<HeaderItem> getDependencies() {
         File adminLte = ((LTEAdminProperties) WebApplication.get()).getWebUiProperties().getAdminLte();
         List<HeaderItem> dependencies = new ArrayList<>(0);
-        dependencies.add(CssHeaderItem.forReference(FontAwesomeCSS.INSTANCE));
+//        dependencies.add(CssHeaderItem.forReference(FontAwesomeCSS.INSTANCE));
         dependencies.add(IOnIconsMinCSS.INSTANCE);
         dependencies.add(GoogleFontCSS.INSTANCE);
         dependencies.add(CssHeaderItem.forReference(AdminLteMinCSS.INSTANCE));

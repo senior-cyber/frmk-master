@@ -157,7 +157,7 @@ public class DashboardV1Page extends WebPage {
         File adminLte = ((LTEAdminProperties) WebApplication.get()).getWebUiProperties().getAdminLte();
 
         // <!-- Font Awesome -->
-        response.render(CssHeaderItem.forReference(FontAwesomeCSS.INSTANCE));
+//        response.render(CssHeaderItem.forReference(FontAwesomeCSS.INSTANCE));
         // <!-- Ionicons -->
         response.render(IOnIconsMinCSS.INSTANCE);
         // <!-- Tempusdominus Bbootstrap 4 -->

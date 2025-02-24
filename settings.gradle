@@ -8,7 +8,6 @@ include(
         ":otp",
         ":repository",
         ":admin-lte",
-        ":html",
         ":transport",
         ":x509"
 )
@@ -20,6 +19,5 @@ project(":dao-generator").projectDir = file("./dao-generator")
 project(":metamodel").projectDir = file("./metamodel")
 project(":otp").projectDir = file("./otp")
 project(":repository").projectDir = file("./repository")
-project(":html").projectDir = file("./html")
 project(":x509").projectDir = file("./x509")
 project(":admin-lte").projectDir = file("./admin-lte")

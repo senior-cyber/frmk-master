@@ -801,8 +801,8 @@ public abstract class MasterPage extends WebPage {
         File adminLte = ((LTEAdminProperties) WebApplication.get()).getWebUiProperties().getAdminLte();
 
         // <!-- Font Awesome -->
-        response.render(CssHeaderItem.forReference(FontAwesomeCSS.INSTANCE));
-        // <!-- Ionicons -->
+//        response.render(CssHeaderItem.forReference(FontAwesomeCSS.INSTANCE));
+        //  <!-- Ionicons -->
         response.render(IOnIconsMinCSS.INSTANCE);
         // <!-- Theme style -->
         response.render(CssHeaderItem.forReference(AdminLteMinCSS.INSTANCE));

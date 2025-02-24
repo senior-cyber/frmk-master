@@ -2,7 +2,7 @@ package com.senior.cyber.frmk.common.base;
 
 public class AdminLTEResourceReference {
 
-    public static final String CSS_FONT_AWESOME = "/plugins/fontawesome-free/css/all.min.css";
+//    public static final String CSS_FONT_AWESOME = "/plugins/fontawesome-free/css/all.min.css";
 
     public static final String CSS_FULL_CALENDAR_MAIN = "/plugins/fullcalendar/main.css";
 
