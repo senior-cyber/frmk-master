@@ -16,7 +16,7 @@ import org.reflections.util.ConfigurationBuilder;
 import java.util.HashMap;
 import java.util.TreeSet;
 
-public abstract class AbstractAuthenticatedWebApplication extends AuthenticatedWebApplication implements IResourceReferenceFactory {
+public abstract class AbstractAuthenticatedWebApplication extends AuthenticatedWebApplication {
 
     private WebUiProperties webUiProperties;
 
@@ -67,11 +67,6 @@ public abstract class AbstractAuthenticatedWebApplication extends AuthenticatedW
 
     public WebUiProperties getWebUiProperties() {
         return this.webUiProperties;
-    }
-
-    @Override
-    protected ResourceReferenceRegistry newResourceReferenceRegistry() {
-        return new ResourceReferenceRegistry(this);
     }
 
 }
