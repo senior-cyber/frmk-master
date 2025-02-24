@@ -7,7 +7,6 @@ include(
         ":metamodel",
         ":otp",
         ":repository",
-        ":admin-lte",
         ":transport",
         ":x509"
 )
@@ -20,4 +19,3 @@ project(":metamodel").projectDir = file("./metamodel")
 project(":otp").projectDir = file("./otp")
 project(":repository").projectDir = file("./repository")
 project(":x509").projectDir = file("./x509")
-project(":admin-lte").projectDir = file("./admin-lte")
