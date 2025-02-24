@@ -1,18 +1,22 @@
 package com.senior.cyber.frmk.common.wicket.resource;
 
 import com.senior.cyber.frmk.common.base.AdminLTEResourceReference;
+import com.senior.cyber.frmk.common.base.LTEAdminProperties;
 import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.resource.FileSystemResourceReference;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JQueryUIMinJS extends AdminLTEResourceReference {
+public class JQueryUIMinJS extends FileSystemResourceReference {
 
     public static final JQueryUIMinJS INSTANCE = new JQueryUIMinJS();
 
     public JQueryUIMinJS() {
-        super(JS_JQUERY_UI);
+        super(new File(((LTEAdminProperties) WebApplication.get()).getWebUiProperties().getAdminLte(), AdminLTEResourceReference.JS_JQUERY_UI).getPath());
     }
 
     @Override

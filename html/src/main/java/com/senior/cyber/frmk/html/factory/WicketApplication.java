@@ -1,6 +1,5 @@
 package com.senior.cyber.frmk.html.factory;
 
-import com.senior.cyber.frmk.common.base.AdminLTEResourceReference;
 import com.senior.cyber.frmk.common.base.WebUiProperties;
 import com.senior.cyber.frmk.html.*;
 import com.senior.cyber.frmk.html.pages.chart.UPlotPage;
@@ -39,7 +38,7 @@ import org.springframework.context.ApplicationContext;
 import java.util.HashMap;
 import java.util.Map;
 
-public class WicketApplication extends WebApplication implements IResourceFinder, IResourceReferenceFactory {
+public class WicketApplication extends WebApplication implements IResourceFinder {
 
     private static final Map<String, String> PAGES = new HashMap<>();
 
@@ -133,24 +132,6 @@ public class WicketApplication extends WebApplication implements IResourceFinder
                 mountPage(page.getValue(), (Class<Page>) Class.forName(page.getKey()));
             } catch (ClassNotFoundException e) {
             }
-        }
-    }
-
-    @Override
-    protected ResourceReferenceRegistry newResourceReferenceRegistry() {
-        return new ResourceReferenceRegistry(this);
-    }
-
-    @Override
-    public ResourceReference create(ResourceReference.Key key) {
-        if (AdminLTEResourceReference.class.getName().equals(key.getScope())) {
-            return new AdminLTEResourceReference(key.getName());
-        } else {
-            ResourceReference result = null;
-            if (PackageResource.exists(key)) {
-                result = new PackageResourceReference(key);
-            }
-            return result;
         }
     }
 

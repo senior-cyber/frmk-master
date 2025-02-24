@@ -1,6 +1,7 @@
 package com.senior.cyber.frmk.html.pages.examples;
 
 import com.senior.cyber.frmk.common.base.AdminLTEResourceReference;
+import com.senior.cyber.frmk.common.base.LTEAdminProperties;
 import com.senior.cyber.frmk.common.base.WebUiProperties;
 import com.senior.cyber.frmk.html.*;
 import com.senior.cyber.frmk.html.factory.WicketFactory;
@@ -32,6 +33,8 @@ import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.resource.FileSystemResourceReference;
 import org.springframework.context.ApplicationContext;
 
 import java.io.File;
@@ -128,62 +131,66 @@ public class ProjectsPage extends WebPage {
 
         add(new BookmarkablePageLink<>("starter.html_1", StarterPage.class));
 
-        index3_2.add(new Image("AdminLTELogo.png_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_LOGO)));
+        File adminLte = ((LTEAdminProperties) WebApplication.get()).getWebUiProperties().getAdminLte();
 
-        add(new Image("user1-128x128.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_1)));
-        add(new Image("user2-160x160.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_2)));
-        add(new Image("user3-128x128.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_3)));
-        add(new Image("user8-128x128.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_8)));
+        index3_2.add(new Image("AdminLTELogo.png_1", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_LOGO).getPath())));
 
-        add(new Image("avatar.png_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_AVATAR_1)));
-        add(new Image("avatar.png_2", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_AVATAR_1)));
-        add(new Image("avatar.png_3", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_AVATAR_1)));
-        add(new Image("avatar.png_4", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_AVATAR_1)));
-        add(new Image("avatar.png_5", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_AVATAR_1)));
-        add(new Image("avatar.png_6", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_AVATAR_1)));
-        add(new Image("avatar.png_7", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_AVATAR_1)));
-        add(new Image("avatar.png_8", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_AVATAR_1)));
-        add(new Image("avatar2.png_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_AVATAR_2)));
-        add(new Image("avatar2.png_2", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_AVATAR_2)));
-        add(new Image("avatar2.png_3", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_AVATAR_2)));
-        add(new Image("avatar2.png_4", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_AVATAR_2)));
-        add(new Image("avatar2.png_5", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_AVATAR_2)));
-        add(new Image("avatar3.png_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_AVATAR_3)));
-        add(new Image("avatar3.png_2", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_AVATAR_3)));
-        add(new Image("avatar3.png_3", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_AVATAR_3)));
-        add(new Image("avatar3.png_4", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_AVATAR_3)));
-        add(new Image("avatar3.png_5", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_AVATAR_3)));
-        add(new Image("avatar3.png_6", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_AVATAR_3)));
-        add(new Image("avatar4.png_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_AVATAR_4)));
-        add(new Image("avatar4.png_2", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_AVATAR_4)));
-        add(new Image("avatar4.png_3", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_AVATAR_4)));
-        add(new Image("avatar4.png_4", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_AVATAR_4)));
-        add(new Image("avatar4.png_5", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_AVATAR_4)));
-        add(new Image("avatar4.png_6", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_AVATAR_4)));
-        add(new Image("avatar4.png_7", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_AVATAR_4)));
-        add(new Image("avatar5.png_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_AVATAR_5)));
-        add(new Image("avatar5.png_2", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_AVATAR_5)));
-        add(new Image("avatar5.png_3", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_AVATAR_5)));
+        add(new Image("user1-128x128.jpg_1", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_USER_1).getPath())));
+        add(new Image("user2-160x160.jpg_1", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_USER_2).getPath())));
+        add(new Image("user3-128x128.jpg_1", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_USER_3).getPath())));
+        add(new Image("user8-128x128.jpg_1", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_USER_8).getPath())));
+
+        add(new Image("avatar.png_1", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_AVATAR_1).getPath())));
+        add(new Image("avatar.png_2", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_AVATAR_1).getPath())));
+        add(new Image("avatar.png_3", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_AVATAR_1).getPath())));
+        add(new Image("avatar.png_4", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_AVATAR_1).getPath())));
+        add(new Image("avatar.png_5", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_AVATAR_1).getPath())));
+        add(new Image("avatar.png_6", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_AVATAR_1).getPath())));
+        add(new Image("avatar.png_7", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_AVATAR_1).getPath())));
+        add(new Image("avatar.png_8", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_AVATAR_1).getPath())));
+        add(new Image("avatar2.png_1", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_AVATAR_2).getPath())));
+        add(new Image("avatar2.png_2", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_AVATAR_2).getPath())));
+        add(new Image("avatar2.png_3", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_AVATAR_2).getPath())));
+        add(new Image("avatar2.png_4", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_AVATAR_2).getPath())));
+        add(new Image("avatar2.png_5", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_AVATAR_2).getPath())));
+        add(new Image("avatar3.png_1", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_AVATAR_3).getPath())));
+        add(new Image("avatar3.png_2", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_AVATAR_3).getPath())));
+        add(new Image("avatar3.png_3", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_AVATAR_3).getPath())));
+        add(new Image("avatar3.png_4", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_AVATAR_3).getPath())));
+        add(new Image("avatar3.png_5", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_AVATAR_3).getPath())));
+        add(new Image("avatar3.png_6", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_AVATAR_3).getPath())));
+        add(new Image("avatar4.png_1", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_AVATAR_4).getPath())));
+        add(new Image("avatar4.png_2", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_AVATAR_4).getPath())));
+        add(new Image("avatar4.png_3", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_AVATAR_4).getPath())));
+        add(new Image("avatar4.png_4", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_AVATAR_4).getPath())));
+        add(new Image("avatar4.png_5", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_AVATAR_4).getPath())));
+        add(new Image("avatar4.png_6", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_AVATAR_4).getPath())));
+        add(new Image("avatar4.png_7", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_AVATAR_4).getPath())));
+        add(new Image("avatar5.png_1", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_AVATAR_5).getPath())));
+        add(new Image("avatar5.png_2", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_AVATAR_5).getPath())));
+        add(new Image("avatar5.png_3", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_AVATAR_5).getPath())));
 
     }
 
     @Override
     public void renderHead(IHeaderResponse response) {
+        File adminLte = ((LTEAdminProperties) WebApplication.get()).getWebUiProperties().getAdminLte();
+
         // <!-- Font Awesome -->
-        response.render(CssHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.CSS_FONT_AWESOME)));
+        response.render(CssHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.CSS_FONT_AWESOME).getPath())));
         // <!-- Ionicons -->
         response.render(CssHeaderItem.forUrl(AdminLTEResourceReference.CSS_ION_ICONS));
         // <!-- Theme style -->
-        response.render(CssHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.CSS_THEME_STYLE)));
+        response.render(CssHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.CSS_THEME_STYLE).getPath())));
         // <!-- Google Font: Source Sans Pro -->
         response.render(CssHeaderItem.forUrl(AdminLTEResourceReference.CSS_GOOGLE_FONT));
 
         response.render(JavaScriptHeaderItem.forReference(getApplication().getJavaScriptLibrarySettings().getJQueryReference()));
 
         // <!-- Bootstrap 4 -->
-        response.render(JavaScriptHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.JS_BOOTSTRAP_4)));
+        response.render(JavaScriptHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.JS_BOOTSTRAP_4).getPath())));
         // <!-- AdminLTE App -->
-        response.render(JavaScriptHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.JS_ADMINLTE_APP)));
+        response.render(JavaScriptHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.JS_ADMINLTE_APP).getPath())));
         try {
             ApplicationContext context = WicketFactory.getApplicationContext();
             WebUiProperties properties = context.getBean(WebUiProperties.class);

@@ -17,7 +17,7 @@ import org.reflections.util.ConfigurationBuilder;
 import java.util.HashMap;
 import java.util.TreeSet;
 
-public abstract class AbstractWebApplication extends WebApplication implements IResourceReferenceFactory {
+public abstract class AbstractWebApplication extends WebApplication implements IResourceReferenceFactory, LTEAdminProperties {
 
     private WebUiProperties webUiProperties;
 
@@ -66,26 +66,13 @@ public abstract class AbstractWebApplication extends WebApplication implements I
         return this.webUiProperties.getConfigurationType();
     }
 
-    protected WebUiProperties getWebUiProperties() {
+    public WebUiProperties getWebUiProperties() {
         return this.webUiProperties;
     }
 
     @Override
     protected ResourceReferenceRegistry newResourceReferenceRegistry() {
         return new ResourceReferenceRegistry(this);
-    }
-
-    @Override
-    public ResourceReference create(ResourceReference.Key key) {
-        if (AdminLTEResourceReference.class.getName().equals(key.getScope())) {
-            return new AdminLTEResourceReference(key.getName());
-        } else {
-            ResourceReference result = null;
-            if (PackageResource.exists(key)) {
-                result = new PackageResourceReference(key);
-            }
-            return result;
-        }
     }
 
 }

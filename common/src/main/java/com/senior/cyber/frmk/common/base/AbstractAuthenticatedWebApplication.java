@@ -65,26 +65,13 @@ public abstract class AbstractAuthenticatedWebApplication extends AuthenticatedW
         return this.webUiProperties.getConfigurationType();
     }
 
-    protected WebUiProperties getWebUiProperties() {
+    public WebUiProperties getWebUiProperties() {
         return this.webUiProperties;
     }
 
     @Override
     protected ResourceReferenceRegistry newResourceReferenceRegistry() {
         return new ResourceReferenceRegistry(this);
-    }
-
-    @Override
-    public ResourceReference create(ResourceReference.Key key) {
-        if (AdminLTEResourceReference.class.getName().equals(key.getScope())) {
-            return new AdminLTEResourceReference(key.getName());
-        } else {
-            ResourceReference result = null;
-            if (PackageResource.exists(key)) {
-                result = new PackageResourceReference(key);
-            }
-            return result;
-        }
     }
 
 }

@@ -1,6 +1,7 @@
 package com.senior.cyber.frmk.html.pages.forms;
 
 import com.senior.cyber.frmk.common.base.AdminLTEResourceReference;
+import com.senior.cyber.frmk.common.base.LTEAdminProperties;
 import com.senior.cyber.frmk.common.base.WebUiProperties;
 import com.senior.cyber.frmk.common.wicket.resource.BootstrapColorPickerMinCSS;
 import com.senior.cyber.frmk.common.wicket.resource.BootstrapColorPickerMinJS;
@@ -32,6 +33,8 @@ import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.resource.FileSystemResourceReference;
 import org.springframework.context.ApplicationContext;
 
 import java.io.File;
@@ -128,71 +131,74 @@ public class AdvancedPage extends WebPage {
 
         add(new BookmarkablePageLink<>("starter.html_1", StarterPage.class));
 
-        index3_2.add(new Image("AdminLTELogo.png_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_LOGO)));
+        File adminLte = ((LTEAdminProperties) WebApplication.get()).getWebUiProperties().getAdminLte();
 
-        add(new Image("user1-128x128.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_1)));
-        add(new Image("user2-160x160.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_2)));
-        add(new Image("user3-128x128.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_3)));
-        add(new Image("user8-128x128.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_8)));
+        index3_2.add(new Image("AdminLTELogo.png_1", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_LOGO).getPath())));
+
+        add(new Image("user1-128x128.jpg_1", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_USER_1).getPath())));
+        add(new Image("user2-160x160.jpg_1", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_USER_2).getPath())));
+        add(new Image("user3-128x128.jpg_1", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_USER_3).getPath())));
+        add(new Image("user8-128x128.jpg_1", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_USER_8).getPath())));
     }
 
     @Override
     public void renderHead(IHeaderResponse response) {
+        File adminLte = ((LTEAdminProperties) WebApplication.get()).getWebUiProperties().getAdminLte();
         // <!-- Color Picker
-        response.render(CssHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.CSS_COLOR_PICKER)));
+        response.render(CssHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.CSS_COLOR_PICKER).getPath())));
         // <!-- Font Awesome -->
-        response.render(CssHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.CSS_FONT_AWESOME)));
+        response.render(CssHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.CSS_FONT_AWESOME).getPath())));
         // <!-- Ionicons -->
         response.render(CssHeaderItem.forUrl(AdminLTEResourceReference.CSS_ION_ICONS));
         // <!-- daterange picker -->
-        response.render(CssHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.CSS_DATE_RANGE_PICKER)));
+        response.render(CssHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.CSS_DATE_RANGE_PICKER).getPath())));
         // <!-- iCheck for checkboxes and radio inputs -->
-        response.render(CssHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.CSS_ICHECK_BOOTSTRAP)));
+        response.render(CssHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.CSS_ICHECK_BOOTSTRAP).getPath())));
         // <!-- Bootstrap Color Picker -->
         response.render(CssHeaderItem.forReference(BootstrapColorPickerMinCSS.INSTANCE));
         // <!-- Tempusdominus Bbootstrap 4 -->
-        response.render(CssHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.CSS_TEMPUSDOMINUS_BOOTSTRAP)));
+        response.render(CssHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.CSS_TEMPUSDOMINUS_BOOTSTRAP).getPath())));
         // <!-- Select2 -->
-        response.render(CssHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.CSS_SELECT_2)));
-        response.render(CssHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.CSS_SELECT_2_BOOTSTRAP)));
+        response.render(CssHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.CSS_SELECT_2).getPath())));
+        response.render(CssHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.CSS_SELECT_2_BOOTSTRAP).getPath())));
         // <!-- Bootstrap4 Duallistbox -->
-        response.render(CssHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.CSS_BOOTSTRAP_BOX)));
+        response.render(CssHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.CSS_BOOTSTRAP_BOX).getPath())));
         // <!-- Theme style -->
-        response.render(CssHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.CSS_THEME_STYLE)));
+        response.render(CssHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.CSS_THEME_STYLE).getPath())));
         // <!-- Google Font: Source Sans Pro -->
         response.render(CssHeaderItem.forUrl(AdminLTEResourceReference.CSS_GOOGLE_FONT));
 
         //  <!-- BS Stepper -->
-        response.render(CssHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.CSS_BS_STEPPER)));
+        response.render(CssHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.CSS_BS_STEPPER).getPath())));
         // <!-- dropzonejs -->
-        response.render(CssHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.CSS_DROPZONEJS)));
+        response.render(CssHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.CSS_DROPZONEJS).getPath())));
 
         response.render(JavaScriptHeaderItem.forReference(getApplication().getJavaScriptLibrarySettings().getJQueryReference()));
 
         // <!-- Bootstrap 4 -->
-        response.render(JavaScriptHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.JS_BOOTSTRAP_4)));
+        response.render(JavaScriptHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.JS_BOOTSTRAP_4).getPath())));
         // <!-- Select2 -->
-        response.render(JavaScriptHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.JS_SELECT_2)));
+        response.render(JavaScriptHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.JS_SELECT_2).getPath())));
         // <!-- Bootstrap4 Duallistbox -->
-        response.render(JavaScriptHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.JS_DUALLISTBOX_BOOTSTRAP)));
+        response.render(JavaScriptHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.JS_DUALLISTBOX_BOOTSTRAP).getPath())));
         // <!-- InputMask -->
-        response.render(JavaScriptHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.JS_MOMENT)));
-        response.render(JavaScriptHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.JS_INPUT_MASK)));
+        response.render(JavaScriptHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.JS_MOMENT).getPath())));
+        response.render(JavaScriptHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.JS_INPUT_MASK).getPath())));
         // <!-- date-range-picker -->
-        response.render(JavaScriptHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.JS_DATE_RANGE_PICKER)));
+        response.render(JavaScriptHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.JS_DATE_RANGE_PICKER).getPath())));
         // <!-- bootstrap color picker -->
         response.render(JavaScriptHeaderItem.forReference(BootstrapColorPickerMinJS.INSTANCE));
         // <!-- Tempusdominus Bootstrap 4 -->
-        response.render(JavaScriptHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.JS_TEMPUSDOMINUS_BOOTSTRAP)));
+        response.render(JavaScriptHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.JS_TEMPUSDOMINUS_BOOTSTRAP).getPath())));
         // <!-- Bootstrap Switch -->
         // removed
         // response.render(JavaScriptHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.JS_SWITCH_BOOTSTRAP)));
         // <!-- BS-Stepper -->
-        response.render(JavaScriptHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.JS_BS_STEPPER)));
+        response.render(JavaScriptHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.JS_BS_STEPPER).getPath())));
         // <!-- dropzonejs -->
-        response.render(JavaScriptHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.JS_DROPZONEJS)));
+        response.render(JavaScriptHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.JS_DROPZONEJS).getPath())));
         // <!-- AdminLTE App -->
-        response.render(JavaScriptHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.JS_ADMINLTE_APP)));
+        response.render(JavaScriptHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.JS_ADMINLTE_APP).getPath())));
         try {
             ApplicationContext context = WicketFactory.getApplicationContext();
             WebUiProperties properties = context.getBean(WebUiProperties.class);

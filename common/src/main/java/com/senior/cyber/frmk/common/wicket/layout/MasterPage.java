@@ -1,6 +1,7 @@
 package com.senior.cyber.frmk.common.wicket.layout;
 
 import com.senior.cyber.frmk.common.base.AdminLTEResourceReference;
+import com.senior.cyber.frmk.common.base.LTEAdminProperties;
 import com.senior.cyber.frmk.common.model.*;
 import com.senior.cyber.frmk.common.model.menu.left.*;
 import com.senior.cyber.frmk.common.model.menu.right.*;
@@ -26,10 +27,13 @@ import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.ResourceReference;
+import org.apache.wicket.resource.FileSystemResourceReference;
 import org.apache.wicket.settings.JavaScriptLibrarySettings;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -794,6 +798,8 @@ public abstract class MasterPage extends WebPage {
 
     @Override
     public void renderHead(IHeaderResponse response) {
+        File adminLte = ((LTEAdminProperties) WebApplication.get()).getWebUiProperties().getAdminLte();
+
         // <!-- Font Awesome -->
         response.render(CssHeaderItem.forReference(FontAwesomeCSS.INSTANCE));
         // <!-- Ionicons -->
@@ -805,7 +811,7 @@ public abstract class MasterPage extends WebPage {
         // <!-- Google Font: Source Sans Pro -->
         response.render(GoogleFontCSS.INSTANCE);
 
-        response.render(CssHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.CSS_ICHECK_BOOTSTRAP)));
+        response.render(CssHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.CSS_ICHECK_BOOTSTRAP).getPath())));
 
         response.render(JavaScriptHeaderItem.forReference(getApplication().getJavaScriptLibrarySettings().getJQueryReference()));
 

@@ -4,11 +4,12 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.wicket.request.resource.IResource;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.apache.wicket.resource.FileSystemResource;
+import org.apache.wicket.resource.FileSystemResourceReference;
 import org.springframework.context.ApplicationContext;
 
 import java.io.File;
 
-public class AdminLTEResourceReference extends ResourceReference {
+public class AdminLTEResourceReference {
 
     public static final String CSS_FONT_AWESOME = "/plugins/fontawesome-free/css/all.min.css";
 
@@ -111,8 +112,6 @@ public class AdminLTEResourceReference extends ResourceReference {
     public static final String JS_COLOR_PICKER = "/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js";
 
     public static final String JS_TEMPUSDOMINUS_BOOTSTRAP = "/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.js";
-
-    // public static final String JS_SWITCH_BOOTSTRAP = "/plugins/bootstrap-switch/js/bootstrap-switch.min.js";
 
     public static final String JS_DIST_DEMO = "/dist/js/demo.js";
 
@@ -271,32 +270,5 @@ public class AdminLTEResourceReference extends ResourceReference {
     public static final String JS_BS_STEPPER = "/plugins/bs-stepper/js/bs-stepper.min.js";
 
     public static final String JS_DROPZONEJS = "/plugins/dropzone/min/dropzone.min.js";
-
-    /**
-     * Construct.
-     *
-     * @param name
-     */
-    public AdminLTEResourceReference(final String name) {
-        super(AdminLTEResourceReference.class, name);
-    }
-
-    /**
-     * @see org.apache.wicket.request.resource.ResourceReference#getResource()
-     */
-    @Override
-    public IResource getResource() {
-        ApplicationContext context = AbstractWicketFactory.getApplicationContext();
-        WebUiProperties properties = context.getBean(WebUiProperties.class);
-
-        final String name = getName();
-
-        File file = new File(properties.getAdminLte(), name);
-
-        if (FilenameUtils.normalize(file.getAbsolutePath(), true).startsWith(FilenameUtils.normalize(properties.getAdminLte().getAbsolutePath(), true))) {
-            return new FileSystemResource(file.toPath());
-        }
-        return null;
-    }
 
 }

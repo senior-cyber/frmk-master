@@ -1,13 +1,18 @@
 package com.senior.cyber.frmk.common.wicket.resource;
 
 import com.senior.cyber.frmk.common.base.AdminLTEResourceReference;
+import com.senior.cyber.frmk.common.base.LTEAdminProperties;
+import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.resource.FileSystemResourceReference;
 
-public class BootstrapColorPickerMinCSS extends AdminLTEResourceReference {
+import java.io.File;
+
+public class BootstrapColorPickerMinCSS extends FileSystemResourceReference {
 
     public static final BootstrapColorPickerMinCSS INSTANCE = new BootstrapColorPickerMinCSS();
 
     public BootstrapColorPickerMinCSS() {
-        super(CSS_COLOR_PICKER);
+        super(new File(((LTEAdminProperties) WebApplication.get()).getWebUiProperties().getAdminLte(), AdminLTEResourceReference.CSS_COLOR_PICKER).getPath());
     }
 
 }

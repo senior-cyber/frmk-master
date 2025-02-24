@@ -1,19 +1,20 @@
 package com.senior.cyber.frmk.common.wicket.resource;
 
 import com.senior.cyber.frmk.common.base.AdminLTEResourceReference;
+import com.senior.cyber.frmk.common.base.LTEAdminProperties;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
+import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.resource.ResourceReference;
+import org.apache.wicket.resource.FileSystemResourceReference;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CalendarOnDomReady extends OnDomReadyHeaderItem {
-
-    private static final ResourceReference CALENDAR_MAIN_MIN_CSS = new AdminLTEResourceReference(AdminLTEResourceReference.CSS_FULL_CALENDAR_MAIN);
-    private static final ResourceReference CALENDAR_MAIN_MIN_JS = new AdminLTEResourceReference(AdminLTEResourceReference.JS_FULL_CALENDAR_MAIN);
 
     public CalendarOnDomReady(CharSequence javaScript) {
         super(javaScript);
@@ -21,6 +22,7 @@ public class CalendarOnDomReady extends OnDomReadyHeaderItem {
 
     @Override
     public List<HeaderItem> getDependencies() {
+        File adminLte = ((LTEAdminProperties) WebApplication.get()).getWebUiProperties().getAdminLte();
         List<HeaderItem> dependencies = new ArrayList<>(0);
         dependencies.add(CssHeaderItem.forReference(FontAwesomeCSS.INSTANCE));
         dependencies.add(IOnIconsMinCSS.INSTANCE);
@@ -31,8 +33,8 @@ public class CalendarOnDomReady extends OnDomReadyHeaderItem {
         dependencies.add(JavaScriptHeaderItem.forReference(JQueryUIMinJS.INSTANCE));
         dependencies.add(JavaScriptHeaderItem.forReference(MomentMinJS.INSTANCE));
         dependencies.add(JavaScriptHeaderItem.forReference(BootstrapBundleMinJS.INSTANCE));
-        dependencies.add(CssHeaderItem.forReference(CALENDAR_MAIN_MIN_CSS));
-        dependencies.add(JavaScriptHeaderItem.forReference(CALENDAR_MAIN_MIN_JS));
+        dependencies.add(CssHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.CSS_FULL_CALENDAR_MAIN).getPath())));
+        dependencies.add(JavaScriptHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.JS_FULL_CALENDAR_MAIN).getPath())));
         return dependencies;
     }
 

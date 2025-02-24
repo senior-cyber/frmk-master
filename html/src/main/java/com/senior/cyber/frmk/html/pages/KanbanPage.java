@@ -1,6 +1,7 @@
 package com.senior.cyber.frmk.html.pages;
 
 import com.senior.cyber.frmk.common.base.AdminLTEResourceReference;
+import com.senior.cyber.frmk.common.base.LTEAdminProperties;
 import com.senior.cyber.frmk.html.*;
 import com.senior.cyber.frmk.html.pages.chart.FlotPage;
 import com.senior.cyber.frmk.html.pages.chart.InlinePage;
@@ -26,6 +27,10 @@ import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.resource.FileSystemResourceReference;
+
+import java.io.File;
 
 public class KanbanPage extends WebPage {
 
@@ -117,38 +122,40 @@ public class KanbanPage extends WebPage {
 
         add(new BookmarkablePageLink<>("starter.html_1", StarterPage.class));
 
-        index3_2.add(new Image("AdminLTELogo.png_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_LOGO)));
+        File adminLte = ((LTEAdminProperties) WebApplication.get()).getWebUiProperties().getAdminLte();
 
-        add(new Image("user1-128x128.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_1)));
-        add(new Image("user2-160x160.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_2)));
-        add(new Image("user3-128x128.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_3)));
-        add(new Image("user8-128x128.jpg_1", new AdminLTEResourceReference(AdminLTEResourceReference.IMG_USER_8)));
+        index3_2.add(new Image("AdminLTELogo.png_1", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_LOGO).getPath())));
+
+        add(new Image("user1-128x128.jpg_1", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_USER_1).getPath())));
+        add(new Image("user2-160x160.jpg_1", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_USER_2).getPath())));
+        add(new Image("user3-128x128.jpg_1", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_USER_3).getPath())));
+        add(new Image("user8-128x128.jpg_1", new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_USER_8).getPath())));
     }
 
     @Override
     public void renderHead(IHeaderResponse response) {
+        File adminLte = ((LTEAdminProperties) WebApplication.get()).getWebUiProperties().getAdminLte();
         // <!-- Font Awesome -->
-        response.render(CssHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.CSS_FONT_AWESOME)));
+        response.render(CssHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.CSS_FONT_AWESOME).getPath())));
         // <!-- Ionicons -->
         response.render(CssHeaderItem.forUrl(AdminLTEResourceReference.CSS_ION_ICONS));
         // <!-- Theme style -->
-        response.render(CssHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.CSS_THEME_STYLE)));
+        response.render(CssHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.CSS_THEME_STYLE).getPath())));
         // <!-- Google Font: Source Sans Pro -->
         response.render(CssHeaderItem.forUrl(AdminLTEResourceReference.CSS_GOOGLE_FONT));
         // <!-- Ekko Lightbox -->
-        response.render(CssHeaderItem.forReference(new AdminLTEResourceReference("/plugins/ekko-lightbox/ekko-lightbox.css")));
+        response.render(CssHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, "/plugins/ekko-lightbox/ekko-lightbox.css").getPath())));
 
         response.render(JavaScriptHeaderItem.forReference(getApplication().getJavaScriptLibrarySettings().getJQueryReference()));
 
         // <!-- Bootstrap 4 -->
-        response.render(JavaScriptHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.JS_BOOTSTRAP_4)));
+        response.render(JavaScriptHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.JS_BOOTSTRAP_4).getPath())));
         // <!-- Ekko Lightbox -->
-        response.render(JavaScriptHeaderItem.forReference(new AdminLTEResourceReference("/plugins/ekko-lightbox/ekko-lightbox.min.js")));
+        response.render(JavaScriptHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, "/plugins/ekko-lightbox/ekko-lightbox.min.js").getPath())));
         // <!-- AdminLTE App -->
-        response.render(JavaScriptHeaderItem.forReference(new AdminLTEResourceReference(AdminLTEResourceReference.JS_ADMINLTE_APP)));
+        response.render(JavaScriptHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.JS_ADMINLTE_APP).getPath())));
         // <!-- Filterizr-->
-        response.render(JavaScriptHeaderItem.forReference(new AdminLTEResourceReference("/plugins/filterizr/jquery.filterizr.min.js")));
-
+        response.render(JavaScriptHeaderItem.forReference(new FileSystemResourceReference(new File(adminLte, "/plugins/filterizr/jquery.filterizr.min.js").getPath())));
     }
 
 }

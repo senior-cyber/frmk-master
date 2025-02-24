@@ -23,3 +23,8 @@ git checkout v3
 ```shell
 ./gradlew publishToMavenLocal
 ```
+
+```shell
+new AdminLTEResourceReference(AdminLTEResourceReference.IMG_LOGO))
+new FileSystemResourceReference(new File(adminLte, AdminLTEResourceReference.IMG_LOGO).getPath())
+```
