@@ -17,7 +17,7 @@ public class MessageRequestConverter implements Converter<Message, RequestBody> 
     @Override
     public RequestBody convert(Message value) throws IOException {
         byte[] data = transport.messageHandler().serialize(value);
-        return RequestBody.create(MediaType.parse("application/octet-stream"), data);
+        return RequestBody.create(data, MediaType.parse("application/octet-stream"));
     }
 
 }
